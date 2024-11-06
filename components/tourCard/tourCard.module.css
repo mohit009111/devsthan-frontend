@@ -1,0 +1,67 @@
+.tour-card {
+    /* width: 300px; */
+    background: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    max-width: 400px;
+  }
+  
+  .image-container {
+    position: relative;
+  }
+  .pricing-and-button{
+    justify-content: space-between;
+    display: flex;
+  }
+  .pricing{
+    display: flex;
+    line-height: 15px;
+    flex-direction: column;
+
+  }
+  .image {
+    border-radius: 8px;
+  }
+  .starting-from{
+    font-size: 12px;
+  }
+  
+  .tag {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .pricing {
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+    font-size: 0.9rem;
+  }
+  
+  .starting-price {
+    color: green;
+    font-size: 1.2rem;
+  }
+  
+  .original-price {
+    text-decoration: line-through;
+    color: gray;
+  }
+  
+  .book-btn {
+    background-color: green;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  

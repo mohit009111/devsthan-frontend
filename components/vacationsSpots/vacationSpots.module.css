@@ -1,0 +1,99 @@
+
+
+.vacation-spots-section {
+    padding: 40px;
+    text-align: center;
+    max-width: 1340px;
+    margin-inline: auto;
+  }
+  
+  .header {
+    margin-bottom: 20px;
+  }
+  
+  .subtitle {
+    color: #6da06f;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .title {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 24px;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 16px;
+  }
+  
+  .grid-item {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .label {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+  }
+  
+  .tour-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #6da06f;
+    color: white;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+  
+  .promo-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #fdf6e4, #d7efcf);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .promo-text {
+    color: #e88542;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .promo-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  
+  .promo-button {
+    background-color: #6da06f;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .grid-item-img{
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 330px;
+  }

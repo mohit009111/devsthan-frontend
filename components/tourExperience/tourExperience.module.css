@@ -1,0 +1,30 @@
+.tour-experience {
+    text-align: center;
+    padding: 2rem;
+    max-width: 1340px;
+    margin-inline: auto;
+  }
+  
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 1rem 0;
+  }
+  
+  .tabs span {
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .active {
+    color: green;
+  }
+  
+  .tour-cards {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  

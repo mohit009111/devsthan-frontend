@@ -1,0 +1,181 @@
+.container {
+  margin-top: 20px;
+}
+
+.title-header {
+  margin-bottom: 10px;
+  color: black;
+}
+
+.day-container {
+  margin-bottom: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+}
+
+.day-container:hover {
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.day-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.day-title {
+  display: flex;
+  align-items: center;
+}
+
+.day {
+  font-weight: bold;
+  color: #fff;
+  margin-right: 8px;
+  padding: 10px 15px;
+  background-color: #81c784;
+}
+
+.title {
+  color: black;
+}
+
+.toggle-icon {
+  color: #81c784;
+  font-size: 1.2rem;
+}
+
+.day-content {
+  padding: 15px;
+  background-color: #f9f9f9;
+  animation: expand 0.3s ease;
+}
+
+@keyframes expand {
+  from {
+      opacity: 0;
+      transform: scaleY(0);
+  }
+  to {
+      opacity: 1;
+      transform: scaleY(1);
+  }
+}
+
+.highlights {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 10px;
+}
+
+.highlights li {
+  margin-bottom: 5px;
+  color: #66bb6a;
+}
+
+.toggle-buttons {
+  display: flex;
+  gap: 10px; /* space between buttons */
+  margin-top: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.toggle-buttons button {
+  padding: 8px 16px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  background-color: #81c784; /* green background */
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.toggle-buttons button:hover {
+  background-color: #66bb6a; /* darker green on hover */
+  transform: scale(1.05);
+}
+
+.toggle-buttons button:active {
+  background-color: #4caf50; /* even darker green on active */
+  transform: scale(0.98);
+}
+
+.toggle-buttons button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(129, 199, 132, 0.5); /* subtle focus ring */
+}
+.meals-section, .hotel-section {
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+.meals-section h3, .hotel-section h3 {
+  color: #81c784;
+  margin-bottom: 15px;
+}
+
+.meal-item {
+  margin-bottom: 10px;
+}
+
+.meal-item h4 {
+  margin: 5px 0;
+  color: #66bb6a;
+}
+
+.meal-image, .hotel-image, .room-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.hotel-info, .room-section {
+  margin-bottom: 15px;
+}
+
+.hotel-info h4, .room-section h4 {
+  margin: 5px 0;
+  color: #81c784;
+}
+
+.hotel-images, .room-images {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.hotel-image, .room-image {
+  width: 100px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.meals-photos {
+  display: grid;
+  gap: 10px; /* Space between grid items */
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Responsive columns */
+  margin-top: 20px;
+}
+
+.meal-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.meal-image:hover {
+  transform: scale(1.05); /* Zoom effect on hover */
+}

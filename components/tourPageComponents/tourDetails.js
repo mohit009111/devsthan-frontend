@@ -3,7 +3,8 @@ import styles from '../../pages/tour/tour.module.css'
 import { CiClock2 } from "react-icons/ci";
 import { FaCheck } from "react-icons/fa6";
 import { RxCross2 } from "react-icons/rx";
-const tourDetails = ({ details }) => {
+import Itinerary from '../itinery/itinery';
+const tourDetails = ({ categoryDetails, details }) => {
     const inclusions = [
         "Meal As Per Hotel Plan And Drinks Free Too.",
         "Return Airport And Round Trip Transfers.",
@@ -57,56 +58,42 @@ const tourDetails = ({ details }) => {
 
 
                     <div className={styles['tour-details-includeds']}>
-                        <div className={styles['tour-details-incl']}>
+                        {categoryDetails.inclusions.map((inc) => {
+                            return (
 
-                            <FaCheck className={styles['tour-details-check']} />
-                            Meal As Per Hotel Plan And Drinks Free Too.
-                        </div>
-                        <div className={styles['tour-details-incl']}>
+                                <>
+                                    <div className={styles['tour-details-incl']}>
 
-                            <FaCheck className={styles['tour-details-check']} />
-                            Meal As Per Hotel Plan And Drinks Free Too.
-                        </div>
+                                        <FaCheck className={styles['tour-details-check']} />
+                                        <p>{inc}</p>
+                                    </div>
+                                </>
+                            )
+                        }
 
-                        <div className={styles['tour-details-incl']}>
 
-                            <FaCheck className={styles['tour-details-check']} />
-                            Meal As Per Hotel Plan And Drinks Free Too.
-                        </div>
-                        <div className={styles['tour-details-incl']}>
+                        )}
 
-                            <FaCheck className={styles['tour-details-check']} />
-                            Meal As Per Hotel Plan And Drinks Free Too.
-                        </div>
-                        <div className={styles['tour-details-incl']}>
-
-                            <FaCheck className={styles['tour-details-check']} />
-                            Meal As Per Hotel Plan And Drinks Free Too.
-                        </div>
 
                     </div>
 
                     <div className={styles['tour-details-excluded']}>
-                        <div className={styles['tour-details-incl']}>
+                        {categoryDetails.exclusions.map((exc) => {
+                            return (
 
-                            <RxCross2 className={styles['tour-details-cross']} />
-                            Meal As Per Hotel Plan And Drinks Free Too.
-                        </div>
-                        <div className={styles['tour-details-incl']}>
+                                <>
+                                    <div className={styles['tour-details-incl']}>
 
-                            <RxCross2 className={styles['tour-details-cross']} />
-                            Meal As Per Hotel Plan And Drinks Free Too.
-                        </div>
-                        <div className={styles['tour-details-incl']}>
+                                        <RxCross2 className={styles['tour-details-cross']} />
+                                        <p>{exc}</p>
+                                    </div>
+                                </>
+                            )
+                        }
 
-                            <RxCross2 className={styles['tour-details-cross']} />
-                            Meal As Per Hotel Plan And Drinks Free Too.
-                        </div>
-                        <div className={styles['tour-details-incl']}>
 
-                            <RxCross2 className={styles['tour-details-cross']} />
-                            Meal As Per Hotel Plan And Drinks Free Too.
-                        </div>
+                        )}
+
 
 
                     </div>
@@ -115,36 +102,29 @@ const tourDetails = ({ details }) => {
             </div>
             <div className={styles['tour-details-overview']}>
                 <h2>Highlights</h2>
-              
+
                 <div className={styles['tour-details-highliglits']}>
-                        <div className={styles['tour-details-incl']}>
+                    {categoryDetails.highlights.map((high) => {
+                        return (
 
-                            <FaCheck className={styles['tour-details-check']} />
-                            Our Team Of Knowledgeable Guides And Travel Experts Are Dedicated To Making Your Journey Memorable And Worry-Free
-                        </div>
-                        <div className={styles['tour-details-incl']}>
+                            <>
+                                <div className={styles['tour-details-incl']}>
 
-                            <FaCheck className={styles['tour-details-check']} />
-                            Meal As Per Hotel Plan And Drinks Free Too.
-                        </div>
+                                    <FaCheck className={styles['tour-details-check']} />
+                                    <p>{high}</p>
+                                </div>
+                            </>
+                        )
+                    }
 
-                        <div className={styles['tour-details-incl']}>
 
-                            <FaCheck className={styles['tour-details-check']} />
-                            Meal As Per Hotel Plan And Drinks Free Too.
-                        </div>
-                        <div className={styles['tour-details-incl']}>
+                    )}
 
-                            <FaCheck className={styles['tour-details-check']} />
-                            Meal As Per Hotel Plan And Drinks Free Too.
-                        </div>
-                        <div className={styles['tour-details-incl']}>
 
-                            <FaCheck className={styles['tour-details-check']} />
-                            Meal As Per Hotel Plan And Drinks Free Too.
-                        </div>
 
-                    </div>
+
+                </div>
+                <Itinerary itineraries={categoryDetails.itineraries}/>
 
             </div>
         </div>

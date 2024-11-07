@@ -145,7 +145,7 @@
 .tour-booking-panel {
   padding: 20px;
   border-radius: 10px;
-  max-width: 350px;
+  max-width: 400px;
   background: linear-gradient(125deg, rgba(99, 171, 69, 0.1) 0%, rgba(251, 176, 59, 0.1) 100%);
   border-radius: 5px;
   padding: 25px;
@@ -354,3 +354,81 @@
     max-width: none;
   }
 }
+
+
+
+@media screen and (max-width: 540px) {
+  .tour-details-inc-exc{
+    flex-direction: column;
+  }
+  .tour-details-overview{
+    font-size: 14px;
+    line-height: 28px;
+  }
+}
+
+.tour-category {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  margin: 15px 0;
+  color: #444;
+}
+
+.tour-category label {
+  font-weight: bold;
+  color: #333;
+}
+
+.category-select {
+  margin-left: 10px;
+  padding: 8px 12px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  outline: none;
+}
+
+.category-select:focus {
+  border-color: #81c784;
+  box-shadow: 0 4px 8px rgba(129, 199, 132, 0.3);
+  background-color: #f1f8e9;
+}
+
+.category-select:hover {
+  border-color: #66bb6a;
+}
+
+.category-select option {
+  background: white;
+  color: #333;
+  font-size: 1rem;
+  padding: 8px;
+}
+
+.category-select option:hover {
+  background: #e0f2f1;
+  color: #00695c;
+}
+
+/* Dropdown open animation */
+@keyframes dropdown-open {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.category-select {
+  animation: dropdown-open 0.3s ease-out;
+}
+

@@ -1,0 +1,119 @@
+.container {
+    display: flex;
+    padding: 2rem;
+    gap: 2rem;
+    max-width: 1350px;
+    margin-inline: auto;
+  }
+  
+  .mainContent {
+    flex: 2;
+  }
+  
+  .mainContent h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .mainContent p {
+    line-height: 1.6;
+    color: #555;
+  }
+  
+  .imageGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    margin: 2rem 0;
+  }
+  
+  .imageCard {
+    overflow: hidden;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+  }
+  
+  .imageCard:hover {
+    transform: scale(1.05);
+  }
+  
+  .image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .imageCard:hover .image {
+    transform: scale(1.1);
+  }
+  
+  .features {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+  }
+  
+  .features li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+    animation: fadeInUp 0.5s ease-in;
+  }
+  
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .sidebar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .detailsBox, .offerBox {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .detailsBox h3 {
+    font-size: 1.2rem;
+    color: #888;
+    margin-bottom: 1rem;
+  }
+  
+  .offerBox {
+    text-align: center;
+    background-color: #ffde5a;
+    color: #333;
+  }
+  
+  .offerBox p {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .offerButton {
+    margin-top: 1rem;
+    padding: 0.8rem 1.5rem;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .offerButton:hover {
+    background-color: #555;
+  }
+  

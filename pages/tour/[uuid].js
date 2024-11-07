@@ -43,7 +43,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const { uuid } = params;
-console.log("uuid",uuid)
+
   const tourData = await apiCall({
     endpoint: `/api/getTour/${uuid}`,
     method: 'GET',

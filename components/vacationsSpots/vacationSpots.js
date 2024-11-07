@@ -1,6 +1,7 @@
 // components/VacationSpots.js
 import Image from 'next/image';
 import styles from '../vacationsSpots/vacationSpots.module.css';
+import Link from 'next/link'
 
 const VacationSpots = ({ destinations }) => {
   return (
@@ -13,21 +14,19 @@ const VacationSpots = ({ destinations }) => {
         {destinations.map((dest) => {
           return (
             <>
-
               <div className={styles['grid-item']}>
                 <Image src={dest.bannerImage} alt="Sweden" width={400} height={200} className={styles['grid-item-img']} />
+              <div className={styles.overlay}>
                 <span className={styles['label']}>{dest.state.label}</span>
+                </div>
               </div>
             </>
           )
         })}
-
-        <div className={styles['promo-card']}>
-          <p className={styles['promo-text']}>Get 10% Off</p>
-          <h3 className={styles['promo-title']}>Of Our All Destination</h3>
-          <button className={styles['promo-button']}>View All Destination</button>
-        </div>
       </div>
+      <Link href={`/destinations`}>
+       <button className={styles['promo-button']}>View All Destination</button>
+      </Link>
     </section>
   );
 };

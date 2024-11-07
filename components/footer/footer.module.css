@@ -43,6 +43,8 @@
     flex: 2;
     justify-content: space-around;
     margin-top: 20px;
+    flex-wrap: wrap;
+    gap: 2rem;
   }
   
   .quick-links, .more-inquiry, .about-section, .payment-partner {
@@ -96,3 +98,13 @@
     to { opacity: 1; }
   }
   
+
+  @media screen and (max-width: 860px) {
+    .footer-links {
+     flex-wrap: wrap;
+    }
+    .footer-content{
+  flex-direction: column;
+    }
+    
+}

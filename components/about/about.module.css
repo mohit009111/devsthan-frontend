@@ -3,6 +3,7 @@
 .about-us-section {
     display: flex;
     padding: 40px;
+    gap: 2rem;
     align-items: center;
     justify-content: space-between;
     max-width: 1340px;
@@ -74,6 +75,10 @@
   .image-wrapper {
     overflow: hidden;
     border-radius: 8px;
+  }
+  .about-images{
+    width: 100% !important;
+    object-fit: cover;
   }
   @media  screen and (max-width:900px)  {
     .about-us-section{

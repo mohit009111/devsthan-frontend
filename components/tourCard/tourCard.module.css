@@ -23,6 +23,8 @@
   }
   .image {
     border-radius: 8px;
+    width: 100% !important;
+    object-fit: cover;
   }
   .starting-from{
     font-size: 12px;

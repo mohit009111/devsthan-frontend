@@ -14,11 +14,14 @@ const VacationSpots = ({ destinations }) => {
         {destinations.map((dest) => {
           return (
             <>
+             
               <div className={styles['grid-item']}>
+             <Link href={`/destination/${dest.uuid}`}>
                 <Image src={dest.bannerImage} alt="Sweden" width={400} height={200} className={styles['grid-item-img']} />
               <div className={styles.overlay}>
                 <span className={styles['label']}>{dest.state.label}</span>
                 </div>
+             </Link>
               </div>
             </>
           )

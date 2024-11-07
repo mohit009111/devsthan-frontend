@@ -15,6 +15,10 @@
   .logo {
     width: 150px;
   }
+
+  .logo-container{
+    height: 30px;
+  }
   
   .nav-menu ul {
     display: flex;

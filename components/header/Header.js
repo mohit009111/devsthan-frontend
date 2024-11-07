@@ -11,7 +11,7 @@ const Header = () => {
                 <div className={styles['logo-container']}>
                     <Link href={`/`}>
                     
-                    <img src="/logo.png" alt="TripRex" className={styles['logo']} />
+                    <img src={''} alt="TripRex" className={styles['logo']} />
                     </Link>
                 </div>
                 <nav className={styles['nav-menu']}>

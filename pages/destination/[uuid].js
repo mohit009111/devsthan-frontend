@@ -7,13 +7,13 @@ const images = [
   'peru.jpg', 'switzerland.jpg', 'nepal.jpg', 'canada.jpg'
 ];
 
-const destination = ({destinationData}) => {
+const Destination  = ({destinationData}) => {
     const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleReadMore = () => {
     setIsExpanded(!isExpanded);
   };
-    console.log(destinationData)
+
   return (
     <div className={styles.container}>
       <section className={styles.mainContent}>
@@ -64,7 +64,7 @@ const destination = ({destinationData}) => {
   );
 };
 
-export default destination;
+export default Destination ;
 export async function getStaticPaths() {
    
     const destinations = await apiCall({

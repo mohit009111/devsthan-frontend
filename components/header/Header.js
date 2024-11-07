@@ -16,11 +16,11 @@ const Header = () => {
                 </div>
                 <nav className={styles['nav-menu']}>
                     <ul>
-                        <li><a className={styles['nav-link']} href="/">Home</a></li>
-                        <li><a className={styles['nav-link']} href="/about">About</a></li>
-                        <li><a className={styles['nav-link']} href="/tours">Tours</a></li>
-                        <li><a className={styles['nav-link']} href="/destinations">Destination</a></li>
-                        <li><a className={styles['nav-link']} href="/contact">Contact</a></li>
+                        <li><p className={styles['nav-link']} href="/">Home</p></li>
+                        <li><p className={styles['nav-link']} href="/about">About</p></li>
+                        <li><p className={styles['nav-link']} href="/tours">Tours</p></li>
+                        <li><p className={styles['nav-link']} href="/destinations">Destination</p></li>
+                        <li><p className={styles['nav-link']} href="/contact">Contact</p></li>
                     </ul>
                 </nav>
                 <div className={styles['header-right-option']}>

@@ -92,4 +92,17 @@
       width: 100%;
     }
   }
+  @media  screen and (max-width:450px)  {
+    .about-us-section{
+    
+      padding: 10px;
+    }
+    .title{
+      font-size: 33px;
+    }
+    .description{
+      font-size: 12px;
+    }
+    
+  }
   

@@ -103,11 +103,15 @@ const HomeBanner = () => {
                     </div>
                     <div className={styles['search-headings-tour']} >
                         <FiMapPin />
-                        <p>Transportation</p>
+                        <p>Bus</p>
                     </div>
                     <div className={styles['search-headings-tour']} >
                         <FiMapPin />
-                        <p>Activities</p>
+                        <p>Cab</p>
+                    </div>
+                    <div className={styles['search-headings-tour']} >
+                        <FiMapPin />
+                        <p>Flight</p>
                     </div>
 
                 </div>

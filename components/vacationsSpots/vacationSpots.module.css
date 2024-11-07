@@ -38,7 +38,8 @@ display: flex;
     /* height: 500px; */
     transition: transform 0.3s ease;
     cursor: pointer;
-width: 400px;
+    height: 400px;
+
 
   }
   .overlay {
@@ -120,14 +121,30 @@ width: 400px;
   }
   
   .grid-item-img{
-    width: 100% !important;
+   
     height: 100% !important;
   object-fit: cover;
   }
   @media screen and (max-width: 900px) {
    
-   
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+          
+        }
     .vacation-spots-section{
       padding-inline: 20px;
     }
+  }
+
+  @media screen and (max-width: 540px) {
+   
+    .grid {
+    
+      grid-template-columns: repeat(1, 1fr);
+          
+        }
+  .vacation-spots-section{
+    padding-inline: 10px;
+  }
   }

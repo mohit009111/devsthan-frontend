@@ -1,34 +1,67 @@
 import Image from 'next/image';
 import styles from '../tourCard/tourCard.module.css';
 import Link from 'next/link'
-import { BASE_URL } from '../../utils/headers';
+import { FaBed } from "react-icons/fa";
+import { GiMeal } from "react-icons/gi";
+import { FaCamera } from "react-icons/fa";
+import { FaCar } from "react-icons/fa";
+import { MdLocalDrink } from "react-icons/md";
 
-export default function TourCard({ duration, location, imageUrl, title, startingPrice, originalPrice, locations,uuid }) {
+export default function TourCard({ duration, location, imageUrl, title, startingPrice, originalPrice, locations, uuid }) {
   return (
     <div className={styles['tour-card']}>
-      <Link href={`tour/${uuid}`}> 
-      <div className={styles['image-container']}>
-        <Image src={imageUrl} alt={location} width={350} height={200} className={styles['image']} />
-        <div className={styles['tag']}>
-          <span>{duration}</span>
-          <span>{location}</span>
+      <Link href={`tour/${uuid}`}>
+        <div className={styles['image-container']}>
+          <Image src={imageUrl} alt={location} width={350} height={200} className={styles['image']} />
+          <div className={styles['tag']}>
+            <span className={styles['duration']}>{duration}</span>
+            <span className={styles['location']}>{location}</span>
+          </div>
         </div>
-      </div>
       </Link>
       <h3>{title}</h3>
       <p>{locations}</p>
+      <div className={styles['tour-features']}>
+        <div className={styles['tour-hotel']}>
+
+          <FaBed />
+          <p>Hotel</p>
+        </div>
+        <div className={styles['tour-hotel']}>
+
+          <GiMeal />
+          <p>Meals</p>
+        </div>
+        <div className={styles['tour-hotel']}>
+
+          <FaCamera />
+          <p>Site Seens</p>
+        </div>
+        <div className={styles['tour-hotel']}>
+
+          <FaCar />
+          <p>Transport</p>
+        </div>
+        <div className={styles['tour-hotel']}>
+
+          <MdLocalDrink />
+          <p>Welcome Drinks</p>
+        </div>
+
+
+      </div>
       <div className={styles['pricing-and-button']}>
 
-      <div className={styles['pricing']}>
-        <span className={styles['starting-from']}> Starting From:</span>
-        <div>
+        <div className={styles['pricing']}>
+          <span className={styles['starting-from']}> Starting From:</span>
+          <div>
 
-        <span className={styles['starting-price']}>{startingPrice}</span>
-        <span className={styles['original-price']}>{originalPrice}</span>
+            <span className={styles['starting-price']}>{startingPrice}</span>
+
+          </div>
+
         </div>
-        
-      </div>
-      <button className={styles['book-btn']}>Book A Trip</button>
+        <button className={styles['book-btn']}>Book A Trip</button>
       </div>
     </div>
   );

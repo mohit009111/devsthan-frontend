@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './destinations.module.css';
 import { apiCall } from '../../utils/common';
 import Link from 'next/link';
+import DestinationCard from '../../components/destinationCard/destinationCard';
 
 const Destinations = ({ destinations }) => {
   console.log(destinations)
@@ -16,15 +17,7 @@ const Destinations = ({ destinations }) => {
           <Link href={`/destination/${destination.uuid}`} className={styles.card} key={index}>
 
 
-            <img src={destination.bannerImage} alt={destination.name} className={styles.image} />
-            <div className={styles.overlay}>
-              <span className={styles.tourBadge}>{destination.tours.length} Tour</span>
-              <div className={styles.textContainer}>
-                <span>Travel To</span>
-                <h3>{destination.state.label}</h3>
-              </div>
-
-            </div>
+           <DestinationCard destination={destination}/>
           </Link>
 
         ))}
@@ -51,5 +44,6 @@ export async function getStaticProps() {
 
       destinations
     },
+    revalidate: 600, 
   };
 }

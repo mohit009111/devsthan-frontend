@@ -23,15 +23,33 @@
   
   .imageGrid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 0.5rem;
     margin: 2rem 0;
   }
+  .header {
+    margin-bottom: 2rem;
+    background-image: url("https://res.cloudinary.com/dmyzudtut/image/upload/v1730914616/inner-banner-bg_aomm7x.jpg");
+    height: 400px;
+    background-size: cover;   /* Ensures the image covers the entire header area */
+    background-position: center;  /* Centers the image within the header */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: #fff;
+  }
   
+  .title {
+    font-size: 3.5rem;
+    font-weight: bold;
+  }
   .imageCard {
     overflow: hidden;
     border-radius: 8px;
     transition: transform 0.3s ease;
+    width: 100%;
   }
   
   .imageCard:hover {
@@ -135,6 +153,12 @@
     font-size: 2rem;
     margin-bottom: 5px;
    }
+   .header{
+    height: 300px;
+      }
+      .title{
+        font-size: 2rem;
+      }
 }
 @media screen and (max-width: 500px) {
 

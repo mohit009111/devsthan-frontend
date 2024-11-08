@@ -45,8 +45,15 @@ const Destination = ({ destinationData }) => {
   };
 
   return (
-    <div className={styles.container}>
+    <>
+     <header className={styles.header}>
+        <h1 className={styles.title}>Destination</h1>
+        <nav>Home ➔ Destination</nav>
+      </header>
+      <div className={styles.container}>
+      
       <section className={styles.mainContent}>
+     
         <h1>Welcome To {destinationData.state.label}</h1>
         <p>
           {isExpanded ? destinationData.description : `${destinationData.description.slice(0, 900)}...`}
@@ -107,6 +114,8 @@ const Destination = ({ destinationData }) => {
         </div>
       </aside>
     </div>
+    </>
+   
   );
 };
 

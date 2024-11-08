@@ -63,6 +63,11 @@
   
   .quick-links li {
     margin-bottom: 5px;
+   
+  }
+  .li{
+    text-decoration: none;
+    color: white;
   }
   
   .payment-icons span {

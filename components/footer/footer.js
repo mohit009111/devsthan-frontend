@@ -1,4 +1,5 @@
 // components/Footer.js
+import Link from 'next/link';
 import styles from '../footer/footer.module.css';
 
 export default function footer() {
@@ -13,11 +14,12 @@ export default function footer() {
           <div className={styles['quick-links']}>
             <h3>Quick Link</h3>
             <ul>
-              <li>About Us</li>
-              <li>Destinations</li>
-              <li>Tour Package</li>
-              <li>Article</li>
-              <li>Contact Us</li>
+             <Link href={'/about'} className={styles['li']}><li >About Us</li></Link> 
+             <Link href={'/destinations'} className={styles['li']}><li >Destinations</li></Link> 
+             <Link href={'/about'} className={styles['li']}><li >Tour Package</li></Link> 
+             <Link href={'/privacy-policy'} className={styles['li']}><li >Privacy Policy</li></Link> 
+             <Link href={'/contact'} className={styles['li']}><li >Contact Us</li></Link> 
+             
             </ul>
           </div>
           <div className={styles['more-inquiry']}>

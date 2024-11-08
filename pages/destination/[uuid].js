@@ -1,14 +1,44 @@
+"use client"
 import React, { useState } from 'react';
 import styles from './destination.module.css';
 import { apiCall } from '../../utils/common';
 
-const images = [
-  'italy.jpg', 'thailand.jpg', 'vietnam.jpg', 'venice.jpg',
-  'peru.jpg', 'switzerland.jpg', 'nepal.jpg', 'canada.jpg'
-];
+import styled from "styled-components";
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+import { Pagination, Navigation } from 'swiper';
+import { MdOutlineKeyboardArrowDown, MdOutlineArrowForwardIos, MdOutlineArrowBackIos } from "react-icons/md";
+import DestinationHighlighs from '../../components/destinationHighlights/destinationHighlights';
 
-const Destination  = ({destinationData}) => {
-    const [isExpanded, setIsExpanded] = useState(false);
+const responsive = {
+  superLargeDesktop: {
+    breakpoint: { max: 4000, min: 1024 },
+    items: 1,
+  },
+  desktop: {
+    breakpoint: { max: 1024, min: 768 },
+    items: 1,
+  },
+  tablet: {
+    breakpoint: { max: 768, min: 464 },
+    items: 1,
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1,
+  },
+};
+const SubDestinationCarousel = styled(Carousel)`
+overflow:hidden;
+    max-width: 800px !important;
+ 
+
+`;
+
+const Destination = ({ destinationData }) => {
+
+
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleReadMore = () => {
     setIsExpanded(!isExpanded);
@@ -19,11 +49,11 @@ const Destination  = ({destinationData}) => {
       <section className={styles.mainContent}>
         <h1>Welcome To {destinationData.state.label}</h1>
         <p>
-      {isExpanded ? destinationData.description : `${destinationData.description .slice(0, 900)}...`}
-      <button onClick={toggleReadMore}>
-        {isExpanded ? "Show Less" : "Read More"}
-      </button>
-    </p>
+          {isExpanded ? destinationData.description : `${destinationData.description.slice(0, 900)}...`}
+          <button onClick={toggleReadMore}>
+            {isExpanded ? "Show Less" : "Read More"}
+          </button>
+        </p>
 
         <div className={styles.imageGrid}>
           {destinationData.images.map((img, index) => (
@@ -32,27 +62,43 @@ const Destination  = ({destinationData}) => {
             </div>
           ))}
         </div>
+        {/* <div className={styles['carousel-container']}>
+    <SubDestinationCarousel
+      responsive={responsive}
+      infinite={true}
+      autoPlay={true}
+      autoPlaySpeed={3000}
+      showDots={true}
+      arrows={true}
+      customTransition="transform 0.5s ease"
+    >
+      {destinationData.subDestinations.map((dest, index) => (
+        <div key={index} className={styles['carousel-item']}>
+          <h2>Heaven On Earth</h2>
+          <p>{dest.description}</p>
+          <ul>
+            <li>🌍 Exploring ancient ruins, historical landmarks</li>
+            <li>🎡 Kid-friendly activities, theme parks</li>
+            <li>🗺️ Immersive cultural experiences</li>
+            <li>🍽️ Premium accommodations, gourmet dining</li>
+          </ul>
+        </div>
+      ))}
+    </SubDestinationCarousel>
+  </div> */}
 
-        <h2>Heaven On Earth</h2>
-        <p>
-          Japan is known for exploring ancient ruins, cultural landmarks, and much more...
-        </p>
-        <ul className={styles.features}>
-          <li>🌍 Exploring ancient ruins, historical landmarks</li>
-          <li>🎡 Kid-friendly activities, theme parks</li>
-          <li>🗺️ Immersive cultural experiences</li>
-          <li>🍽️ Premium accommodations, gourmet dining</li>
-        </ul>
+        {/* <DestinationHighlighs highlights={destinationData.highlights} /> */}
+
       </section>
 
       <aside className={styles.sidebar}>
         <div className={styles.detailsBox}>
           <h3>Destination</h3>
-          <p><strong>Japan</strong></p>
-          <p><strong>Population:</strong> 90.5 million</p>
-          <p><strong>Capital City:</strong> Cairo</p>
-          <p><strong>Language:</strong> Japanese</p>
-          <p><strong>Currency:</strong> Yen</p>
+          <p><strong>{destinationData.state.label}</strong></p>
+          <p><strong>Population:</strong> {destinationData.population}</p>
+          <p><strong>Capital City:</strong> {destinationData.capitalCity}</p>
+          <p><strong>Language:</strong> {destinationData.languages}</p>
+
         </div>
         <div className={styles.offerBox}>
           <h4>Savings worldwide</h4>
@@ -64,38 +110,37 @@ const Destination  = ({destinationData}) => {
   );
 };
 
-export default Destination ;
+export default Destination;
 export async function getStaticPaths() {
-   
-    const destinations = await apiCall({
-        endpoint: '/api/getAllDestinations',
-        method: 'GET',
-    
-      });
-  
-    const paths = destinations.map((dest) => ({
-      params: { uuid: dest.uuid },
-    }));
-  
-    return {
-      paths,
-      fallback: false, 
-    };
-  }
-  
-  export async function getStaticProps({ params }) {
-    const { uuid } = params;
-    console.log("uuid",uuid)
-    const destinationData = await apiCall({
-      endpoint: `/api/getDestinationById/${uuid}`,
-      method: 'POST',
-    
-    });
-  
-    return {
-      props: {
-        destinationData
-      },
-    };
-  }
-  
+
+  const destinations = await apiCall({
+    endpoint: '/api/getAllDestinations',
+    method: 'GET',
+
+  });
+
+  const paths = destinations.map((dest) => ({
+    params: { uuid: dest.uuid },
+  }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+}
+
+export async function getStaticProps({ params }) {
+  const { uuid } = params;
+  console.log("uuid", uuid)
+  const destinationData = await apiCall({
+    endpoint: `/api/getDestinationById/${uuid}`,
+    method: 'POST',
+
+  });
+
+  return {
+    props: {
+      destinationData
+    },
+  };
+}

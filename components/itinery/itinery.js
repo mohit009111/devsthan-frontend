@@ -145,9 +145,17 @@ const Itinerary = ({ itineraries }) => {
                   </div>
                 </div>
               )}
-              {selectedItineryButton == 'siteseen' ? <>
-
-              </> : null}
+              {selectedItineryButton === 'siteseen' ? (
+  <>
+    <div className={styles['siteseen-photos']}>
+      {item.siteSeenPhotos.map((img, index) => (
+        <div key={index} className={styles['photo-container']}>
+          <img src={img} alt={`Site Seen ${index}`} className={styles['siteseen-image']} />
+        </div>
+      ))}
+    </div>
+  </>
+) : null}
 
 
               <div className={styles['toggle-buttons']}>

@@ -1,0 +1,44 @@
+.container {
+    padding-inline: 20px;
+    max-width: 1200px;
+    border-inline: 1px solid rgb(173, 172, 172);
+    margin: 20px auto;
+    line-height: 1.6;
+
+  }
+  
+  .mainHeading {
+    font-size: 32px;
+    margin-bottom: 15px;
+    text-align: center;
+    color: #2a2a2a;
+    margin-top: 20px;
+  }
+  
+  .subHeading {
+    font-size: 24px;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    color: #4a4a4a;
+  }
+  
+  .description {
+    margin-bottom: 15px;
+    color: #555;
+  }
+  
+  .list {
+    list-style-type: disc;
+    margin-left: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .link {
+    color: #0070f3;
+    text-decoration: none;
+  }
+  
+  .link:hover {
+    text-decoration: underline;
+  }
+  

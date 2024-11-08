@@ -365,7 +365,11 @@
     font-size: 14px;
     line-height: 28px;
   }
+  .tour-main{
+    padding-inline: 10px;
+  }
 }
+
 
 .tour-category {
   display: flex;

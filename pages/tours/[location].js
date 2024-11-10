@@ -6,9 +6,9 @@ import ToursList from '../../components/toursList/toursList';
 // `getStaticPaths` to define the list of dynamic routes to pre-render
 
 const TourCategory = ({  tourData ,categories,location}) => {
-  console.log(categories)
+
   const [selectedTourTypes, setSelectedTourTypes] = useState([]);
-  console.log(selectedTourTypes)
+
 
   // Handle checkbox change and trigger API call
   const handleCheckboxChange = async (e) => {
@@ -117,17 +117,17 @@ export async function getStaticPaths() {
     method: 'GET',
   });
 
-  console.log('Locations fetched:', locations);
+
 
   const destinations = locations?.destinations?.map((dest) => dest.trim()) || [];
 
-  console.log('Destinations array:', destinations);
+
 
   const paths = destinations.map((destination) => ({
     params: { location: destination },
   }));
 
-  console.log('Generated paths:', paths);
+
 
   return {
     paths,
@@ -138,7 +138,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const { location } = params;
-  console.log('Fetching data for location:', location);
+
 
   try {
 
@@ -152,7 +152,7 @@ export async function getStaticProps({ params }) {
       method: 'POST',
     });
 
-    console.log('Fetched tour data:', tourData);
+
 
     return {
       props: {

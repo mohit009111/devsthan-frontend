@@ -1,0 +1,78 @@
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 80%;
+    height: 100vh;
+    background-color: white;
+    transition: left 0.3s ease;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+}
+
+.open {
+    left: 0;
+}
+
+.logo {
+    width: 100%;
+}
+
+.logo-container {
+
+    max-width: 150px;
+}
+
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+.close-button {
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+}
+
+.menu-list {
+    list-style: none;
+    padding: 0;
+
+}
+
+.menu-list li {
+    margin: 1rem 0;
+    font-size: 18px;
+    text-align: left;
+    padding: 0 1.5rem;
+}
+
+.menu-list a {
+    color: #333;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.menu-footer {
+    margin-top: auto;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-top: 1px solid #ddd;
+}
+
+.contact-info {
+    display: flex;
+    align-items: center;
+    color: #28a745;
+}
+
+.contact-icon {
+    margin-right: 8px;
+    font-size: 18px;
+}

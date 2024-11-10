@@ -1,17 +1,24 @@
-import React from 'react'
-import styles from '../header/header.module.css'
+import React, { useState } from 'react';
+import styles from '../header/header.module.css';
 import { FaRegUser } from "react-icons/fa6";
-import { RxHamburgerMenu } from "react-icons/rx";
+import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { FiPhoneCall } from "react-icons/fi";
 import Link from 'next/link';
+import MobileMenu from '../mobileMenue/mobileMenue';
+
 const Header = () => {
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setMenuOpen(!menuOpen);
+    };
+
     return (
         <>
             <header className={styles['header-container']}>
                 <div className={styles['logo-container']}>
-                    <Link href={`/`}>
-                    
-                    <img src={''} alt="TripRex" className={styles['logo']} />
+                    <Link href="/">
+                        <img src='https://res.cloudinary.com/dmyzudtut/image/upload/v1731261401/Untitled_design_11_dlpmou.jpg' alt="TripRex" className={styles['logo']} />
                     </Link>
                 </div>
                 <nav className={styles['nav-menu']}>
@@ -24,23 +31,19 @@ const Header = () => {
                     </ul>
                 </nav>
                 <div className={styles['header-right-option']}>
-
-                    <FaRegUser className={styles['user-icon']} />
                     <div className={styles['inquiry']}>
-
-                        <FiPhoneCall className={styles['inquiry-icon']}/>
+                        <FiPhoneCall className={styles['inquiry-icon']} />
                         <div className={styles['inquiry-details']}>
-
                             <span>To More Inquiry</span>
-                            <a href="tel:+990737621432">+990-737-621-432</a>
+                            <a href="tel:+990737621432">+91 86-8381-8381</a>
                         </div>
                     </div>
-                    <RxHamburgerMenu className={styles['hamburger']}/>
+                    <HiOutlineMenuAlt3 className={styles['hamburger']} onClick={toggleMenu} />
                 </div>
-
             </header>
+            <MobileMenu isOpen={menuOpen} toggleMenu={toggleMenu} />
         </>
-    )
-}
+    );
+};
 
-export default Header
+export default Header;

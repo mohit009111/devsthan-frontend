@@ -1,8 +1,8 @@
 .contact-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
-    padding: 40px;
+    gap: 30px;
+    padding: 20px;
 
     max-width: 1350px;
     margin-inline: auto;
@@ -27,20 +27,29 @@
   }
   .info-section {
     flex: 1;
-    min-width: 300px;
+
 
   }
-  
-  .info-card {
-  margin-bottom: 20px;
+  .info-icon{
+    display: flex;
+    margin-bottom: 20px;
     border: 1px solid #eee;
     border-radius: 10px;
-    padding: 20px 50px;
-    display: flex;
+    padding: 20px 30px;
+    
     align-items: center;
     gap: 15px;
     position: relative;
   }
+ .icon-div{
+ background-color: #63ab45;
+ color: white;
+ border-radius: 25px;
+ padding: 9px;
+ display: flex;
+  color: white;
+  font-size: 20px;
+ }
   
   .info-card h4 {
     font-size: 18px;
@@ -56,7 +65,7 @@
   
   .form-section {
     flex: 1;
-    min-width: 300px;
+
     background: linear-gradient(125deg, rgba(99, 171, 69, 0.1) 0%, rgba(251, 176, 59, 0.1) 100%);
     border-radius: 8px;
     padding: 40px;
@@ -106,5 +115,24 @@
   
   .submit-button:hover {
     background-color: #45a049;
+  }
+  
+  @media screen and (max-width: 850px) {
+   .contact-container{
+    flex-direction: column-reverse;
+    padding: 10px;
+   }
+   .form-section{
+    padding: 20px 10px;
+   }
+   .info-icon{
+    padding: 15px;
+   }
+   .info-card > p{
+    font-size: 14px;
+   }
+   .contact-form > input{
+    padding: 9px;
+   }
   }
   

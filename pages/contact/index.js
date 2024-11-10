@@ -3,6 +3,10 @@ import styles from './contact.module.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { apiCall } from '../../utils/common'; 
+import { FaPhoneAlt } from "react-icons/fa";
+import { FaLocationDot } from "react-icons/fa6";
+import { IoTime } from "react-icons/io5";
+import { MdEmail } from "react-icons/md";
 const ContactPage = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -46,23 +50,55 @@ const ContactPage = () => {
       </header>
       <div className={styles['contact-container']}>
         <div className={styles['info-section']}>
+          <div className={styles['info-icon']}>
+          <div className={styles['icon-div']}>
+
+          <FaPhoneAlt className={styles['icon']}/>
+            </div>
           <div className={styles['info-card']}>
-            <h4>Phone</h4>
+           
+            <p>+91 86-8381-8381</p>
+            {/* <p>+990-137 324 465</p> */}
+          </div>
+
+          </div>
+          
+          <div className={styles['info-icon']}>
+          <div className={styles['icon-div']}>
+
+          <MdEmail className={styles['icon']}/>
+            </div>
+          <div className={styles['info-card']}>
+           
+            <p> info@devsthanexpert.com</p>
+            <p> support@devsthanexpert.com</p>
+          </div>
+
+        
+          </div>
+          <div className={styles['info-icon']}>
+          <div className={styles['icon-div']}>
+
+          <FaLocationDot className={styles['icon']}/>
+            </div>
+          <div className={styles['info-card']}>
+           
+            <p>street-7# Gayatri Vihar, Shanti Kunj Ashram Gate-4, Bhupatwala, Haridwar - 249401</p>
+            {/* <p>+990-137 324 465</p> */}
+          </div>
+
+          </div>
+          <div className={styles['info-icon']}>
+          <div className={styles['icon-div']}>
+
+          <IoTime className={styles['icon']}/>
+            </div>
+          <div className={styles['info-card']}>
+          
             <p>+990-737 621 432</p>
             <p>+990-137 324 465</p>
           </div>
-          <div className={styles['info-card']}>
-            <h4>Email Now</h4>
-            <p>info@example.com</p>
-            <p>example@example.com</p>
-          </div>
-          <div className={styles['info-card']}>
-            <h4>Location</h4>
-            <p>168/170, Avenue 01, Old York Drive Rich Mirpur DOHS, Bangladesh</p>
-          </div>
-          <div className={styles['info-card']}>
-            <h4>Opening Time</h4>
-            <p>8:00AM - 10:PM, Friday Closed</p>
+
           </div>
         </div>
         <div className={styles['form-section']}>

@@ -34,6 +34,7 @@ right:25px;
 `;
 
 const NextArrow = ({ onClick }) => (
+
     <div className={`${styles["custom-arrow"]} ${styles["next-arrow"]}`} onClick={onClick}>
         <MdOutlineArrowForwardIos />
     </div>
@@ -45,6 +46,12 @@ const PrevArrow = ({ onClick }) => (
     </div>
 );
 const HomeBanner = ({ locations }) => {
+    const headings = [
+        { title: 'Tour', isAvailable: true },
+        { title: 'Hotel', isAvailable: false },
+        { title: 'Bus', isAvailable: false },
+        { title: 'Flight', isAvailable: false },
+    ];
     var settings = {
         infinite: true,
         slidesToShow: 1,
@@ -92,28 +99,21 @@ const HomeBanner = ({ locations }) => {
             </div>
             <div className={styles['search-bar']} >
 
-                <div className={styles['search-headings']} >
-
-                    <div className={styles['search-headings-tour']} >
-                        <FiMapPin />
-                        <p>Tour</p>
-                    </div>
-                    <div className={styles['search-headings-tour']} >
-                        <FiMapPin />
-                        <p>Hotel</p>
-                    </div>
-                    <div className={styles['search-headings-tour']} >
-                        <FiMapPin />
-                        <p>Bus</p>
-                    </div>
-
-                    <div className={styles['search-headings-tour']} >
-                        <FiMapPin />
-                        <p>Flight</p>
-                    </div>
-
+                <div className={styles['search-headings']}>
+                    {headings.map((heading, index) => (
+                        <div
+                            key={index}
+                            className={`${styles['search-headings-tour']} ${heading.isAvailable ? '' : styles['unavailable']
+                                }`}
+                        >
+                            {heading.isAvailable == false ? <p className={styles['coming-soon']}>Comming Soon</p> : null}
+                        
+                            <FiMapPin />
+                            <p>{heading.title}</p>
+                        </div>
+                    ))}
                 </div>
-                <TourSearch locations={locations}/>
+                <TourSearch locations={locations} />
             </div>
 
         </div>

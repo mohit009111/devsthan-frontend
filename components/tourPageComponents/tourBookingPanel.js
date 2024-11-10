@@ -1,17 +1,58 @@
 import React, { useState } from 'react';
 import styles from '../../pages/tour/tour.module.css';
-
-const TourBookingPanel = () => {
+import { apiCall } from '../../utils/common';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast, ToastContainer } from 'react-toastify';
+import { SiOnstar } from 'react-icons/si';
+const TourBookingPanel = ({uuid}) => {
+  console.log(uuid)
   const [adultCount, setAdultCount] = useState(1);
   const [childrenCount, setChildrenCount] = useState(0);
   const [selectedExtras, setSelectedExtras] = useState([]);
   const [totalPrice, setTotalPrice] = useState(240); // initial base price for one adult
   const [panelTab, setPanelTab] = useState("booking");
+  const [formData, setFormData] = useState({
+    fullName: '',
+    phone: '',
+    email: '',
+    message: '',
+    uuid: uuid
+  });
+  const [errors, setErrors] = useState({});
+console.log(formData)
+const handleChange = (e) => {
+  const { name, value } = e.target;
+  console.log(`Input changed: ${name} => ${value}`); // Add logging here
+  setFormData((prevData) => ({
+    ...prevData,
+    [name]: value,
+  }));
+};
+
   const extraServices = [
     { name: 'Home Pickup', price: 10 },
     { name: 'Night Food', price: 15 },
     { name: 'Seaplane Flying', price: 20 },
   ];
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const createInquiry = await apiCall({
+        endpoint: `/api/createInquiry`,
+        method: 'POST',
+    
+        body: formData,
+      });
+      
+      setFormData({ fullName: '', phone: '', email: '', message: '' });
+      toast.success('Inquiry submitted successfully!');
+    } catch (error) {
+      console.error('Error submitting inquiry:', error);
+      toast.error('Error submitting inquiry. Please try again later.');
+    }
+  };
+
 
   const handleAdultChange = (amount) => {
     const newCount = Math.max(adultCount + amount, 1);
@@ -95,18 +136,48 @@ const TourBookingPanel = () => {
       }
        {
         panelTab === "inquiry" ? (
-          <form className={styles.inquiryForm}>
-            <label>Phone</label>
-            <input type="tel" />
-
-            <label>Email</label>
-            <input type="email" />
-
-            <label>Message</label>
-            <input type="text" />
-
-            <button type="submit">Submit</button>
-          </form>
+          <form className={styles.inquiryForm} onSubmit={handleSubmit}>
+          <label>Full Name</label>
+          <input
+            type="text"
+            name="fullName"
+            value={formData.fullName}
+            onChange={handleChange}
+            minLength="2"
+          />
+        
+          <label>Phone</label>
+          <input
+            type="tel"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            required
+            pattern="\d{10}"
+            title="Phone must be a 10-digit number"
+          />
+        
+          <label>Email</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+        
+          <label>Message</label>
+          <input
+            type="text"
+            name="message"
+            value={formData.message}
+            onChange={handleChange}
+            required
+          />
+        
+          <button type="submit">Submit</button>
+        </form>
+        
         ) : null
       }
 

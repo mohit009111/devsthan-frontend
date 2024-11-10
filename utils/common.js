@@ -1,8 +1,7 @@
 import { BASE_URL } from "./headers";
 const apiCall = async ({ endpoint, method, headers = {}, body = null }) => {
     try {
-        console.log(endpoint)
-        console.log("endpoint")
+ 
       const res = await fetch(`${BASE_URL}${endpoint}`, {
         method,
         headers: {

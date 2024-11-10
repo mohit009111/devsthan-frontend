@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import styles from '../vacationsSpots/vacationSpots.module.css';
 import Link from 'next/link'
-
+import DestinationCard from '../destinationCard/destinationCard'
 const VacationSpots = ({ destinations }) => {
   return (
     <section className={styles['vacation-spots-section']}>
@@ -17,10 +17,11 @@ const VacationSpots = ({ destinations }) => {
 
               <div className={styles['grid-item']}>
                 <Link href={`/destination/${dest.uuid}`}>
-                  <Image src={dest.bannerImage} alt="Sweden" width={400} height={200} className={styles['grid-item-img']} />
-                  <div className={styles.overlay}>
+                <DestinationCard destination={dest}/>
+                 
+                  {/* <div className={styles.overlay}>
                     <span className={styles['label']}>{dest.state.label}</span>
-                  </div>
+                  </div> */}
                 </Link>
               </div>
             </>

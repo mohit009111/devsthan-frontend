@@ -5,7 +5,7 @@ import Link from 'next/link';
 import DestinationCard from '../../components/destinationCard/destinationCard';
 
 const Destinations = ({ destinations }) => {
-  console.log(destinations)
+  
   return (
     <div className={styles.container}>
       <header className={styles.header}>

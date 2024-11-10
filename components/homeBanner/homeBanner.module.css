@@ -15,7 +15,18 @@
     height: 700px;
     width: 100%;
 }
-
+.datepicker-input {
+    border: 1px solid #ddd;
+    padding: 8px;
+    width: 100%;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .react-datepicker__input-container {
+    width: 100%;
+  }
+  
 .banner-img {
 
     width: 100%;
@@ -113,11 +124,47 @@ justify-content: center;
     border-radius: 0 0 30px 0;
     color: white;
 }
-
+.select-dropdown{
+    position: absolute;
+}
+.search-input {
+    top: 0;
+    border: none;
+    outline: none;
+    background: white;
+    width: 100%;
+    padding: 5px;
+    position: sticky;
+    font-size: 16px;
+}
+  
+  .select-dropdown {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 10;
+    max-width: 400px;
+    top: 70px;
+  }
+  
+  .dropdown-option {
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  
+  .dropdown-option:hover {
+    background-color: #f1f1f1;
+  }
+  
 .search-options-tour {
     background-color: #edf2de;
     display: flex;
     width: 100%;
+    position: relative;
     align-items: center;
     border-radius: 0 0 30px 30px;
     gap: 10px;

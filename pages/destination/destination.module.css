@@ -24,7 +24,7 @@
   .imageGrid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 0.5rem;
+    gap: 1rem;
     margin: 2rem 0;
   }
   .header {
@@ -158,6 +158,9 @@
       }
       .title{
         font-size: 2rem;
+      }
+      .imageGrid{
+        grid-template-columns: repeat(2, 1fr);
       }
 }
 @media screen and (max-width: 500px) {

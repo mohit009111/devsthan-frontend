@@ -1,0 +1,148 @@
+/* Filter Section Container */
+.filter-section {
+    display: flex;
+    flex-direction: column;
+    height: 700px;
+    position: sticky;
+    top: 100px;
+
+    gap: 1.5rem;
+    max-width: 400px;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  .header {
+    margin-bottom: 2rem;
+    background-image: url("https://res.cloudinary.com/dmyzudtut/image/upload/v1730914616/inner-banner-bg_aomm7x.jpg");
+    height: 400px;
+    background-size: cover;   /* Ensures the image covers the entire header area */
+    background-position: center;  /* Centers the image within the header */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: #fff;
+  }
+  
+  .title {
+    font-size: 3.5rem;
+    font-weight: bold;
+  }
+  .tour-category{
+    display: flex;
+    max-width: 1300px;
+    margin-inline: auto;
+    padding: 20px;
+    gap: 20px;
+  }
+  /* Search Input */
+  .filter-section__search {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .tour-cards {
+    display: grid;
+      gap: 20px;
+      grid-template-columns: repeat(2, 1fr);
+      
+    }
+    
+  .filter-section__search-input {
+    flex: 1;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .filter-section__search-button {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+  }
+  
+  /* Price Filter */
+  .filter-section__price {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .filter-section__title {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+  
+  .filter-section__range {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    background: #ddd;
+    outline: none;
+    border-radius: 5px;
+  }
+  
+  .filter-section__range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    background: #4caf50;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .filter-section__price-inputs {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .filter-section__price-min,
+  .filter-section__price-max {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  /* Destination Filter */
+  .filter-section__destination {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .filter-section__options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .filter-section__option {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+  }
+  
+  .filter-section__option input[type='radio'] {
+    margin-right: 0.5rem;
+  }
+  
+  @media screen and (max-width: 860px) {
+   
+    .header{
+     height: 300px;
+       }
+       .title{
+         font-size: 2rem;
+       }
+       .imageGrid{
+         grid-template-columns: repeat(2, 1fr);
+       }
+ }

@@ -7,9 +7,10 @@
   
   .footer-content {
     display: flex;
+   
     justify-content: space-between;
     flex-wrap: wrap;
-    max-width: 1350px;
+    max-width: 1300px;
     margin-inline: auto;
   }
   
@@ -49,6 +50,7 @@
   
   .quick-links, .more-inquiry, .about-section, .payment-partner {
     flex: 1;
+    font-size: 15px;
   }
   
   .quick-links h3, .more-inquiry h3, .about-section h3, .payment-partner h3 {
@@ -59,6 +61,7 @@
   .quick-links ul {
     list-style: none;
     padding: 0;
+    font-size: 15px;
   }
   
   .quick-links li {
@@ -111,5 +114,15 @@
     .footer-content{
   flex-direction: column;
     }
+    .footer{
+      padding: 20px;
+    }
     
+}
+@media screen and (max-width: 450px) {
+ 
+  .footer{
+    padding: 10px;
+  }
+  
 }

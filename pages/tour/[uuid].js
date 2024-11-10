@@ -48,7 +48,6 @@ const TourPage = ({ tourData }) => {
 export default TourPage;
 
 export async function getStaticPaths() {
-  // Fetch the list of UUIDs to pre-render the pages
   const tours = await apiCall({
     endpoint: '/api/allTours',
     method: 'POST',
@@ -67,7 +66,6 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const { uuid } = params;
-
   const tourData = await apiCall({
     endpoint: `/api/getTour/${uuid}`,
     method: 'GET',

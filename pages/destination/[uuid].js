@@ -140,7 +140,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const { uuid } = params;
-  console.log("uuid", uuid)
+
   const destinationData = await apiCall({
     endpoint: `/api/getDestinationById/${uuid}`,
     method: 'POST',

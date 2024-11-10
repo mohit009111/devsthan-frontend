@@ -28,7 +28,7 @@ const itineraryData = [
 ];
 
 const Itinerary = ({ itineraries }) => {
-  console.log(itineraries)
+  
   const [expandedDay, setExpandedDay] = useState(null);
   const [selectedItineryButton, setSelectedItineryButton] = useState('overview');
 

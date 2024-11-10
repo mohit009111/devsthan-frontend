@@ -8,6 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { IoLocationOutline } from "react-icons/io5";
 import { FiMapPin } from "react-icons/fi";
 import { MdOutlineKeyboardArrowDown, MdOutlineArrowForwardIos, MdOutlineArrowBackIos } from "react-icons/md";
+import TourSearch from '../searchbar-components/tour-search';
 
 const BannerInner = styled(Slider)`
 height:100% !important;
@@ -34,22 +35,22 @@ right:25px;
 
 const NextArrow = ({ onClick }) => (
     <div className={`${styles["custom-arrow"]} ${styles["next-arrow"]}`} onClick={onClick}>
-      <MdOutlineArrowForwardIos />
+        <MdOutlineArrowForwardIos />
     </div>
-  );
-  
-  const PrevArrow = ({ onClick }) => (
+);
+
+const PrevArrow = ({ onClick }) => (
     <div className={`${styles["custom-arrow"]} ${styles["prev-arrow"]}`} onClick={onClick}>
-      <MdOutlineArrowBackIos />
+        <MdOutlineArrowBackIos />
     </div>
-  );
-const HomeBanner = () => {
+);
+const HomeBanner = ({ locations }) => {
     var settings = {
         infinite: true,
         slidesToShow: 1,
         slidesToScroll: 1,
         nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
+        prevArrow: <PrevArrow />,
     };
     return (
         <div className={styles['home-banner']}>
@@ -105,61 +106,14 @@ const HomeBanner = () => {
                         <FiMapPin />
                         <p>Bus</p>
                     </div>
-                    <div className={styles['search-headings-tour']} >
-                        <FiMapPin />
-                        <p>Cab</p>
-                    </div>
+
                     <div className={styles['search-headings-tour']} >
                         <FiMapPin />
                         <p>Flight</p>
                     </div>
 
                 </div>
-                <div className={styles['search-options-outer']} >
-                    <div className={styles['search-options']}>
-
-                        <div className={styles['search-options-tour']} >
-                            <FiMapPin />
-                            <div className={styles['search-options-destination']}>
-
-                                <p >Destination</p>
-                                <p>Select Destination</p>
-                            </div>
-                            <MdOutlineKeyboardArrowDown className={styles['arrow-down']} />
-                        </div>
-                        <div className={styles['search-options-tour']} >
-                            <FiMapPin />
-                            <div className={styles['search-options-destination']}>
-
-                                <p >Destination</p>
-                                <p>Select Destination</p>
-                            </div>
-                            <MdOutlineKeyboardArrowDown className={styles['arrow-down']} />
-                        </div>
-                        <div className={styles['search-options-tour']} >
-                            <FiMapPin />
-                            <div className={styles['search-options-destination']}>
-
-                                <p >Destination</p>
-                                <p>Select Destination</p>
-                            </div>
-                            <MdOutlineKeyboardArrowDown className={styles['arrow-down']} />
-                        </div>
-                        <div className={styles['search-options-tour']} >
-                            <FiMapPin />
-                            <div className={styles['search-options-destination']}>
-
-                                <p >Destination</p>
-                                <p>Select Destination</p>
-                            </div>
-                            <MdOutlineKeyboardArrowDown className={styles['arrow-down']} />
-                        </div>
-                    </div>
-
-                    <button className={styles['search-options-button']}>
-                        Search
-                    </button>
-                </div>
+                <TourSearch locations={locations}/>
             </div>
 
         </div>

@@ -14,7 +14,7 @@ export default function TourExperience({tourData}) {
         <span onClick={() => setSelectedTab('hotel')} className={selectedTab === 'hotel' ? styles['active'] : ''}>Hotel</span>
         <span onClick={() => setSelectedTab('transports')} className={selectedTab === 'transports' ? styles['active'] : ''}>Transports</span>
       </div>
-      {selectedTab == "tour" &&  <ToursList tourData={tourData}/>  }
+      {selectedTab == "tour" &&   <div className={styles['tour-cards']}> <ToursList tourData={tourData}/></div>   }
       {selectedTab == "hotel" &&  <p>wsec</p> }
      
       

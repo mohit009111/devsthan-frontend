@@ -9,12 +9,12 @@ import WhyChoose from "../components/whyChoose/whyChoose";
 // import Testimonials from "../components/testimonials/testimonials";
 import { apiCall } from "../utils/common";
 
-export default function Home({ tourData, destinations }) {
-  console.log(destinations);
+export default function Home({ tourData, destinations,locations }) {
+  console.log(locations);
   
   return (
     <>
-      <HomeBanner />
+      <HomeBanner locations={locations} />
       <About />
       <VacationSpots destinations={destinations} />
       <TourExperience tourData={tourData} />
@@ -30,6 +30,11 @@ export async function getStaticProps() {
     endpoint: '/api/allTours',
     method: 'POST',
   });
+  const locations = await apiCall({
+    endpoint: '/api/getAllLocations',
+    method: 'GET',
+  });
+
   const destinations = await apiCall({
     endpoint: '/api/getAllDestinations',
     method: 'GET',
@@ -39,6 +44,7 @@ export async function getStaticProps() {
     props: {
       tourData,
       destinations,
+      locations
     },
     revalidate: 600, 
   };

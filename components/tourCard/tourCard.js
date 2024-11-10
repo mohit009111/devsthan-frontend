@@ -6,21 +6,21 @@ import { GiMeal } from "react-icons/gi";
 import { FaCamera } from "react-icons/fa";
 import { FaCar } from "react-icons/fa";
 import { MdLocalDrink } from "react-icons/md";
-
-export default function TourCard({ duration, location, imageUrl, title, startingPrice, originalPrice, locations, uuid }) {
+import { FaLocationDot } from "react-icons/fa6";
+export default function TourCard({ duration, location, imageUrl, title, startingPrice, originalPrice,  uuid }) {
   return (
     <div className={styles['tour-card']}>
-      <Link href={`tour/${uuid}`}>
+      <Link href={`/tour/${uuid}`}>
         <div className={styles['image-container']}>
           <Image src={imageUrl} alt={location} width={350} height={200} className={styles['image']} />
           <div className={styles['tag']}>
             <span className={styles['duration']}>{duration}</span>
-            <span className={styles['location']}>{location}</span>
+            <span className={styles['location']}><FaLocationDot  className={styles['location-icon']}/>{location}</span>
           </div>
         </div>
       </Link>
       <h3>{title}</h3>
-      <p>{locations}</p>
+     
       <div className={styles['tour-features']}>
         <div className={styles['tour-hotel']}>
 

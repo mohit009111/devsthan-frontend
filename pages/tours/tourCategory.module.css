@@ -134,7 +134,7 @@
     margin-right: 0.5rem;
   }
   
-  @media screen and (max-width: 860px) {
+  @media screen and (max-width: 900px) {
    
     .header{
      height: 300px;
@@ -143,6 +143,17 @@
          font-size: 2rem;
        }
        .imageGrid{
-         grid-template-columns: repeat(2, 1fr);
+         grid-template-columns: repeat(3, 1fr);
+       }
+       .filter-section{
+        display: none;
        }
  }
+ @media screen and (max-width: 740px) {
+   
+  
+     .imageGrid{
+       grid-template-columns: repeat(2, 1fr);
+     }
+    
+}

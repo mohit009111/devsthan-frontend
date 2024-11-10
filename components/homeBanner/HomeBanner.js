@@ -1,12 +1,15 @@
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 import styles from '../homeBanner/homeBanner.module.css';
 import Slider from "react-slick";
 import styled from "styled-components";
+import { FaHotel } from "react-icons/fa";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { IoLocationOutline } from "react-icons/io5";
 import { FiMapPin } from "react-icons/fi";
+import { FaBus } from "react-icons/fa";
+import { MdFlight } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown, MdOutlineArrowForwardIos, MdOutlineArrowBackIos } from "react-icons/md";
 import TourSearch from '../searchbar-components/tour-search';
 
@@ -46,12 +49,15 @@ const PrevArrow = ({ onClick }) => (
     </div>
 );
 const HomeBanner = ({ locations }) => {
+    const [selected, setSelected] = useState("Tour")
+    console.log(selected)
     const headings = [
-        { title: 'Tour', isAvailable: true },
-        { title: 'Hotel', isAvailable: false },
-        { title: 'Bus', isAvailable: false },
-        { title: 'Flight', isAvailable: false },
+        { title: 'Tour', isAvailable: true, icon: FiMapPin },
+        { title: 'Hotel', isAvailable: false, icon: FaHotel },
+        { title: 'Bus', isAvailable: false, icon: FaBus },
+        { title: 'Flight', isAvailable: false, icon: MdFlight },
     ];
+    
     var settings = {
         infinite: true,
         slidesToShow: 1,
@@ -99,20 +105,24 @@ const HomeBanner = ({ locations }) => {
             </div>
             <div className={styles['search-bar']} >
 
-                <div className={styles['search-headings']}>
-                    {headings.map((heading, index) => (
-                        <div
-                            key={index}
-                            className={`${styles['search-headings-tour']} ${heading.isAvailable ? '' : styles['unavailable']
-                                }`}
-                        >
-                            {heading.isAvailable == false ? <p className={styles['coming-soon']}>Comming Soon</p> : null}
-                        
-                            <FiMapPin />
-                            <p>{heading.title}</p>
-                        </div>
-                    ))}
-                </div>
+            <div className={styles['search-headings']}>
+    {headings.map((heading, index) => (
+        <div
+            key={index}
+            className={`${styles['search-headings-tour']} 
+                ${selected === heading.title ? styles['search-headings-tour-selected'] : styles['unavailable']}
+            `}
+            onClick={() => setSelected(heading.title)}
+        >
+            {/* {heading.isAvailable === false ? <p className={styles['coming-soon']}>Coming Soon</p> : null} */}
+            
+           
+            {React.createElement(heading.icon, { className: styles['icon-class'] })} 
+            <p>{heading.title}</p>
+        </div>
+    ))}
+</div>
+
                 <TourSearch locations={locations} />
             </div>
 

@@ -104,15 +104,22 @@
     padding-block: 15px;
     display: flex;
     align-items: center;
+    cursor: pointer;
     width: 100%;
     padding-inline: 4%;
     position: relative;
     justify-content: center;
     gap: 10px;
 }
-
-.search-headings-tour:hover {
+.search-options-button:disabled {
+    background-color: #cccccc; /* Light gray for disabled state */
+    color: #666666; /* Gray text for disabled state */
+    cursor: not-allowed;
+    opacity: 0.6; 
+  }
+.search-headings-tour-selected {
     background-color: #63ab45;
+
     color: white;
 }
 
@@ -120,6 +127,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 9;
     bottom: -47px;
     position: absolute;
     width: 100%;
@@ -135,8 +143,11 @@
 .search-options-button {
     font-size: 18px;
     font-weight: 500;
+    width: 100%;
+    height: 100%;
     outline: none;
     border: none;
+    cursor: pointer;
 
     white-space: nowrap;
     background-color: #63ab45;
@@ -267,12 +278,11 @@
 
     }
 
-    .home-banner {
-        height: 1000px;
-    }
+    
 
     .search-bar {
         padding-inline: 15px;
+        
     }
 
     .home-banner {

@@ -5,12 +5,13 @@ import { FiMapPin } from "react-icons/fi";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import Link from 'next/link';
 
 // Sample locations list
 
 
-const TourSearch = ({locations}) => {
-    console.log(locations)
+const TourSearch = ({ locations }) => {
+  console.log(locations)
   const [destination, setDestination] = useState(null);
   const [showSelect, setShowSelect] = useState(false);
   const [searchText, setSearchText] = useState('');
@@ -34,23 +35,6 @@ const TourSearch = ({locations}) => {
     setShowSelect(false);
   };
 
-  const handleSearchButtonClick = () => {
-    if (destination) {
-      // Format date in YYYY-MM-DD
-   
-
-      // Create a descriptive slug for destination, removing commas and spaces for SEO-friendly format
-      const destinationSlug = destination
-        .toLowerCase()
-        .replace(/[^a-z0-9\s]/g, '') // Remove non-alphanumeric characters
-        .replace(/\s+/g, '-') // Replace spaces with hyphens
-
-      // Navigate to the dynamic tour category page with destination and formatted date
-      router.push(`/tours/${destinationSlug}`);
-    } else {
-      alert('Please select both destination and date.');
-    }
-  };
 
   return (
     <div className={styles['search-options-outer']}>
@@ -60,7 +44,7 @@ const TourSearch = ({locations}) => {
           <FiMapPin />
           <div className={styles['search-options-destination']}>
             <p>Destination</p>
-            <p>{destination ? destination: 'Select Destination'}</p>
+            <p>{destination ? destination : 'Select Destination'}</p>
           </div>
           <MdOutlineKeyboardArrowDown className={styles['arrow-down']} />
           {showSelect && (
@@ -105,10 +89,19 @@ const TourSearch = ({locations}) => {
           <MdOutlineKeyboardArrowDown className={styles['arrow-down']} />
         </div>
       </div>
+      <Link href={destination ?
+        `/tours/${destination.toLowerCase()
+          .replace(/[^a-z0-9\s]/g, '') // Remove non-alphanumeric characters
+          .replace(/\s+/g, '-')}`
+        : '#'}> {/* Use a placeholder link or '#' when destination is null */}
+        <button
+          className={styles['search-options-button']}
+          disabled={!destination} // Disable if destination is not selected
+        >
+          Search
+        </button>
+      </Link>
 
-      <button className={styles['search-options-button']} onClick={handleSearchButtonClick}>
-        Search
-      </button>
     </div>
   );
 };

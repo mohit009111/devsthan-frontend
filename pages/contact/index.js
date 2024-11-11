@@ -36,9 +36,11 @@ const ContactPage = () => {
       //   email: '',
       //   message: '',
       // });
-      if (!createInquiry.ok) {
+      if (createInquiry.success == true) {
 
-        toast.success(createInquiry.message);
+        toast.success('Message submitted successfully ');
+      }else{
+        toast.error('Error submitting message. Please try again later.');
       }
     } catch (error) {
       console.error('Error submitting contact form:', error);

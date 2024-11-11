@@ -44,12 +44,16 @@ const handleChange = (e) => {
     
         body: formData,
       });
-      
+      if(createInquiry.success == true){
+
+        toast.success('Inquiry submitted successfully!');
+      }else{
+
+        toast.error('Error submitting inquiry. Please try again later.');
+      }
       setFormData({ fullName: '', phone: '', email: '', message: '' });
-      toast.success('Inquiry submitted successfully!');
     } catch (error) {
       console.error('Error submitting inquiry:', error);
-      toast.error('Error submitting inquiry. Please try again later.');
     }
   };
 

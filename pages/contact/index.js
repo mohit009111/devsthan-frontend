@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import styles from './contact.module.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { apiCall } from '../../utils/common'; 
+import { apiCall } from '../../utils/common';
 import { FaPhoneAlt } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { IoTime } from "react-icons/io5";
 import { MdEmail } from "react-icons/md";
+import { BASE_URL } from '../../utils/headers';
 const ContactPage = () => {
   const [formData, setFormData] = useState({
-    name: '',
+    fullName: '',
     phone: '',
     email: '',
     message: ''
@@ -23,19 +24,22 @@ const ContactPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await apiCall({
-        endpoint: '/api/contact', 
+      const createInquiry = await apiCall({
+        endpoint: `/api/createInquiry`,
         method: 'POST',
+    
         body: formData,
       });
-      setFormData({
-        name: '',
-        phone: '',
-        email: '',
-        message: '',
-      });
+      // setFormData({
+      //   name: '',
+      //   phone: '',
+      //   email: '',
+      //   message: '',
+      // });
+      if (!createInquiry.ok) {
 
-      toast.success('Your message has been submitted successfully!');
+        toast.success(createInquiry.message);
+      }
     } catch (error) {
       console.error('Error submitting contact form:', error);
       toast.error('Error submitting message. Please try again later.');
@@ -51,53 +55,53 @@ const ContactPage = () => {
       <div className={styles['contact-container']}>
         <div className={styles['info-section']}>
           <div className={styles['info-icon']}>
-          <div className={styles['icon-div']}>
+            <div className={styles['icon-div']}>
 
-          <FaPhoneAlt className={styles['icon']}/>
+              <FaPhoneAlt className={styles['icon']} />
             </div>
-          <div className={styles['info-card']}>
-           
-            <p>+91 86-8381-8381</p>
-            {/* <p>+990-137 324 465</p> */}
-          </div>
+            <div className={styles['info-card']}>
+
+              <p>+91 86-8381-8381</p>
+              {/* <p>+990-137 324 465</p> */}
+            </div>
 
           </div>
-          
+
           <div className={styles['info-icon']}>
-          <div className={styles['icon-div']}>
+            <div className={styles['icon-div']}>
 
-          <MdEmail className={styles['icon']}/>
+              <MdEmail className={styles['icon']} />
             </div>
-          <div className={styles['info-card']}>
-           
-            <p> info@devsthanexpert.com</p>
-            <p> support@devsthanexpert.com</p>
-          </div>
+            <div className={styles['info-card']}>
 
-        
-          </div>
-          <div className={styles['info-icon']}>
-          <div className={styles['icon-div']}>
-
-          <FaLocationDot className={styles['icon']}/>
+              <p> info@devsthanexpert.com</p>
+              <p> support@devsthanexpert.com</p>
             </div>
-          <div className={styles['info-card']}>
-           
-            <p>street-7# Gayatri Vihar, Shanti Kunj Ashram Gate-4, Bhupatwala, Haridwar - 249401</p>
-            {/* <p>+990-137 324 465</p> */}
-          </div>
+
 
           </div>
           <div className={styles['info-icon']}>
-          <div className={styles['icon-div']}>
+            <div className={styles['icon-div']}>
 
-          <IoTime className={styles['icon']}/>
+              <FaLocationDot className={styles['icon']} />
             </div>
-          <div className={styles['info-card']}>
-          
-            <p>+990-737 621 432</p>
-            <p>+990-137 324 465</p>
+            <div className={styles['info-card']}>
+
+              <p>street-7# Gayatri Vihar, Shanti Kunj Ashram Gate-4, Bhupatwala, Haridwar - 249401</p>
+              {/* <p>+990-137 324 465</p> */}
+            </div>
+
           </div>
+          <div className={styles['info-icon']}>
+            <div className={styles['icon-div']}>
+
+              <IoTime className={styles['icon']} />
+            </div>
+            <div className={styles['info-card']}>
+
+              <p>+990-737 621 432</p>
+              <p>+990-137 324 465</p>
+            </div>
 
           </div>
         </div>
@@ -108,12 +112,12 @@ const ContactPage = () => {
             <input
               type="text"
               placeholder="Daniel Scoot"
-              name="name"
-              value={formData.name}
+              name="fullName"
+              value={formData.fullName}
               onChange={handleChange}
               required
             />
-            
+
             <label>Phone*</label>
             <input
               type="tel"

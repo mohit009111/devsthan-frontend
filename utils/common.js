@@ -24,5 +24,12 @@ const apiCall = async ({ endpoint, method, headers = {}, body = null }) => {
       return { data: null, error: error.message };
     }
   };
-  export {apiCall}
+  function truncateText(text, maxLength) {
+    if (text.length > maxLength) {
+      return text.slice(0, maxLength) + '...';
+    }
+    return text;
+  }
+  
+  export {apiCall,truncateText}
   

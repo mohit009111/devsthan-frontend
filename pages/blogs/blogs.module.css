@@ -1,0 +1,32 @@
+.header {
+    margin-bottom: 2rem;
+    background-image: url("https://res.cloudinary.com/dmyzudtut/image/upload/v1730914616/inner-banner-bg_aomm7x.jpg");
+    height: 400px;
+    background-size: cover;   /* Ensures the image covers the entire header area */
+    background-position: center;  /* Centers the image within the header */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: #fff;
+  }
+  
+  .title {
+    font-size: 3.5rem;
+    font-weight: bold;
+  }
+  .blog-grid {
+    display: grid;
+    max-width: 1350px;
+    margin-inline: auto;
+    gap: 20px;
+    padding: 20px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media (max-width: 768px) {
+    .blog-grid {
+      grid-template-columns: 1fr;
+    }
+  }

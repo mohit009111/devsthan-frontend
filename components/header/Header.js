@@ -23,10 +23,10 @@ const Header = () => {
                 </div>
                 <nav className={styles['nav-menu']}>
                     <ul>
-                        <li><Link className={styles['nav-link']} href="/">Home</Link></li>
-                        <li><Link className={styles['nav-link']} href="/about">About</Link></li>
                         <li><Link className={styles['nav-link']} href="/tours/uttarakhand">Tours</Link></li>
+                        <li><Link className={styles['nav-link']} href="/about">About</Link></li>
                         <li><Link className={styles['nav-link']} href="/destinations">Destinations</Link></li>
+                        <li><Link className={styles['nav-link']} href="/blogs">Blogs</Link></li>
                         <li><Link className={styles['nav-link']} href="/contact">Contact Us</Link></li>
                     </ul>
                 </nav>

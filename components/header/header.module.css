@@ -110,7 +110,7 @@
   }
 
   .header-container {
-
+padding: .9rem .7rem;
     justify-content: space-between;
   }
 }

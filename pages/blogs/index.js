@@ -14,7 +14,7 @@ const index = ({ blogs }) => {
                 {blogs.data.map((blogs) => {
                     return (
                         <>
-                            <BlogCard blogs={blogs} />
+                            <BlogCard key={blogs.id} blogs={blogs} />
 
                         </>
                     )

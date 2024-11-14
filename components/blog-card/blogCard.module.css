@@ -42,6 +42,11 @@
   .blog-card-description {
     margin: 12px 0;
     color: #555;
+     display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 7; /* Number of lines to show */
+    text-overflow: ellipsis;
   }
   
   .read-more {

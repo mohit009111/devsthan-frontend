@@ -15,7 +15,9 @@ export default function Blog({ blogs }) {
       </div>
       <h1 className={styles['blog-title']}>{blogs.data.title}</h1>
       <p className={styles['blog-date']}>Published on: {blogs.data.createdAt}</p>
-      <p className={styles['blog-description']}>{blogs.data.description}</p>
+      <p className={styles['blog-description']}   dangerouslySetInnerHTML={{
+                        __html: blogs.data.description // You can set the desired maxLength here, e.g., 100
+                    }}></p>
     </div>
   );
 }

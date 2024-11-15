@@ -240,7 +240,7 @@
         display: grid;
         grid-template-columns: repeat(2, 1fr);
 
-        /* Creates two equal-height rows */
+      
         gap: 20px;
 
     }
@@ -287,6 +287,7 @@
 
     .home-banner {
         padding-inline: 15px;
+        margin-top: 10px;
     }
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../../pages/tour/tour.module.css';
 import { apiCall } from '../../utils/common';
 import 'react-toastify/dist/ReactToastify.css';
@@ -28,6 +28,13 @@ const handleChange = (e) => {
     [name]: value,
   }));
 };
+useEffect(() => {
+  setFormData((prevData) => ({
+    ...prevData,
+    uuid: uuid
+  }));
+}, [uuid]);
+
 
   const extraServices = [
     { name: 'Home Pickup', price: 10 },

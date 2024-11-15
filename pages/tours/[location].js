@@ -5,7 +5,7 @@ import ToursList from '../../components/toursList/toursList';
 
 // `getStaticPaths` to define the list of dynamic routes to pre-render
 
-const TourCategory = ({  tourData ,categories,location}) => {
+const TourCategory = ({ tourData, categories, location }) => {
 
   const [selectedTourTypes, setSelectedTourTypes] = useState([]);
 
@@ -87,18 +87,18 @@ const TourCategory = ({  tourData ,categories,location}) => {
           <div className={styles['filter-section__destination']}>
             <h3 className={styles['filter-section__title']}>Tour Categories</h3>
             <div className={styles['filter-section__options']}>
-        {categories.map((category) => (
-          <label key={category.name} className={styles['filter-section__option']}>
-            <input
-              type="checkbox" // Change to checkbox
-              name="tourType"
-              value={category.name}
-              onChange={handleCheckboxChange} // Trigger API call on change
-            />
-            {category.name}
-          </label>
-        ))}
-      </div>
+              {categories.map((category) => (
+                <label key={category.name} className={styles['filter-section__option']}>
+                  <input
+                    type="checkbox" // Change to checkbox
+                    name="tourType"
+                    value={category.name}
+                    onChange={handleCheckboxChange} // Trigger API call on change
+                  />
+                  {category.name}
+                </label>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -142,10 +142,10 @@ export async function getStaticProps({ params }) {
 
   try {
 
-  const categories = await apiCall({
-    endpoint: '/api/categories',
-    method: 'GET',
-  });
+    const categories = await apiCall({
+      endpoint: '/api/categories',
+      method: 'GET',
+    });
 
     const tourData = await apiCall({
       endpoint: `/api/tours/${location}`,
@@ -167,8 +167,8 @@ export async function getStaticProps({ params }) {
     return {
       props: {
         tourData: [],
-        categories:[],
-        location:''
+        categories: [],
+        location: ''
       },
     };
   }

@@ -197,6 +197,7 @@
     background-color: #edf2de;
     display: flex;
     width: 100%;
+    border-radius: 0 0 30px 30px;
     position: relative;
     align-items: center;
  
@@ -288,6 +289,23 @@
     .home-banner {
         padding-inline: 15px;
         margin-top: 10px;
+    }
+    .search-headings-tour{
+        padding-block: 10px;
+        font-size: 13px;
+    }
+    .search-options-tour{
+        padding-block: 10px;
+        font-size: 13px;
+    }
+    .search-bar{
+        bottom: -26px;
+    }
+    .banner-outer{
+        height: 600px;
+    }
+    .search-options-button{
+        padding: 25px 53px;
     }
 }
 

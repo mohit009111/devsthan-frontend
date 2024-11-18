@@ -1,30 +1,33 @@
 import React from 'react'
 import styles from '../whyChoose/whyChoose.module.css'
-const whyChoose = () => {
+const whyChoose = ({whyChoose}) => {
     const services = [
-        { title: "Worldwide Coverage", icon: "🌍", description: "Cras facilisis fermentum ex sed ..." },
-        { title: "Competitive Pricing", icon: "⚡️", description: "Burabitur convallis enim ..." },
-        { title: "Fast Booking", icon: "📅", description: "Fermentum eitorx quis ..." },
-        { title: "Guided Tours", icon: "🚩", description: "Pellentesque venenatis ..." },
-        { title: "Best Support 24/7", icon: "⏰", description: "Sed venenatis mauris ..." },
-        { title: "Ultimate Flexibility", icon: "📆", description: "Duis leo sapien, lacinia ..." }
+        { title: "Worldwide Coverage", bannerImage: "🌍", description: "Cras facilisis fermentum ex sed ..." },
+        { title: "Competitive Pricing", bannerImage: "⚡️", description: "Burabitur convallis enim ..." },
+        { title: "Fast Booking", bannerImage: "📅", description: "Fermentum eitorx quis ..." },
+        { title: "Guided Tours", bannerImage: "🚩", description: "Pellentesque venenatis ..." },
+        { title: "Best Support 24/7", bannerImage: "⏰", description: "Sed venenatis mauris ..." },
+        { title: "Ultimate Flexibility", bannerImage: "📆", description: "Duis leo sapien, lacinia ..." }
       ];
     
   return (
     <>
-     <div className={styles['why-choose-trip-rex']}>
-      <h3 className={styles['section-header']}>Our Success</h3>
-      <h2 className={styles['main-title']}>Why Choose TripRex</h2>
-      <div className={styles['service-grid']}>
-        {services.map((service, index) => (
-          <div key={index} className={styles['service-card']}>
-            <div className={styles['icon']}>{service.icon}</div>
-            <h4 className={styles['card-title']}>{service.title}</h4>
-            <p className={styles['description']}>{service.description}</p>
+     <section className={styles['about-us-section']}>
+      <h2 className={styles['section-title']}>About Us</h2>
+      <div className={styles['cards-container']}>
+        {whyChoose.data.map((card) => (
+          <div key={card.id} className={styles['about-card']}>
+            <div className={styles['image-wrapper']}>
+              <img src={card.bannerImage} alt={card.title} />
+            </div>
+            <div className={styles['card-content']}>
+              <h3 className={styles['card-title']}>{card.title}</h3>
+              <p className={styles['card-description']}>{card.description}</p>
+            </div>
           </div>
         ))}
       </div>
-    </div>
+    </section>
     </>
   )
 }

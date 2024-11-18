@@ -57,8 +57,8 @@
   }
   .carousel-container {
     width: 100%;
-    max-width: 800px; /* Adjust this to your preferred max width */
-    margin: auto;
+    max-width: 900px; /* Adjust this to your preferred max width */
+    margin-left: 0;
     padding: 20px;
   }
   .image {
@@ -144,6 +144,89 @@
     background-color: #555;
   }
   
+  .image-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    width: 100%;
+  }
+  .carousel-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+  
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border-radius: 8px;
+    background: #fff;
+  }
+  
+  .carousel-item:hover {
+    transform: translateY(-10px);
+    /* box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); */
+  }
+  
+  .carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.5s ease, filter 0.5s ease;
+  }
+  
+  .carousel-item img:hover {
+    transform: scale(1.1);
+    filter: brightness(1.1);
+  }
+  
+  .carousel-item h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin: 0.5rem 0;
+  }
+  
+  .carousel-item p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 35px;
+    color: #787878;
+    margin-bottom: 10px;
+  }
+
+.custom-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  font-size: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Next arrow */
+.next-arrow {
+  right: 10px;
+}
+
+/* Previous arrow */
+.prev-arrow {
+  left: 10px;
+}
+
+/* Hover effect */
+.custom-arrow:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+  transform: translateY(-50%) scale(1.1);
+}
   @media screen and (max-width: 860px) {
    .container{
     flex-direction: column;

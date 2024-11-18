@@ -16,7 +16,7 @@ export default function footer() {
             <ul>
              <Link href={'/about'} className={styles['li']}><li >About Us</li></Link> 
              <Link href={'/destinations'} className={styles['li']}><li >Destinations</li></Link> 
-             <Link href={'/about'} className={styles['li']}><li >Tour Package</li></Link> 
+             <Link href={'/blogs'} className={styles['li']}><li >Blogs</li></Link> 
              <Link href={'/privacy-policy'} className={styles['li']}><li >Privacy Policy</li></Link> 
              <Link href={'/contact'} className={styles['li']}><li >Contact Us</li></Link> 
              
@@ -24,13 +24,13 @@ export default function footer() {
           </div>
           <div className={styles['more-inquiry']}>
             <h3>More Inquiry</h3>
-            <p>+999-858 624 984</p>
-            <p>info@example.com</p>
-            <p>House 168/170, Avenue 01, Mirpur DOHS, Dhaka Bangladesh</p>
+            <p>+91 8683818381</p>
+            <p>info@devsthanexpert.com </p>
+            <p>street-7# Gayatri Vihar, Shanti Kunj Ashram Gate-4, Bhupatwala, Haridwar - 249401</p>
           </div>
           <div className={styles['about-section']}>
-            <h3>We Are Here</h3>
-            <p>Quisque purus augue, facilisis andi neque idont acumsan fringilla massa. Vivamusol id nibhom condimentum.</p>
+            <h3>Your Trusted Travel Partner</h3>
+            <p>From your first step to your last, we’re committed to creating moments you’ll cherish forever. Wherever your journey takes you, we’ll be here to make it extraordinary.</p>
           </div>
           {/* <div className={styles['payment-partner']}>
             <h3>Payment Partner</h3>
@@ -45,7 +45,7 @@ export default function footer() {
         </div>
       </div>
       <div className={styles['footer-bottom']}>
-        <p>©Copyright 2024 TripRex | Design By <a href="#">Egens Lab</a></p>
+        <p>©Copyright 2024 Devsthan Expert </p>
         <p><a href="#">Privacy Policy</a> • <a href="#">Terms & Condition</a></p>
       </div>
     </footer>

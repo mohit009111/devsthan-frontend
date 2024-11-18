@@ -12,7 +12,7 @@ import { FaBus } from "react-icons/fa";
 import { MdFlight } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown, MdOutlineArrowForwardIos, MdOutlineArrowBackIos } from "react-icons/md";
 import TourSearch from '../searchbar-components/tour-search';
-
+import Search from '../search/search'
 const BannerInner = styled(Slider)`
 height:100% !important;
  border-radius: 30px;
@@ -57,7 +57,7 @@ const HomeBanner = ({ locations }) => {
         { title: 'Bus', isAvailable: false, icon: FaBus },
         { title: 'Flight', isAvailable: false, icon: MdFlight },
     ];
-    
+
     var settings = {
         infinite: true,
         slidesToShow: 1,
@@ -105,25 +105,26 @@ const HomeBanner = ({ locations }) => {
             </div>
             <div className={styles['search-bar']} >
 
-            <div className={styles['search-headings']}>
-    {headings.map((heading, index) => (
-        <div
-            key={index}
-            className={`${styles['search-headings-tour']} 
+                <div className={styles['search-headings']}>
+                    {headings.map((heading, index) => (
+                        <div
+                            key={index}
+                            className={`${styles['search-headings-tour']} 
                 ${selected === heading.title ? styles['search-headings-tour-selected'] : styles['unavailable']}
             `}
-            onClick={() => setSelected(heading.title)}
-        >
-            {/* {heading.isAvailable === false ? <p className={styles['coming-soon']}>Coming Soon</p> : null} */}
-            
-           
-            {React.createElement(heading.icon, { className: styles['icon-class'] })} 
-            <p>{heading.title}</p>
-        </div>
-    ))}
-</div>
+                            onClick={() => setSelected(heading.title)}
+                        >
+                            {heading.isAvailable === false ? <p className={styles['coming-soon']}>Coming Soon</p> : null}
 
-                <TourSearch locations={locations} />
+
+                            {React.createElement(heading.icon, { className: styles['icon-class'] })}
+                            <p>{heading.title}</p>
+                        </div>
+                    ))}
+                </div>
+                {selected == "Tour" ? <TourSearch locations={locations} /> : null}
+                {/* {selected == "Hotel" || "Bus" || "Flight" ? <Search /> : null} */}
+
             </div>
 
         </div>

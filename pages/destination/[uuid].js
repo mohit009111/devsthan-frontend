@@ -2,7 +2,10 @@
 import React, { useState } from 'react';
 import styles from './destination.module.css';
 import { apiCall } from '../../utils/common';
+import Slider from "react-slick";
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import styled from "styled-components";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
@@ -10,34 +13,35 @@ import { Pagination, Navigation } from 'swiper';
 import { MdOutlineKeyboardArrowDown, MdOutlineArrowForwardIos, MdOutlineArrowBackIos } from "react-icons/md";
 import DestinationHighlighs from '../../components/destinationHighlights/destinationHighlights';
 
-const responsive = {
-  superLargeDesktop: {
-    breakpoint: { max: 4000, min: 1024 },
-    items: 1,
-  },
-  desktop: {
-    breakpoint: { max: 1024, min: 768 },
-    items: 1,
-  },
-  tablet: {
-    breakpoint: { max: 768, min: 464 },
-    items: 1,
-  },
-  mobile: {
-    breakpoint: { max: 464, min: 0 },
-    items: 1,
-  },
+const NextArrow = ({ onClick }) => (
+
+  <div className={`${styles["custom-arrow"]} ${styles["next-arrow"]}`} onClick={onClick}>
+    <MdOutlineArrowForwardIos />
+  </div>
+);
+
+const PrevArrow = ({ onClick }) => (
+  <div className={`${styles["custom-arrow"]} ${styles["prev-arrow"]}`} onClick={onClick}>
+    <MdOutlineArrowBackIos />
+  </div>
+);
+var settings = {
+  infinite: true,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  nextArrow: <NextArrow />,
+  prevArrow: <PrevArrow />,
 };
-const SubDestinationCarousel = styled(Carousel)`
-overflow:hidden;
-    max-width: 800px !important;
- 
+
+
+const SubDestinationCarousel = styled(Slider)`
+
 
 `;
 
 const Destination = ({ destinationData }) => {
 
-
+  console.log(destinationData)
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleReadMore = () => {
@@ -46,59 +50,50 @@ const Destination = ({ destinationData }) => {
 
   return (
     <>
-     <header className={styles.header}>
+      <header className={styles.header}>
         <h1 className={styles.title}>Destination</h1>
         <nav>Home ➔ Destination</nav>
       </header>
       <div className={styles.container}>
-      
-      <section className={styles.mainContent}>
-     
-        <h1>Welcome To {destinationData.state.label}</h1>
-        <p>
-          {isExpanded ? destinationData.description : `${destinationData.description.slice(0, 900)}...`}
-          <button onClick={toggleReadMore}>
-            {isExpanded ? "Show Less" : "Read More"}
-          </button>
-        </p>
 
-        <div className={styles.imageGrid}>
-          {destinationData.images.map((img, index) => (
-            <div key={index} className={styles.imageCard}>
-              <img src={`${img}`} alt={`image ${index + 1}`} className={styles.image} />
-            </div>
-          ))}
-        </div>
-        {/* <div className={styles['carousel-container']}>
-    <SubDestinationCarousel
-      responsive={responsive}
-      infinite={true}
-      autoPlay={true}
-      autoPlaySpeed={3000}
-      showDots={true}
-      arrows={true}
-      customTransition="transform 0.5s ease"
-    >
-      {destinationData.subDestinations.map((dest, index) => (
-        <div key={index} className={styles['carousel-item']}>
-          <h2>Heaven On Earth</h2>
-          <p>{dest.description}</p>
-          <ul>
-            <li>🌍 Exploring ancient ruins, historical landmarks</li>
-            <li>🎡 Kid-friendly activities, theme parks</li>
-            <li>🗺️ Immersive cultural experiences</li>
-            <li>🍽️ Premium accommodations, gourmet dining</li>
-          </ul>
-        </div>
-      ))}
-    </SubDestinationCarousel>
-  </div> */}
+        <section className={styles.mainContent}>
 
-        {/* <DestinationHighlighs highlights={destinationData.highlights} /> */}
+          <h1>Welcome To {destinationData.state.label}</h1>
+          <p>
+            {isExpanded ? destinationData.description : `${destinationData.description.slice(0, 900)}...`}
+            <button onClick={toggleReadMore}>
+              {isExpanded ? "Show Less" : "Read More"}
+            </button>
+          </p>
 
-      </section>
+          <div className={styles.imageGrid}>
+            {destinationData.images.map((img, index) => (
+              <div key={index} className={styles.imageCard}>
+                <img src={`${img}`} alt={`image ${index + 1}`} className={styles.image} />
+              </div>
+            ))}
+          </div>
+          <div className={styles['carousel-container']}>
+            <SubDestinationCarousel {...settings}>
+              {destinationData.subDestinations.map((dest, index) => (
+                <div key={index} className={styles['carousel-item']}>
+                  <h2>{dest.name}</h2>
+                  <p>{dest.description}</p>
+                  <div className={styles['image-grid']}>
+                    {dest.photos.map((photo, photoIndex) => (
+                      <img key={photoIndex} src={photo} alt={`Photo ${photoIndex + 1}`} />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </SubDestinationCarousel>
+          </div>
 
-      <aside className={styles.sidebar}>
+          {/* <DestinationHighlighs highlights={destinationData.highlights} /> */}
+
+        </section>
+
+        {/* <aside className={styles.sidebar}>
         <div className={styles.detailsBox}>
           <h3>Destination</h3>
           <p><strong>{destinationData.state.label}</strong></p>
@@ -112,10 +107,10 @@ const Destination = ({ destinationData }) => {
           <p>50% Off</p>
           <button className={styles.offerButton}>View All Package</button>
         </div>
-      </aside>
-    </div>
+      </aside> */}
+      </div>
     </>
-   
+
   );
 };
 

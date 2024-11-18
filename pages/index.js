@@ -5,12 +5,13 @@ import HomeBanner from "../components/homeBanner/HomeBanner";
 import VacationSpots from "../components/vacationsSpots/vacationSpots";
 import TourExperience from "../components/tourExperience/tourExperience";
 import WhyChoose from "../components/whyChoose/whyChoose";
+import Blogs from "../components/blogs/blogs";
 // import TourActivities from "../components/tourActivities/tourActivities";
 // import Testimonials from "../components/testimonials/testimonials";
 import { apiCall } from "../utils/common";
 
-export default function Home({ tourData, destinations,locations }) {
-  console.log(locations);
+export default function Home({ tourData, destinations,locations,whyChoose,blogs }) {
+  console.log(whyChoose);
   
   return (
     <>
@@ -18,7 +19,8 @@ export default function Home({ tourData, destinations,locations }) {
       <About />
       <VacationSpots destinations={destinations} />
       <TourExperience tourData={tourData} />
-      <WhyChoose />
+      <WhyChoose whyChoose={whyChoose}/>
+      <Blogs blogs={blogs.data}/>
       {/* <TourActivities /> */}
       {/* <Testimonials /> */}
     </>
@@ -39,12 +41,22 @@ export async function getStaticProps() {
     endpoint: '/api/getAllDestinations',
     method: 'GET',
   });
-  
+  const whyChoose = await apiCall({
+    endpoint: '/api/getAllWhyChoose',
+    method: 'GET',
+  });
+  const blogs = await apiCall({
+    endpoint: `/api/getAllBlogs`,
+    method: 'GET',
+
+});
   return {
     props: {
       tourData,
       destinations,
-      locations
+      locations,
+      whyChoose,
+      blogs
     },
     revalidate: 600, 
   };

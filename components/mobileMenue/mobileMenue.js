@@ -15,9 +15,9 @@ const MobileMenu = ({ isOpen, toggleMenu }) => {
                 <span onClick={toggleMenu} className={styles['close-button']}>×</span>
             </div>
             <ul className={styles['menu-list']}>
-                <li onClick={toggleMenu}>
-                    <Link href="/">
-                        Home <FaArrowRight className={styles['arrow-icon']} />
+            <li onClick={toggleMenu}>
+                    <Link href={`/tour/uttarakhand`}>
+                        Tours <FaArrowRight className={styles['arrow-icon']} />
                     </Link>
                 </li>
                 <li onClick={toggleMenu}>
@@ -26,30 +26,30 @@ const MobileMenu = ({ isOpen, toggleMenu }) => {
                     </Link>
                 </li >
                 <li onClick={toggleMenu}>
-                    <Link href="/tours">
-                        Tours <FaArrowRight className={styles['arrow-icon']} />
-                    </Link>
-                </li>
-                <li onClick={toggleMenu}>
                     <Link href="/destinations">
                         Destination <FaArrowRight className={styles['arrow-icon']} />
                     </Link>
                 </li>
-                <li onClick={toggleMenu}> 
-                    <Link href="/contact">
-                        Contact <FaArrowRight className={styles['arrow-icon']} />
+                <li onClick={toggleMenu}>
+                    <Link href={`/blogs`}>
+                        Blogs <FaArrowRight className={styles['arrow-icon']} />
                     </Link>
                 </li>
-                <li onClick={toggleMenu}>
+                <li onClick={toggleMenu}> 
+                    <Link href="/contact">
+                        Contact Us<FaArrowRight className={styles['arrow-icon']} />
+                    </Link>
+                </li>
+                {/* <li onClick={toggleMenu}>
                     <Link href="/register">
                         Register / Login <FaArrowRight className={styles['arrow-icon']} />
                     </Link>
-                </li>
+                </li> */}
             </ul>
             <div className={styles['menu-footer']}>
                 <div className={styles['contact-info']}>
                     <FaRegUser className={styles['contact-icon']} />
-                    <a href="tel:+990737621432">+990-737-621-432</a>
+                    <a href="tel:+990737621432">+91 86-8381-8381</a>
                 </div>
             </div>
         </div>

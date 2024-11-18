@@ -1,6 +1,6 @@
 .blogsContainer {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* Responsive columns */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive columns */
     gap: 20px; /* Space between grid items */
     padding: 20px;
     max-width: 1300px;
@@ -11,3 +11,4 @@
     margin-top: 20px;
     font-size: 45px;
   }
+  

@@ -59,7 +59,7 @@
     width: 100%;
     max-width: 900px; /* Adjust this to your preferred max width */
     margin-left: 0;
-    padding: 20px;
+  
   }
   .image {
     width: 100%;
@@ -235,6 +235,10 @@
    .mainContent > h1{
     font-size: 2rem;
     margin-bottom: 5px;
+   }
+   .carousel-item > p{
+    font-size: 14px;
+    line-height: 25px;
    }
    .header{
     height: 300px;

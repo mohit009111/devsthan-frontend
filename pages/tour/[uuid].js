@@ -73,7 +73,7 @@ export async function getStaticPaths() {
   });
 
   const paths = tours.map((tour) => ({
-    params: { uuid: tour.uuid },
+    params: { uuid: String(tour.uuid) }, 
   }));
 
   return {

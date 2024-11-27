@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './contact.module.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -8,7 +8,20 @@ import { FaLocationDot } from "react-icons/fa6";
 import { IoTime } from "react-icons/io5";
 import { MdEmail } from "react-icons/md";
 import { BASE_URL } from '../../utils/headers';
-const ContactPage = () => {
+const ContactPage = ({contact}) => {
+  const handleScrollParallax = () => {
+    const parallaxImage = document.querySelector(`.${styles['parallax-image']}`);
+    if (parallaxImage) {
+      const scrollPosition = window.scrollY;
+      parallaxImage.style.transform = `translateY(${scrollPosition * 0.5}px)`; // Adjust speed factor
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScrollParallax);
+    return () => window.removeEventListener('scroll', handleScrollParallax);
+  }, []);
+ 
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
@@ -51,9 +64,14 @@ const ContactPage = () => {
 
   return (
     <>
-      <header className={styles.header}>
-        <h1 className={styles.title}>Contact</h1>
-        <nav>Home ➔ Contact</nav>
+   <header className={styles.header}>
+        <div className={styles['parallax-container']}>
+          <img src={contact.data.bannerUrls[0]} alt="Destination Banner" className={styles['parallax-image']} />
+        </div>
+        <div className={styles.header_content}>
+          <h1 className={styles.title}>Contact Us</h1>
+          <nav>Home ➔ Contact Us</nav>
+        </div>
       </header>
       <div className={styles['contact-container']}>
         <div className={styles['info-section']}>
@@ -161,3 +179,20 @@ const ContactPage = () => {
 };
 
 export default ContactPage;
+export async function getStaticProps() {
+
+  
+  const contact = await apiCall({
+    endpoint: `/api/getBanner?page=contactBanner`,
+    method: 'GET',
+
+  });
+  return {
+    props: {
+
+   
+      contact
+    },
+    revalidate: 600, 
+  };
+}

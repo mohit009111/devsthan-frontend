@@ -3,63 +3,148 @@ import React, { useState } from 'react';
 import TourGallery from '../../components/tourPageComponents/tourGallery';
 import TourDetails from '../../components/tourPageComponents/tourDetails';
 import TourBookingPanel from '../../components/tourPageComponents/tourBookingPanel';
-import styles from '../../pages/tour/tour.module.css';
+import styles from './tour.module.css';
 import { apiCall } from "../../utils/common";
+import { useRouter } from 'next/router';
+import Itinerary from '../../components/itinery/itinery';
 
-const TourPage = ({ tourData }) => {
-  console.log(tourData)
-  const [selectedCategory, setSelectedCategory] = useState('standardDetails');
-
-  const categoryDetails = 
-    selectedCategory === 'standardDetails' ? tourData[0].standardDetails :
-    selectedCategory === 'deluxeDetails' ? tourData[0].deluxeDetails :
-    selectedCategory === 'premiumDetails' ? tourData[0].premiumDetails : 
-    null;
-
-  const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
+const TourPage = ({ tourAllData }) => {
+  console.log(tourAllData)
+  const tourData = {
+    duration: '7 days',
+    images: [
+      'https://res.cloudinary.com/dmyzudtut/image/upload/v1730914616/inner-banner-bg_aomm7x.jpg',
+      'https://res.cloudinary.com/dmyzudtut/image/upload/v1730914616/inner-banner-bg_aomm7x.jpg',
+      'https://res.cloudinary.com/dmyzudtut/image/upload/v1730914616/inner-banner-bg_aomm7x.jpg',
+    ],
+    bannerImage: 'https://res.cloudinary.com/dmyzudtut/image/upload/v1730914616/inner-banner-bg_aomm7x.jpg',
+    name: 'Amazing Tour Package',
+    state: 'California',
+    city: 'San Francisco',
+    location: 'Golden Gate Park',
+    itinerary: [
+      {
+        date: '2024-11-27',
+        dayName: 'Day 1',
+        title: 'Arrival and Welcome Dinner',
+        description:
+          'Arrive at the destination, settle in the hotel, and enjoy a welcome dinner.',
+        flightDetails: 'Flight from NYC to SFO',
+        transferDetails: 'Airport to hotel transfer',
+        hotelName: 'Luxury Inn',
+      },
+      {
+        date: '2024-11-28',
+        dayName: 'Day 2',
+        title: 'City Tour and Golden Gate Bridge',
+        description:
+          'Explore the city’s landmarks and enjoy the scenic views of the Golden Gate Bridge.',
+        flightDetails: 'N/A',
+        transferDetails: 'Bus transfer throughout the day',
+        hotelName: 'Luxury Inn',
+      },
+      {
+        date: '2024-11-29',
+        dayName: 'Day 3',
+        title: 'Wine Country Tour',
+        description:
+          'Visit the famous wine country and enjoy wine tasting at top vineyards.',
+        flightDetails: 'N/A',
+        transferDetails: 'Private car transfer',
+        hotelName: 'Luxury Inn',
+      },
+    ],
+    policies:
+      'Cancellation is free up to 7 days before the tour starts. No refunds within 7 days of the tour start date.',
+    summary:
+      'This tour package offers a perfect mix of urban exploration and scenic countryside experiences, ensuring an unforgettable trip for all participants.',
   };
+  const router = useRouter();
+  const { date } = router.query;
+
+  const [selectedCategory, setSelectedCategory] = useState('standardDetails');
+  const [activeTab, setActiveTab] = useState('Itinerary');
+  const [selectedDay, setSelectedDay] = useState(0);
+
+  const handleTabChange = (tab) => setActiveTab(tab);
+  const handleDayChange = (dayIndex) => setSelectedDay(dayIndex);
+  const categoryDetails =
+    selectedCategory === 'standardDetails' ? tourAllData[0].standardDetails :
+      selectedCategory === 'deluxeDetails' ? tourAllData[0].deluxeDetails :
+        selectedCategory === 'premiumDetails' ? tourAllData[0].premiumDetails :
+          null;
+
 
   return (
     <div className={styles['tour-main']}>
-      <TourGallery 
-        images={tourData[0].images} 
-        bannerImage={tourData[0].bannerImage} 
-        name={tourData[0].name} 
-        state={tourData[0].state} 
-        city={tourData[0].city} 
-        location={tourData[0].location}
-      />
-      <div className={styles['tour-category']}>
-        <label htmlFor="category-select">Tour Category: </label>
-        <select 
-          id="category-select" 
-          value={selectedCategory} 
-          onChange={handleCategoryChange}
-          className={styles['category-select']}
-        >
-          <option value="standardDetails">Standard</option>
-          <option value="deluxeDetails">Deluxe</option>
-          <option value="premiumDetails">Premium</option>
-        </select>
+      {/* Tour Gallery Component */}
+      <div className={styles['gallery']}>
+        <TourGallery
+          duration={tourData.duration}
+          images={tourData.images}
+          bannerImage={tourData.bannerImage}
+          name={tourData.name}
+          state={tourData.state}
+          city={tourData.city}
+          location={tourData.location}
+        />
       </div>
 
-      <div className={styles['tour-details-panel']}>
-        <TourDetails 
-          categoryDetails={categoryDetails}  
-          details={{ 
-            overview: tourData[0].overview, 
-            size: tourData[0].groupSize,
-            departureDetails: tourData[0].departureDetails, 
-            additionalInfo: tourData[0].additionalInfo,
-            duration: tourData[0].duration 
-          }} 
-        />
-        <TourBookingPanel 
-          availability={tourData.availability} 
-          uuid={tourData[0].uuid && tourData[0].uuid} 
-        />
+      {/* Tabs */}
+      <div className={styles['tabs']}>
+        <button
+          className={activeTab === 'Itinerary' ? styles['tab-active'] : ''}
+          onClick={() => handleTabChange('Itinerary')}
+        >
+          Itinerary
+        </button>
+        <button
+          className={activeTab === 'Policies' ? styles['tab-active'] : ''}
+          onClick={() => handleTabChange('Policies')}
+        >
+          Policies
+        </button>
+        <button
+          className={activeTab === 'Summary' ? styles['tab-active'] : ''}
+          onClick={() => handleTabChange('Summary')}
+        >
+          Summary
+        </button>
       </div>
+
+      {/* Tab Content */}
+      <div className={styles['tab-panel']}>
+      <div className={styles['tab-content']}>
+        {activeTab === 'Itinerary' && (
+          <Itinerary categoryDetails={categoryDetails.itineraries
+          } date={date} />
+        )}
+
+        {activeTab === 'Policies' && (
+          <div className={styles['policies']}>
+            <h2>Policies</h2>
+            <p>{tourData.policies}</p>
+          </div>
+        )}
+
+        {activeTab === 'Summary' && (
+          <div className={styles['summary']}>
+            <h2>Summary</h2>
+            <p>{tourData.summary}</p>
+          </div>
+        )}
+      </div>
+   
+
+        <TourBookingPanel
+          availability={tourAllData.availability}
+          uuid={tourAllData[0].uuid && tourAllData[0].uuid}
+          categoryDetails={categoryDetails}
+        />
+    
+
+      </div>
+     
     </div>
   );
 };
@@ -73,18 +158,18 @@ export async function getStaticPaths() {
   });
 
   const paths = tours.map((tour) => ({
-    params: { uuid: String(tour.uuid) }, 
+    params: { uuid: String(tour.uuid) },
   }));
 
   return {
     paths,
-    fallback: false, 
+    fallback: false,
   };
 }
 
 export async function getStaticProps({ params }) {
   const { uuid } = params;
-  const tourData = await apiCall({
+  const tourAllData = await apiCall({
     endpoint: `/api/getTour/${uuid}`,
     method: 'GET',
     data: { uuid },
@@ -92,8 +177,8 @@ export async function getStaticProps({ params }) {
 
   return {
     props: {
-      tourData,
+      tourAllData,
     },
-    revalidate: 600, 
+    revalidate: 600,
   };
 }

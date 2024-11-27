@@ -6,7 +6,7 @@ const toursList = ({ tourData }) => {
     <>
      
         {tourData.length > 0 && tourData && tourData.map((data) => {
-          {console.log(data)}
+       
           return (
             <>
               <TourCard

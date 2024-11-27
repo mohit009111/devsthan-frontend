@@ -13,18 +13,22 @@
     position: absolute;
     top: -22px;
     z-index: 99;
-    font-size: 12px; /* Set the size you prefer */
-    color: #ff6b6b; /* Red or a noticeable color for emphasis */
+    font-size: 12px;
+    /* Set the size you prefer */
+    color: #ff6b6b;
+    /* Red or a noticeable color for emphasis */
     font-weight: bold;
-    margin-top: 5px; /* Adds spacing if necessary */
+    margin-top: 5px;
+    /* Adds spacing if necessary */
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    background-color: rgba(255, 107, 107, 0.1); /* Light background for emphasis */
+    background-color: rgba(255, 107, 107, 0.1);
+    /* Light background for emphasis */
     padding: 5px 10px;
     border-radius: 5px;
     text-align: center;
     display: inline-block;
-  
+
 }
 
 .banner-outer {
@@ -111,12 +115,16 @@
     justify-content: center;
     gap: 10px;
 }
+
 .search-options-button:disabled {
-    background-color: #cccccc; /* Light gray for disabled state */
-    color: #666666; /* Gray text for disabled state */
+    background-color: #cccccc;
+    /* Light gray for disabled state */
+    color: #666666;
+    /* Gray text for disabled state */
     cursor: not-allowed;
-    opacity: 0.6; 
-  }
+    opacity: 0.6;
+}
+
 .search-headings-tour-selected {
     background-color: #63ab45;
 
@@ -183,7 +191,15 @@
     max-width: 400px;
     top: 70px;
 }
-
+.banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Adjust opacity as needed */
+    z-index: 1;
+}
 .dropdown-option {
     padding: 8px 12px;
     cursor: pointer;
@@ -200,7 +216,7 @@
     border-radius: 0 0 30px 30px;
     position: relative;
     align-items: center;
- 
+
     gap: 10px;
     justify-content: center;
     padding-block: 15px;
@@ -241,7 +257,7 @@
         display: grid;
         grid-template-columns: repeat(2, 1fr);
 
-      
+
         gap: 20px;
 
     }
@@ -279,32 +295,42 @@
 
     }
 
-    
+    .banner-inner {
+        height: auto;
+
+    }
+
+
 
     .search-bar {
         padding-inline: 15px;
-        
+
     }
 
     .home-banner {
         padding-inline: 15px;
         margin-top: 10px;
     }
-    .search-headings-tour{
+
+    .search-headings-tour {
         padding-block: 10px;
         font-size: 13px;
     }
-    .search-options-tour{
+
+    .search-options-tour {
         padding-block: 10px;
         font-size: 13px;
     }
-    .search-bar{
+
+    .search-bar {
         bottom: -26px;
     }
-    .banner-outer{
+
+    .banner-outer {
         height: 600px;
     }
-    .search-options-button{
+
+    .search-options-button {
         padding: 25px 53px;
     }
 }

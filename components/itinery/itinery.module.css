@@ -1,238 +1,252 @@
-.container {
-  margin-top: 20px;
-}
 
-.title-header {
-  margin-bottom: 10px;
-  color: black;
-}
 
-.day-container {
-  margin-bottom: 10px;
-  border: 1px solid #e0e0e0;
-  border-radius: 5px;
-  overflow: hidden;
-  transition: box-shadow 0.3s ease;
-}
 
-.day-container:hover {
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-}
 
-.day-header {
+.itinerary {
   display: flex;
+  flex-direction: column;
+}
+
+.tabs {
+  display: flex;
+  position: sticky;
+  top: 72px;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd;
+  justify-content: space-between;
+  background-color: #edf2de;
+}
+
+.tabs button {
+  background: none;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.tabs .active-tab {
+  font-weight: bold;
+  background: var(--details-itinerary-tab-active-bg-color, #ffffff);
+  border-radius: 20px;
+  border: 1px solid #63ab45;
+  color: #63ab45;
+}
+.day-details-heading{
+  background: #f9f9f9;
+  display: flex;
+  margin-bottom: 20px;
   justify-content: space-between;
   align-items: center;
-  cursor: pointer;
 }
-
-.day-title {
+.day-details-inner{
   display: flex;
   align-items: center;
-}
-
-.day {
-  font-weight: bold;
-  color: #fff;
-  margin-right: 8px;
-  padding: 10px 15px;
+  padding: 20px 27px;
+  font-size: 16px;
   background-color: #63ab45;
+  font-weight: 900;
+  color: white;
+}
+.day-details-icluded{
+  display: flex;
 }
 
-.title {
-  color: black;
+.content {
+  display: flex;
+  gap: 10px;
+  margin-top: 1rem;
+
 }
 
-.toggle-icon {
-  color: #63ab45;
-  font-size: 1.2rem;
-  padding-right: 10px;
+.day-plan-sidebar {
+ min-width: 200px;
+  border-right: 1px solid #ddd;
+  padding: 1rem;
+
+}
+.day-item{
+  position: sticky;
+  top: 160px;
+  height: auto;
+}
+.day-item.active-day {
+  border-left: 3px solid #63ab45;
+  background-color: #edf2de;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+.day-details{
+  padding-inline: 20px;
+}
+.day-details h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
 }
 
-.day-content {
+.section {
+  margin-bottom: 20px;
   padding: 15px;
-  background-color: #f9f9f9;
-  animation: expand 0.3s ease;
+  border-radius: 8px;
+  background: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-@keyframes expand {
-  from {
-      opacity: 0;
-      transform: scaleY(0);
-  }
-  to {
-      opacity: 1;
-      transform: scaleY(1);
-  }
+.section h3 {
+  font-size: 20px;
+  color: #007bff;
+  margin-bottom: 10px;
 }
 
-.highlights {
-  list-style: none;
-  padding-left: 0;
+.section p {
+  margin: 5px 0;
+  color: #555;
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+.section strong {
+  font-weight: bold;
+  color: #333;
+}
+
+.photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
   margin-top: 10px;
 }
 
-.highlights li {
-  margin-bottom: 5px;
-  color: #66bb6a;
-}
-
-.toggle-buttons {
-  display: flex;
-  gap: 10px; /* space between buttons */
-  margin-block: 10px;
-  justify-content: center;
-  flex-wrap: wrap;
-  padding-inline: 10px;
-}
-
-.toggle-buttons button {
-  padding: 8px 16px;
-  font-size: 1rem;
-  font-weight: bold;
-  border: none;
-  border-radius: 4px;
-  background-color: #63ab45; /* green background */
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.toggle-buttons button:hover {
-  background-color: #66bb6a; /* darker green on hover */
-  transform: scale(1.05);
-}
-
-.toggle-buttons button:active {
-  background-color: #4caf50; /* even darker green on active */
-  transform: scale(0.98);
-}
-
-.toggle-buttons button:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(129, 199, 132, 0.5); /* subtle focus ring */
-}
-.meals-section, .hotel-section {
-  padding: 15px;
-  background-color: #f9f9f9;
-  border-radius: 5px;
-
-}
-
-.meals-section h3, .hotel-section h3 {
-  color:#63ab45;
-  margin-bottom: 15px;
-}
-
-.meal-item {
-  margin-bottom: 10px;
-}
-
-.meal-item h4 {
-  margin: 5px 0;
-  color: #63ab45;
-}
-
-.meal-image, .hotel-image, .room-image {
-  max-width: 100%;
-  height: auto;
-  border-radius: 5px;
-  margin-top: 5px;
-}
-
-.hotel-info, .room-section {
-  margin-bottom: 15px;
-}
-
-.hotel-info h4, .room-section h4 {
-  margin: 5px 0;
-  color: #63ab45;
-}
-
-.hotel-images, .room-images {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.hotel-image, .room-image {
-  width: 100px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-.meals-photos {
-  display: grid;
-  gap: 10px; /* Space between grid items */
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Responsive columns */
-  margin-top: 20px;
-}
-
-.meal-image {
+.photos img {
   width: 100%;
-  height: auto;
+  height: 100px;
   object-fit: cover;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease;
 }
-
-.meal-image:hover {
-  transform: scale(1.05); /* Zoom effect on hover */
+.hotel-details{
+  display: flex;
+  gap: 10px;
 }
-.siteseen-photos {
+.photos img:hover {
+  transform: scale(1.1);
+}
+
+/* Day Plan Sidebar */
+.day-plan-sidebar {
+  padding: 10px;
+  border-right: 1px solid #ddd;
+  background: #fff;
+}
+
+
+
+.day-item:hover {
+  background: #eaf4ff;
+  border-color: #007bff;
+}
+
+.section h3 {
+  font-size: 1.5rem;
+  color: #4a4a4a;
+
+  margin-bottom: 15px;
+  padding-bottom: 5px;
+}
+
+/* General text styles */
+.section p {
+  font-size: 1rem;
+  color: #333333;
+  line-height: 1.6;
+  margin: 10px 0;
+}
+
+/* Link styling (for URL) */
+.section p a {
+  color: #0073e6;
+  text-decoration: none;
+  font-weight: bold;
+}
+.section p a:hover {
+  text-decoration: underline;
+}
+
+/* Image gallery grid */
+.section .photos {
   display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 15px;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 2fr)); /* Responsive grid */
+  margin-top: 15px;
+}
+
+.section img {
+  /* width: 100%; */
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.section img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Categories and details */
+.section .details {
+  margin-top: 15px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.section .details span {
+  display: inline-block;
+  background-color: #00aaff;
+  color: #ffffff;
+  padding: 5px 10px;
+  border-radius: 16px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+}
+
+.section .details span:last-child {
+  margin-right: 0;
+}
+
+/* Room category styling */
+.section .room-category {
   margin-top: 20px;
   padding: 10px;
+  background-color: #e0f7ff;
+  border-left: 4px solid #0073e6;
+  border-radius: 4px;
 }
-
-.photo-container {
-  position: relative;
-  overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease;
-  cursor: pointer;
-}
-
-.siteseen-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Crop and scale image */
-  border-radius: 12px;
-  transition: transform 0.4s ease, opacity 0.4s ease;
-}
-
-.siteseen-image:hover {
-  transform: scale(1.1); /* Slight zoom effect */
-  opacity: 0.9;
-}
-
-/* Hover effect on photo container */
-.photo-container:hover {
-  transform: scale(1.05); /* Slight zoom on the container */
-}
-
-/* Animations for smooth entry */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .day-details {
+    padding: 15px;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .section {
+    padding: 10px;
   }
-}
 
-.siteseen-photos .photo-container {
-  animation: fadeInUp 0.5s ease-out;
-}
+  .section h3 {
+    font-size: 18px;
+  }
 
-.siteseen-image {
-  animation: fadeInUp 0.6s ease-out;
-  animation-delay: 0.2s; /* Delay image animation for staggered effect */
+  .section p {
+    font-size: 14px;
+  }
+
+  .photos img {
+    width: 80px;
+    height: 80px;
+  }
 }

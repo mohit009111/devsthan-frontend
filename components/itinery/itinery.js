@@ -1,179 +1,129 @@
 import React, { useState } from 'react';
 import styles from './itinery.module.css';
+import Transfers from '../tourPageComponents/transfers'
+import Hotels from '../tourPageComponents/hotels'
+import DayPlan from '../tourPageComponents/dayPlan';
+const itineraryData = {
+  tabs: ['5 DAY PLAN', '2 FLIGHTS & 2 TRANSFERS', '1 HOTEL'],
+  days: [
+    {
+      date: '04 Dec, Wed',
+      title: 'Arrival in Goa (North)',
+      flight: {
+        from: 'New Delhi',
+        to: 'Goa (North)',
+        duration: '02h 30m',
+        time: '18:00 - 20:30',
+        flightNumber: '6E-2279',
+        baggage: 'Cabin: 7 Kgs, Check-in: 15 Kgs',
+      },
+      transfer: {
+        type: 'Private Transfer',
+        details:
+          'Travel comfortably in a private vehicle from Dabolim airport to North Goa hotel.',
+      },
+      hotel: {
+        name: 'Turtle Beach Resort - Morjim',
+        location: 'Morjim, 3-4 minutes walk from Morjim Beach',
+        checkIn: 'Wed, 4 Dec 2024 - Sun, 8 Dec 2024',
+        rating: 3.8,
+      },
+    },
+    {
+      date: '05 Dec, Thu',
+      title: 'Day 2 Plan...',
+      // Add similar details for Day 2
+    },
+  ],
+};
+const Itinerary = ({ categoryDetails, date }) => {
+  console.log(categoryDetails)
 
-const itineraryData = [
-  {
-    day: 'Day 01',
-    title: 'Admire Big Ben, Buckingham Palace And St Paul’s Cathedral',
-    description:
-      'Arrive Cairo airport, welcome greeting by our representative who will assist you and provide transfers to your Hotel in Cairo. (the clients will inform us about their arrival time minimum 7 days before)',
-    highlights: [
-      'Admire Big Ben, Buckingham Palace And St Paul’s Cathedral',
-      'Chance To Spot Prominent Landmarks Of The City',
-    ],
-  },
-  {
-    day: 'Day 02',
-    title: 'Adventure Begins',
-    description: 'This day is filled with various adventurous activities...',
-    highlights: ['Activity 1', 'Activity 2'],
-  },
-  {
-    day: 'Day 03',
-    title: 'Historical Tour',
-    description: 'Explore historical sites and landmarks.',
-    highlights: ['Historical Site 1', 'Historical Site 2'],
-  },
-  // Add more days as needed
-];
+  const [activeTab, setActiveTab] = useState('day-plan');
+  const [selectedDay, setSelectedDay] = useState(0);
 
-const Itinerary = ({ itineraries }) => {
-  
-  const [expandedDay, setExpandedDay] = useState(null);
-  const [selectedItineryButton, setSelectedItineryButton] = useState('overview');
-
-  const toggleDay = (index) => {
-    setExpandedDay(expandedDay === index ? null : index);
-  };
-  const toggleButton = (button) => {
-    setSelectedItineryButton(button);
-  };
   return (
-    <div className={styles['container']}>
-      <h2 className={styles['title-header']}>Itinerary</h2>
-      {itineraries.map((item, index) => (
-        <div key={index} className={styles['day-container']}>
-          <div className={styles['day-header']} onClick={() => toggleDay(index)}>
-            <div className={styles['day-title']}>
-              <span className={styles['day']}>Day: {item.day}</span>
-              <span className={styles['title']}>{item.title}</span>
-            </div>
-            <span className={styles['toggle-icon']}>
-              {expandedDay === index ? '▲' : '▼'}
-            </span>
-          </div>
-          {expandedDay === index && (
-            <>
-              {selectedItineryButton == 'overview' ? <div className={styles['day-content']}>
-                <p>{item.description}</p>
-                {/* <ul className={styles['highlights']}>
-                  {item.highlights.map((highlight, i) => (
-                    <li key={i}>✓ {highlight}</li>
-                  ))}
-                </ul> */}
-              </div> : null}
 
-              {selectedItineryButton == 'Car' ? <>
+    <div className={styles['itinerary']}>
+      {/* Tabs */}
+      <div className={styles['tabs']}>
 
-              </> : null}
-              {selectedItineryButton === 'meals' && (
-                <div className={styles['meals-section']}>
-                  <h3>Meals</h3>
+        <button
 
-                  {item.meals.breakfast.isAvailable ? <div className={styles['meal-item']}>
-                    <h4>Breakfast</h4>
-                    <p>{item.meals.breakfast.name}</p>
-                    <div className={styles['meals-photos']}>
+          className={activeTab === "day-plan" ? styles['active-tab'] : ''}
+          onClick={() => setActiveTab("day-plan")}
+        >
+          <p>{`${categoryDetails.length} DAY PLAN`}</p>
+        </button>
+        <button
 
+          className={activeTab === "transfer" ? styles['active-tab'] : ''}
+          onClick={() => setActiveTab("transfer")}
+        >
+          <p>TRANSFERS</p>
+        </button>
+        <button
+          className={activeTab === "hotel" ? styles['active-tab'] : ''}
+          onClick={() => setActiveTab("hotel")}
+        >
+          <p>1 HOTEL</p>
+        </button>
+        <button
+          className={activeTab === "meal" ? styles['active-tab'] : ''}
+          onClick={() => setActiveTab("meal")}
+        >
+          <p>Meals</p>
+        </button>
 
-                      {item.meals.breakfast.photos.map((img) => {
-                        return (
+      </div>
 
-                          <>
-                            <img src={img} alt="Breakfast" className={styles['meal-image']} />
-                          </>
-                        )
-                      })}
-                    </div>
+      {/* Content */}
+      <div className={styles['content']}>
+        {/* Day Plan Sidebar */}
+        <div className={styles['day-plan-sidebar']}>
+          {categoryDetails.map((day, index) => {
+            // Parse the date from "DD-MM-YYYY" format
 
 
-                  </div> : null}
-                  {item.meals.lunch.isAvailable ?
-                    <div className={styles['meal-item']}>
-                      <h4>Lunch</h4>
-                      <p>{item.meals.lunch.name}</p>
-                      <div className={styles['meals-photos']}>
-
-
-                        {item.meals.lunch.photos.map((img) => {
-                          return (
-
-                            <>
-                              <img src={img} alt="Breakfast" className={styles['meal-image']} />
-                            </>
-                          )
-                        })}
-                      </div>
-                    </div> : null}
-                  {item.meals.dinner.isAvailable ?
-                    <div className={styles['meal-item']}>
-                      <h4>Dinner</h4>
-                      <p>{item.meals.dinner.name}</p>
-                      <div className={styles['meals-photos']}>
-
-
-                        {item.meals.dinner.photos.map((img) => {
-                          return (
-
-                            <>
-                              <img src={img} alt="Breakfast" className={styles['meal-image']} />
-                            </>
-                          )
-                        })}
-                      </div>
-                    </div> : null}
-                </div>
-              )}
-
-              {selectedItineryButton === 'hotel' && (
-                <div className={styles['hotel-section']}>
-                  <h3>Hotel Information</h3>
-                  <div className={styles['hotel-info']}>
-                    <h4>Hotel Name</h4>
-                    <p>Location: Hotel Location</p>
-                    <p>Category: Hotel Category</p>
-                    <div className={styles['hotel-images']}>
-                      <img src="hotel_image_url" alt="Hotel" className={styles['hotel-image']} />
-                    </div>
-                  </div>
-                  <div className={styles['room-section']}>
-                    <h4>Room Category</h4>
-                    <p>Room Category Name</p>
-                    <div className={styles['room-images']}>
-                      <img src="room_image_url" alt="Room" className={styles['room-image']} />
-                    </div>
-                  </div>
-                </div>
-              )}
-              {selectedItineryButton === 'siteseen' ? (
-  <>
-    <div className={styles['siteseen-photos']}>
-      {item.siteSeenPhotos.map((img, index) => (
-        <div key={index} className={styles['photo-container']}>
-          <img src={img} alt={`Site Seen ${index}`} className={styles['siteseen-image']} />
-        </div>
-      ))}
-    </div>
-  </>
-) : null}
-
-
-              <div className={styles['toggle-buttons']}>
-                <button onClick={() => toggleButton("overview")}>Overview</button>
-                <button onClick={() => toggleButton("meals")}>Meals</button>
-                <button onClick={() => toggleButton("Car")}>Car</button>
-                <button onClick={() => toggleButton("hotel")}>Hotel</button>
-                <button onClick={() => toggleButton("siteseen")}>Site Seen</button>
+            return (
+              <div
+                key={index}
+                className={`${styles['day-item']} ${selectedDay === index ? styles['active-day'] : ''
+                  }`}
+                onClick={() => setSelectedDay(index)}
+              >
+                <div>{date}</div>
+                <div>{day.title}</div>
               </div>
-            </>
-
-
-          )}
-
-
+            );
+          })}
         </div>
-      ))}
-    </div>
+        {activeTab === "day-plan" && (
+          categoryDetails.map((itinerary, index) => {
+            return (
+             <DayPlan itinerary={itinerary}/>
+            );
+          })
+        )}
+          {activeTab === "transfer" && (
+          categoryDetails.map((itinerary, index) => {
+            return (
+             <Transfers itinerary={itinerary}/>
+            );
+          })
+        )}
+         {activeTab === "hotel" && (
+          categoryDetails.map((itinerary, index) => {
+            return (
+             <Hotels itinerary={itinerary}/>
+            );
+          })
+        )}
+
+
+
+      </div>
+    </div >
   );
 };
 

@@ -90,10 +90,10 @@ const TourCategory = ({ tourData, categories, location }) => {
               {categories.map((category) => (
                 <label key={category.name} className={styles['filter-section__option']}>
                   <input
-                    type="checkbox" // Change to checkbox
+                    type="checkbox" 
                     name="tourType"
                     value={category.name}
-                    onChange={handleCheckboxChange} // Trigger API call on change
+                    onChange={handleCheckboxChange} 
                   />
                   {category.name}
                 </label>
@@ -138,10 +138,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const { location } = params;
-
-
   try {
-
     const categories = await apiCall({
       endpoint: '/api/categories',
       method: 'GET',
@@ -151,9 +148,6 @@ export async function getStaticProps({ params }) {
       endpoint: `/api/tours/${location}`,
       method: 'POST',
     });
-
-
-
     return {
       props: {
         tourData,
@@ -163,7 +157,6 @@ export async function getStaticProps({ params }) {
     };
   } catch (error) {
     console.error('Error fetching tour data:', error);
-
     return {
       props: {
         tourData: [],

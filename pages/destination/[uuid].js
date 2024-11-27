@@ -1,5 +1,6 @@
 "use client"
-import React, { useState } from 'react';
+import { useState } from 'react';
+import React, { useEffect } from 'react';
 import styles from './destination.module.css';
 import { apiCall } from '../../utils/common';
 import Slider from "react-slick";
@@ -39,9 +40,20 @@ const SubDestinationCarousel = styled(Slider)`
 
 `;
 
-const Destination = ({ destinationData }) => {
+const Destination = ({ destinationData, destinationBanner }) => {
+  const handleScrollParallax = () => {
+    const parallaxImage = document.querySelector(`.${styles['parallax-image']}`);
+    if (parallaxImage) {
+      const scrollPosition = window.scrollY;
+      parallaxImage.style.transform = `translateY(${scrollPosition * 0.5}px)`; // Adjust speed factor
+    }
+  };
 
-  console.log(destinationData)
+  useEffect(() => {
+    window.addEventListener('scroll', handleScrollParallax);
+    return () => window.removeEventListener('scroll', handleScrollParallax);
+  }, []);
+  console.log(destinationBanner)
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleReadMore = () => {
@@ -51,8 +63,13 @@ const Destination = ({ destinationData }) => {
   return (
     <>
       <header className={styles.header}>
-        <h1 className={styles.title}>Destination</h1>
-        <nav>Home ➔ Destination</nav>
+        <div className={styles['parallax-container']}>
+          <img src={destinationBanner.data.bannerUrls[0]} alt="Destination Banner" className={styles['parallax-image']} />
+        </div>
+        <div className={styles.header_content}>
+          <h1 className={styles.title}>Destination</h1>
+          <nav>Home ➔ Destination</nav>
+        </div>
       </header>
       <div className={styles.container}>
 
@@ -141,10 +158,15 @@ export async function getStaticProps({ params }) {
     method: 'POST',
 
   });
+  const destinationBanner = await apiCall({
+    endpoint: `/api/getBanner?page=destinationBanner`,
+    method: 'GET',
 
+  });
   return {
     props: {
-      destinationData
+      destinationData,
+      destinationBanner
     },
   };
 }

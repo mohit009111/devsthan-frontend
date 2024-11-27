@@ -48,7 +48,7 @@ const PrevArrow = ({ onClick }) => (
         <MdOutlineArrowBackIos />
     </div>
 );
-const HomeBanner = ({ locations }) => {
+const HomeBanner = ({ locations, homebanner }) => {
     const [selected, setSelected] = useState("Tour")
     console.log(selected)
     const headings = [
@@ -70,36 +70,22 @@ const HomeBanner = ({ locations }) => {
             <div className={styles['banner-outer']}>
 
                 <BannerInner {...settings}>
-                    <div className={styles['banner-inner']}>
-                        <img className={styles['banner-img']} src='https://triprex.b-cdn.net/wp-content/uploads/2024/02/hero-home1-slider-4.webp' />
-                        <div className={styles['banner-inner-content']}>
-                            <div className={styles['banner-inner-location']}>
-                                <IoLocationOutline />
+                {
+    homebanner.data.bannerUrls.map((image, index) => (
+        <div key={index} className={styles['banner-inner']}>
+            <img className={styles['banner-img']} src={image} alt={`Banner ${index}`} />
+            {/* <div className={styles['banner-overlay']}></div> */}
+            <div className={styles['banner-inner-content']}>
+                <div className={styles['banner-inner-location']}>
+                    {/* <IoLocationOutline /> */}
+                    {/* <p>France</p> */}
+                </div>
+            </div>
+        </div>
+    ))
+}
 
-                                <p>France</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={styles['banner-inner']}>
-                        <img className={styles['banner-img']} src='https://triprex.b-cdn.net/wp-content/uploads/2024/02/hero-home1-slider-4.webp' />
-                        <div className={styles['banner-inner-content']}>
-                            <div className={styles['banner-inner-location']}>
-                                <IoLocationOutline />
 
-                                <p>France</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={styles['banner-inner']}>
-                        <img className={styles['banner-img']} src='https://triprex.b-cdn.net/wp-content/uploads/2024/02/hero-home1-slider-4.webp' />
-                        <div className={styles['banner-inner-content']}>
-                            <div className={styles['banner-inner-location']}>
-                                <IoLocationOutline />
-
-                                <p>France</p>
-                            </div>
-                        </div>
-                    </div>
                 </BannerInner>
 
             </div>

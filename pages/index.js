@@ -10,12 +10,12 @@ import Blogs from "../components/blogs/blogs";
 // import Testimonials from "../components/testimonials/testimonials";
 import { apiCall } from "../utils/common";
 
-export default function Home({ tourData, destinations,locations,whyChoose,blogs }) {
-  console.log(whyChoose);
+export default function Home({ tourData, destinations,locations,whyChoose,blogs,homebanner }) {
+  console.log(homebanner);
   
   return (
     <>
-      <HomeBanner locations={locations} />
+      <HomeBanner locations={locations} homebanner={homebanner} />
       <About />
       <VacationSpots destinations={destinations} />
       <TourExperience tourData={tourData} />
@@ -50,13 +50,20 @@ export async function getStaticProps() {
     method: 'GET',
 
 });
+const homebanner = await apiCall({
+  endpoint: `/api/getBanner?page=homeBanner`,
+  method: 'GET',
+
+});
+
   return {
     props: {
       tourData,
       destinations,
       locations,
       whyChoose,
-      blogs
+      blogs,
+      homebanner
     },
     revalidate: 600, 
   };

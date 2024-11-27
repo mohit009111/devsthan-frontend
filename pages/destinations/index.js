@@ -1,16 +1,35 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './destinations.module.css';
 import { apiCall } from '../../utils/common';
 import Link from 'next/link';
 import DestinationCard from '../../components/destinationCard/destinationCard';
 
-const Destinations = ({ destinations }) => {
-  
+const Destinations = ({ destinations,destinationsBanner }) => {
+  console.log(destinationsBanner)
+  const handleScrollParallax = () => {
+    const parallaxImage = document.querySelector(`.${styles['parallax-image']}`);
+    if (parallaxImage) {
+      const scrollPosition = window.scrollY;
+      parallaxImage.style.transform = `translateY(${scrollPosition * 0.5}px)`; // Adjust speed factor
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScrollParallax);
+    return () => window.removeEventListener('scroll', handleScrollParallax);
+  }, []);
+ 
+
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
-        <h1 className={styles.title}>Destinations</h1>
-        <nav>Home ➔ Destinations</nav>
+     <header className={styles.header}>
+        <div className={styles['parallax-container']}>
+          <img src={destinationsBanner.data.bannerUrls[0]} alt="Destination Banner" className={styles['parallax-image']} />
+        </div>
+        <div className={styles.header_content}>
+          <h1 className={styles.title}>Destinations</h1>
+          <nav>Home ➔ Destinations</nav>
+        </div>
       </header>
       <div className={styles.grid}>
         {destinations.map((destination, index) => (
@@ -39,10 +58,16 @@ export async function getStaticProps() {
     method: 'GET',
 
   });
+  const destinationsBanner = await apiCall({
+    endpoint: `/api/getBanner?page=destinationsBanner`,
+    method: 'GET',
+
+  });
   return {
     props: {
 
-      destinations
+      destinations,
+      destinationsBanner
     },
     revalidate: 600, 
   };

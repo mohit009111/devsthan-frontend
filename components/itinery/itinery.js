@@ -101,21 +101,21 @@ const Itinerary = ({ categoryDetails, date }) => {
         {activeTab === "day-plan" && (
           categoryDetails.map((itinerary, index) => {
             return (
-             <DayPlan itinerary={itinerary}/>
+             <DayPlan key={index} itinerary={itinerary}/>
             );
           })
         )}
           {activeTab === "transfer" && (
           categoryDetails.map((itinerary, index) => {
             return (
-             <Transfers itinerary={itinerary}/>
+             <Transfers  key={index} itinerary={itinerary}/>
             );
           })
         )}
          {activeTab === "hotel" && (
           categoryDetails.map((itinerary, index) => {
             return (
-             <Hotels itinerary={itinerary}/>
+             <Hotels  key={index} itinerary={itinerary}/>
             );
           })
         )}

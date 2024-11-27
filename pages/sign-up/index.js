@@ -3,6 +3,7 @@ import styles from "./signup.module.css"; // Import your CSS module
 import Loader from "../../components/loader/loader"; // Assuming you have a Loader component
 import { apiCall } from "../../utils/common";
 import { toast } from 'react-toastify';
+import Link from "next/link";
 const RegisterCard = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -303,9 +304,9 @@ const RegisterCard = () => {
 
         <p className={styles["login-text"]}>
           Already have an account?{" "}
-          <a href="/login" className={styles["link"]}>
+          <Link href="/login" className={styles["link"]}>
             Login
-          </a>
+          </Link>
         </p>
       </div>
     </>

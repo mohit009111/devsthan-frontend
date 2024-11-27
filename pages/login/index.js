@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 const RegisterCard = () => {
+    const router = useRouter();
     const [formData, setFormData] = useState({
 
         email: "",
@@ -86,7 +87,7 @@ const RegisterCard = () => {
                 body: data,
             });
             console.log(response)
-            const router = useRouter();
+ 
             if (response.success) {
                 setLoading(false);
                 setOtpSent(true); // Show OTP form after successful signup

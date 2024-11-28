@@ -1,7 +1,3 @@
-
-
-
-
 .itinerary {
   display: flex;
   flex-direction: column;
@@ -10,8 +6,9 @@
 .tabs {
   display: flex;
   position: sticky;
-  top: 72px;
+  top: 128px;
   gap: 1rem;
+
   padding: 1rem;
   border-bottom: 1px solid #ddd;
   justify-content: space-between;
@@ -25,6 +22,9 @@
   cursor: pointer;
   font-size: 1rem;
 }
+.content > p{
+  font-size: 14px;
+}
 
 .tabs .active-tab {
   font-weight: bold;
@@ -33,53 +33,72 @@
   border: 1px solid #63ab45;
   color: #63ab45;
 }
-.day-details-heading{
+
+.day-details-heading {
   background: #f9f9f9;
   display: flex;
-  margin-bottom: 20px;
+  margin-block: 10px;
   justify-content: space-between;
   align-items: center;
 }
-.day-details-inner{
+
+.day-details-inner {
   display: flex;
   align-items: center;
-  padding: 20px 27px;
+  padding: 15px 20px;
   font-size: 16px;
   background-color: #63ab45;
   font-weight: 900;
   color: white;
 }
-.day-details-icluded{
+
+.day-details-icluded {
   display: flex;
 }
 
 .content {
   display: flex;
   gap: 10px;
-  margin-top: 1rem;
+
 
 }
 
 .day-plan-sidebar {
- min-width: 200px;
+  min-width: 160px;
   border-right: 1px solid #ddd;
   padding: 1rem;
 
 }
-.day-item{
+
+.day-item {
   position: sticky;
-  top: 160px;
+  top: 210px;
   height: auto;
+  font-size: 14px;
 }
+
 .day-item.active-day {
   border-left: 3px solid #63ab45;
   background-color: #edf2de;
   padding: 0.5rem;
   cursor: pointer;
+  font-size: 15px;
+ 
 }
-.day-details{
-  padding-inline: 20px;
+
+.content>img {
+  width: 50%;
+  height: auto;
+  object-fit: cover;
 }
+
+.day-details {
+  background: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+}
+
 .day-details h2 {
   font-size: 24px;
   margin-bottom: 20px;
@@ -129,10 +148,12 @@
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease;
 }
-.hotel-details{
+
+.hotel-details {
   display: flex;
   gap: 10px;
 }
+
 .photos img:hover {
   transform: scale(1.1);
 }
@@ -173,6 +194,7 @@
   text-decoration: none;
   font-weight: bold;
 }
+
 .section p a:hover {
   text-decoration: underline;
 }
@@ -186,7 +208,7 @@
 }
 
 .section img {
-  /* width: 100%; */
+
   height: auto;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -227,10 +249,20 @@
   border-left: 4px solid #0073e6;
   border-radius: 4px;
 }
+
 /* Media Queries for Responsiveness */
-@media (max-width: 768px) {
+@media (max-width: 740px) {
   .day-details {
     padding: 15px;
+  }
+
+  .tabs {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .section img {
+    width: 100%;
   }
 
   .section {
@@ -245,8 +277,20 @@
     font-size: 14px;
   }
 
-  .photos img {
-    width: 80px;
-    height: 80px;
+
+}
+
+@media (max-width: 470px) {
+
+  .content {
+    flex-direction: column;
+  }
+
+  .tabs button {
+    font-size: 14px;
+  }
+  .day-plan-sidebar{
+    position: sticky;
+    top: 241px;
   }
 }

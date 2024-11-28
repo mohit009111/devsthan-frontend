@@ -53,20 +53,20 @@ const Itinerary = ({ categoryDetails, date }) => {
           className={activeTab === "day-plan" ? styles['active-tab'] : ''}
           onClick={() => setActiveTab("day-plan")}
         >
-          <p>{`${categoryDetails.length} DAY PLAN`}</p>
+          <p>{`${categoryDetails.length} Day Plan`}</p>
         </button>
         <button
 
           className={activeTab === "transfer" ? styles['active-tab'] : ''}
           onClick={() => setActiveTab("transfer")}
         >
-          <p>TRANSFERS</p>
+          <p>Transfers</p>
         </button>
         <button
           className={activeTab === "hotel" ? styles['active-tab'] : ''}
           onClick={() => setActiveTab("hotel")}
         >
-          <p>1 HOTEL</p>
+          <p>1 Hotel</p>
         </button>
         <button
           className={activeTab === "meal" ? styles['active-tab'] : ''}

@@ -11,7 +11,7 @@
 
 .coming-soon {
     position: absolute;
-    top: -22px;
+    top: -10px;
     z-index: 99;
     font-size: 12px;
     /* Set the size you prefer */
@@ -22,7 +22,7 @@
     /* Adds spacing if necessary */
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    background-color: rgba(255, 107, 107, 0.1);
+   
     /* Light background for emphasis */
     padding: 5px 10px;
     border-radius: 5px;
@@ -309,11 +309,12 @@
 
     .home-banner {
         padding-inline: 15px;
+        height: 500px;
         margin-top: 10px;
     }
 
     .search-headings-tour {
-        padding-block: 10px;
+       
         font-size: 13px;
     }
 
@@ -323,11 +324,12 @@
     }
 
     .search-bar {
-        bottom: -26px;
+        bottom: -40px;
     }
 
     .banner-outer {
-        height: 600px;
+        height: auto;
+
     }
 
     .search-options-button {

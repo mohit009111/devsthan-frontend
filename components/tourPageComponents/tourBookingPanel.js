@@ -100,53 +100,10 @@ useEffect(() => {
       <p className={styles['panel-heading']}>Book Your Tour</p>
       <p className={styles['panel-des']}>Reserve your ideal trip early for a hassle-free trip; secure comfort and convenience!</p>
       <div className={styles['panel-buttons']}>
-        <button onClick={() => handlePanelTabs('booking')}>Online Booking</button>
-        <button onClick={() => handlePanelTabs('inquiry')}>Inquiry Form</button>
-
+      
       </div>
-      {
-        panelTab == 'booking' ? <>
-
-          <div className={styles.dateSelection}>
-            <input type="date" />
-          </div>
-
-          <h3>Adult</h3>
-          <div className={styles.counter}>
-            <button onClick={() => handleAdultChange(-1)}>-</button>
-            <span>{adultCount}</span>
-            <button onClick={() => handleAdultChange(1)}>+</button>
-          </div>
-
-          <h3>Children</h3>
-          <div className={styles.counter}>
-            <button onClick={() => handleChildrenChange(-1)}>-</button>
-            <span>{childrenCount}</span>
-            <button onClick={() => handleChildrenChange(1)}>+</button>
-          </div>
-
-          <h3>Other Extra Services</h3>
-          {extraServices.map((service, index) => (
-            <label key={index} className={styles.extraService}>
-              <input
-                type="checkbox"
-                onChange={() => handleExtraChange(service)}
-                checked={selectedExtras.includes(service)}
-              />
-              {service.name} - ${service.price}
-            </label>
-          ))}
-
-          <div className={styles.summary}>
-            {/* <p>Adult Price: ${240} x {adultCount} => ${240 * adultCount}</p> */}
-            <p>Total Price: ${totalPrice}</p>
-          </div>
-          <button className={styles.bookButton}>Book Now</button>
-        </>
-          : null
-      }
-       {
-        panelTab === "inquiry" ? (
+    
+   
           <form className={styles.inquiryForm} onSubmit={handleSubmit}>
           <label>Full Name</label>
           <input
@@ -189,8 +146,8 @@ useEffect(() => {
           <button type="submit">Submit</button>
         </form>
         
-        ) : null
-      }
+      
+      
 
     </div>
   );

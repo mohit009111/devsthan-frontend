@@ -12,3 +12,9 @@
     font-size: 45px;
   }
   
+  @media (max-width: 740px) {
+    .blogsContainer {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive columns */
+      padding: 10px;
+    }
+  }

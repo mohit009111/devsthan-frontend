@@ -70,20 +70,20 @@ const HomeBanner = ({ locations, homebanner }) => {
             <div className={styles['banner-outer']}>
 
                 <BannerInner {...settings}>
-                {
-    homebanner.data.bannerUrls.map((image, index) => (
-        <div key={index} className={styles['banner-inner']}>
-            <img className={styles['banner-img']} src={image} alt={`Banner ${index}`} />
-            {/* <div className={styles['banner-overlay']}></div> */}
-            <div className={styles['banner-inner-content']}>
-                <div className={styles['banner-inner-location']}>
-                    {/* <IoLocationOutline /> */}
-                    {/* <p>France</p> */}
-                </div>
-            </div>
-        </div>
-    ))
-}
+                    {
+                        homebanner.data.bannerUrls.map((image, index) => (
+                            <div key={index} className={styles['banner-inner']}>
+                                <img className={styles['banner-img']} src={image} alt={`Banner ${index}`} />
+                                {/* <div className={styles['banner-overlay']}></div> */}
+                                <div className={styles['banner-inner-content']}>
+                                    <div className={styles['banner-inner-location']}>
+                                        {/* <IoLocationOutline /> */}
+                                        {/* <p>France</p> */}
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    }
 
 
                 </BannerInner>
@@ -108,7 +108,7 @@ const HomeBanner = ({ locations, homebanner }) => {
                         </div>
                     ))}
                 </div>
-                {selected == "Tour" ? <TourSearch locations={locations} /> : null}
+ <TourSearch locations={locations} /> 
                 {/* {selected == "Hotel" || "Bus" || "Flight" ? <Search /> : null} */}
 
             </div>

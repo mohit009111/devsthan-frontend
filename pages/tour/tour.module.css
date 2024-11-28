@@ -76,7 +76,7 @@
   color: #787878;
   border-bottom: 1px solid #ddd;
   padding-bottom: 30px;
-  margin-bottom: 35px;
+  margin-bottom: 20px;
 }
 
 .panel-buttons {
@@ -100,7 +100,7 @@
   padding: 20px;
   border-radius: 10px;
   max-width: 400px;
-  min-width: 400px;
+  min-width: 300px;
   background: linear-gradient(125deg, rgba(99, 171, 69, 0.1) 0%, rgba(251, 176, 59, 0.1) 100%);
   border-radius: 5px;
   padding: 25px;
@@ -284,7 +284,7 @@
 }
 
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 990px) {
   .gallery {
     flex-direction: column;
     margin-inline: auto;
@@ -295,7 +295,9 @@
   .gallery-banner {
     width: 100%;
   }
-
+.tab-panel{
+  flex-direction: column;
+}
   .gallery-images {
     width: 100%;
   }
@@ -312,7 +314,7 @@
 
 
 
-@media screen and (max-width: 540px) {
+@media screen and (max-width: 640px) {
   .tour-details-inc-exc{
     flex-direction: column;
   }
@@ -320,9 +322,14 @@
     font-size: 14px;
     line-height: 28px;
   }
+  .tabs button{
+    font-size: 14px !important;
+    padding: 10px 10px !important;
+  }
   .tour-main{
     padding-inline: 10px;
   }
+
 }
 
 
@@ -391,9 +398,7 @@
   animation: dropdown-open 0.3s ease-out;
 }
 
-.gallery-container {
-  margin: 20px;
-}
+
 
 .header {
   margin-bottom: 20px;
@@ -486,7 +491,9 @@
 
 .tabs {
   display: flex;
- 
+  position: sticky;
+  top: 73px;
+  background-color: white;
   margin: 20px 0;
 }
 
@@ -497,7 +504,7 @@
 }
 .tab-panel{
   display: flex;
-  gap: 10px;
+  gap: 20px;
 }
 
 .tab-content {

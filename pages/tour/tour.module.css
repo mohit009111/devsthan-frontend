@@ -284,10 +284,6 @@
   }
 }
 
-body {
-  position: relative;
-}
-
 @media screen and (max-width: 990px) {
   .gallery {
     flex-direction: column;

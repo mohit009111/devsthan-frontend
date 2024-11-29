@@ -10,7 +10,7 @@ const TourBookingPanel = ({ uuid, categoryDetails }) => {
   const [rooms, setRooms] = useState([
     { id: 1, adults: 1, children: 0, extraBeds: 0 }
   ]);
-  const [totalPrice, setTotalPrice] = useState(categoryDetails.pricing[3].price);
+  const [totalPrice, setTotalPrice] = useState(categoryDetails?.pricing[3]?.price);
 
   function calculateInitialPrice(itineraries) {
     return itineraries.reduce((total, day) => {

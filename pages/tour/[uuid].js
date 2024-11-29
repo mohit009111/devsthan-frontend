@@ -77,21 +77,19 @@ const TourPage = ({ tourAllData }) => {
 
   return (
     <div className={styles['tour-main']}>
-      {/* Tour Gallery Component */}
+
       <div className={styles['gallery']}>
         <TourGallery
-          duration={tourData.duration}
-          images={tourData.images}
-          bannerImage={tourData.bannerImage}
-          name={tourData.name}
-          state={tourData.state}
-          city={tourData.city}
-          location={tourData.location}
+          duration={tourAllData[0].duration}
+          images={tourAllData[0].images}
+          bannerImage={tourAllData[0].bannerImage}
+          name={tourAllData[0].name}
+          state={tourAllData[0].state}
+          city={tourAllData[0].city}
+          location={tourAllData[0].location}
         />
       </div>
 
-
-      {/* Tabs */}
       <div className={styles['tabs']}>
         <button
           className={activeTab === 'Itinerary' ? styles['tab-active'] : ''}

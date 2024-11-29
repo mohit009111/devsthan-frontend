@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from '../../components/itinery/itinery.module.css';
+import Image from 'next/image';
 const meals = ({itinerary}) => {
   return (
     <div>

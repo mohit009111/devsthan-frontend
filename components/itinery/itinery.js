@@ -4,39 +4,7 @@ import styles from './itinery.module.css';
 import Transfers from '../tourPageComponents/transfers'
 import Hotels from '../tourPageComponents/hotels'
 import DayPlan from '../tourPageComponents/dayPlan';
-const itineraryData = {
-  tabs: ['5 DAY PLAN', '2 FLIGHTS & 2 TRANSFERS', '1 HOTEL'],
-  days: [
-    {
-      date: '04 Dec, Wed',
-      title: 'Arrival in Goa (North)',
-      flight: {
-        from: 'New Delhi',
-        to: 'Goa (North)',
-        duration: '02h 30m',
-        time: '18:00 - 20:30',
-        flightNumber: '6E-2279',
-        baggage: 'Cabin: 7 Kgs, Check-in: 15 Kgs',
-      },
-      transfer: {
-        type: 'Private Transfer',
-        details:
-          'Travel comfortably in a private vehicle from Dabolim airport to North Goa hotel.',
-      },
-      hotel: {
-        name: 'Turtle Beach Resort - Morjim',
-        location: 'Morjim, 3-4 minutes walk from Morjim Beach',
-        checkIn: 'Wed, 4 Dec 2024 - Sun, 8 Dec 2024',
-        rating: 3.8,
-      },
-    },
-    {
-      date: '05 Dec, Thu',
-      title: 'Day 2 Plan...',
-      // Add similar details for Day 2
-    },
-  ],
-};
+
 const Itinerary = ({ categoryDetails, date }) => {
   console.log(categoryDetails)
   const dayRefs = useRef([]); // Array of refs for each day

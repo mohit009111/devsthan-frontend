@@ -4,29 +4,62 @@ import { apiCall } from '../../utils/common';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast, ToastContainer } from 'react-toastify';
 import { SiOnstar } from 'react-icons/si';
-const TourBookingPanel = ({ uuid, categoryDetails }) => {
+const TourBookingPanel = ({ uuid, categoryDetails,name,duration }) => {
   const [rooms, setRooms] = useState({
     id: 1,
     extraBeds: 0,
-    adults: 4,
+    adults: 1,
     children: 0,
   });
-
+  
   const [totalPrice, setTotalPrice] = useState(
-    categoryDetails?.pricing[rooms.adults - 1]?.price || 0
+    categoryDetails?.pricing.find((p) => p.person === rooms.adults)?.price || 0
   );
+  
   const updateRoom = (type, value) => {
     setRooms((prev) => {
+      // Get the maximum number of people allowed (sum of adults and children)
+      const maxPersons = Math.max(...categoryDetails.pricing.map((p) => p.person)); 
+    
+      // Calculate the updated value for the type (either adults or children)
+      const updatedValue = prev[type] + value;
+    
+      // Ensure the updated value is not negative
+      if (updatedValue < 0) {
+        return prev; // Do not allow negative values
+      }
+    
+      // Ensure that the total number of adults and children does not exceed maxPersons
+      if (type === "adults" && updatedValue + prev.children > maxPersons) {
+        return prev; // Do not update if the total exceeds the maxPersons
+      }
+    
+      if (type === "children" && prev.adults + updatedValue > maxPersons) {
+        return prev; // Do not update if the total exceeds the maxPersons
+      }
+    
+      // Update the rooms state
       const updatedRooms = {
         ...prev,
-        [type]: Math.max(1, prev[type] + value), 
+        [type]: updatedValue,
       };
-      const updatedPrice = categoryDetails?.pricing[updatedRooms.adults]?.price || 0;
-      setTotalPrice(updatedPrice);
-
+    
+      // Calculate total price: Adults + Half price for Children
+      const adultPrice = categoryDetails?.pricing.find((p) => p.person === updatedRooms.adults)?.price || 0;
+      console.log(adultPrice)
+      // Find the price for one person (used for children)
+      const pricePerPerson = categoryDetails?.pricing.find((p) => p.person === updatedRooms.adults)?.price || 0;
+  
+      // Calculate children price as half of the price per person
+      const childrenPrice = (updatedRooms.children * pricePerPerson) / 2;
+    
+      // Set the total price
+      setTotalPrice(adultPrice - childrenPrice/4);
+    
       return updatedRooms;
     });
   };
+  
   const [showDialouge, setShowDialouge] = useState(false)
   const [formData, setFormData] = useState({
     fullName: '',
@@ -105,11 +138,14 @@ const TourBookingPanel = ({ uuid, categoryDetails }) => {
                 &times;
               </button>
               <div className={styles["dialog-header"]}>
-                <h3>7N-8D Royal Uttarakhand Package</h3>
+                <div>
+
+                <h3>{name}</h3>
                 <h4>Total Price: ₹{totalPrice}</h4>
+                  </div>
                 <div className={styles["dialog-details"]}>
-                  <span className={styles["dialog-badge"]}>7 Nights</span>
-                  <span className={styles["dialog-badge"]}>8 Days</span>
+                  <span className={styles["dialog-badge"]}>{duration}</span>
+                
                 </div>
                 <button className={styles["dialog-button-primary"]}>Book Now</button>
               </div>
@@ -126,27 +162,16 @@ const TourBookingPanel = ({ uuid, categoryDetails }) => {
                     </div>
                   </div>
 
-                  <div className={styles["dialog-row"]}>
-                    <label>Adult</label>
-                    <div className={styles["dialog-counter"]}>
-                      <button onClick={() => updateRoom(categoryDetails?.pricing[rooms.adults] + 1, "adults", -1)}>
-                        -
-                      </button>
-                      <span>{rooms.adults}</span>
-                      <button onClick={() => updateRoom(categoryDetails?.pricing[rooms.adults] + 1, "adults", 1)}>
-                        +
-                      </button>
-                    </div>
-                  </div>
+                 
 
                   <div className={styles["dialog-row"]}>
                     <label>Children</label>
                     <div className={styles["dialog-counter"]}>
-                      <button onClick={() => updateRoom(rooms.id, "children", -1)}>
+                      <button onClick={() => updateRoom( "children", -1)}>
                         -
                       </button>
                       <span>{rooms.children}</span>
-                      <button onClick={() => updateRoom(rooms.id, "children", 1)}>
+                      <button onClick={() => updateRoom( "children", 1)}>
                         +
                       </button>
                     </div>

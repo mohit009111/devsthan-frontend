@@ -10,55 +10,7 @@ import Itinerary from '../../components/itinery/itinery';
 
 const TourPage = ({ tourAllData }) => {
   console.log(tourAllData)
-  const tourData = {
-    duration: '7 days',
-    images: [
-      'https://res.cloudinary.com/dmyzudtut/image/upload/v1730914616/inner-banner-bg_aomm7x.jpg',
-      'https://res.cloudinary.com/dmyzudtut/image/upload/v1730914616/inner-banner-bg_aomm7x.jpg',
-      'https://res.cloudinary.com/dmyzudtut/image/upload/v1730914616/inner-banner-bg_aomm7x.jpg',
-    ],
-    bannerImage: 'https://res.cloudinary.com/dmyzudtut/image/upload/v1730914616/inner-banner-bg_aomm7x.jpg',
-    name: 'Amazing Tour Package',
-    state: 'California',
-    city: 'San Francisco',
-    location: 'Golden Gate Park',
-    itinerary: [
-      {
-        date: '2024-11-27',
-        dayName: 'Day 1',
-        title: 'Arrival and Welcome Dinner',
-        description:
-          'Arrive at the destination, settle in the hotel, and enjoy a welcome dinner.',
-        flightDetails: 'Flight from NYC to SFO',
-        transferDetails: 'Airport to hotel transfer',
-        hotelName: 'Luxury Inn',
-      },
-      {
-        date: '2024-11-28',
-        dayName: 'Day 2',
-        title: 'City Tour and Golden Gate Bridge',
-        description:
-          'Explore the city’s landmarks and enjoy the scenic views of the Golden Gate Bridge.',
-        flightDetails: 'N/A',
-        transferDetails: 'Bus transfer throughout the day',
-        hotelName: 'Luxury Inn',
-      },
-      {
-        date: '2024-11-29',
-        dayName: 'Day 3',
-        title: 'Wine Country Tour',
-        description:
-          'Visit the famous wine country and enjoy wine tasting at top vineyards.',
-        flightDetails: 'N/A',
-        transferDetails: 'Private car transfer',
-        hotelName: 'Luxury Inn',
-      },
-    ],
-    policies:
-      'Cancellation is free up to 7 days before the tour starts. No refunds within 7 days of the tour start date.',
-    summary:
-      'This tour package offers a perfect mix of urban exploration and scenic countryside experiences, ensuring an unforgettable trip for all participants.',
-  };
+ 
   const router = useRouter();
   const { date } = router.query;
 
@@ -159,6 +111,14 @@ const TourPage = ({ tourAllData }) => {
 
 
         <TourBookingPanel
+          duration={tourAllData[0].duration}
+       
+       
+        
+          state={tourAllData[0].state}
+          city={tourAllData[0].city}
+          location={tourAllData[0].location}
+          name={tourAllData[0].name}
           availability={tourAllData.availability}
           uuid={tourAllData[0].uuid && tourAllData[0].uuid}
           categoryDetails={categoryDetails}

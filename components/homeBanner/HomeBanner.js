@@ -96,44 +96,45 @@ const HomeBanner = ({ locations, homebanner }) => {
 
             </div>
             <div className={styles['search-bar']}>
-  <div className={styles['search-headings']}>
-  {headings.map((heading, index) => (
-  <div
-    key={index}
-    className={`${styles['search-headings-tour']} 
+                <div className={styles['search-headings']}>
+                    {headings.map((heading, index) => (
+                        <div
+                            key={index}
+                            className={`${styles['search-headings-tour']} 
       ${selected === heading.title ? styles['search-headings-tour-selected'] : styles['unavailable']}
     `}
-    onClick={() => {
-      if (!heading.isAvailable) {
-        setSelected(heading.title);
-        setShowComminSoon(true); // Trigger the "Coming Soon" state
-    
-      } else {
-        setShowComminSoon(false); // Ensure "Coming Soon" state is hidden
-        setSelected(heading.title); // Update the selected heading
-      }
-    }}
-  >
-    {/* Conditionally display "Coming Soon" message if selected and unavailable */}
-    {selected === heading.title && showComminSoon && (
-      <p className={styles['coming-soon']}>Coming Soon</p>
-    )}
+                            onClick={() => {
+                                if (!heading.isAvailable) {
+                                    setSelected(heading.title);
+                                    setShowComminSoon(true); // Trigger the "Coming Soon" state
+                                    alert("not available")
+                                    
+                                } else {
+                                    setShowComminSoon(false); // Ensure "Coming Soon" state is hidden
+                                    setSelected(heading.title); // Update the selected heading
+                                }
+                            }}
+                        >
+{/*                             
+                            {selected === heading.title && showComminSoon && (
+                                <p className={styles['coming-soon']}>Coming Soon</p>
+                            )} */}
 
-    {/* Render the heading icon */}
-    {React.createElement(heading.icon, { className: styles['icon-class'] })}
+                            {/* Render the heading icon */}
+                            {React.createElement(heading.icon, { className: styles['icon-class'] })}
 
-    {/* Display the heading title */}
-    <p>{heading.title}</p>
-  </div>
-))}
+                            {/* Display the heading title */}
+                            <p>{heading.title}</p>
+                        </div>
+                    ))}
 
-  </div>
+                </div>
 
-  <TourSearch locations={locations} />
+                <TourSearch locations={locations} />
 
-  {/* Conditional rendering based on selected type */}
-  {/* {['Hotel', 'Bus', 'Flight'].includes(selected) && <Search />} */}
-</div>
+                {/* Conditional rendering based on selected type */}
+                {/* {['Hotel', 'Bus', 'Flight'].includes(selected) && <Search />} */}
+            </div>
 
 
 

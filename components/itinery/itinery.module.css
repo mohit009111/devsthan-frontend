@@ -2,7 +2,10 @@
   display: flex;
   flex-direction: column;
 }
-
+.day-details-outer{
+  display: flex;
+  flex-direction: column;
+}
 .tabs {
   display: flex;
   position: sticky;
@@ -24,6 +27,7 @@
 }
 .content > p{
   font-size: 14px;
+  color: #9b9b9b;
 }
 
 .tabs .active-tab {
@@ -43,13 +47,14 @@
 }
 
 .day-details-inner {
-  display: flex;
-  align-items: center;
-  padding: 15px 20px;
-  font-size: 16px;
-  background-color: #63ab45;
-  font-weight: 900;
-  color: white;
+  display: flex
+  ;
+      align-items: center;
+      padding: 13px 18px;
+      font-size: 14px;
+      background-color: #63ab45;
+      font-weight: 900;
+      color: #fff;
 }
 
 .day-details-icluded {
@@ -59,20 +64,45 @@
 .content {
   display: flex;
   gap: 10px;
+  flex-direction: column;
+
+
+}
+
+.day-details .content img {
+  width: 100%; 
+  max-width: 200px; /* Limits the max width */
+  height: auto; /* Maintains aspect ratio */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Adds hover effect */
+}
+
+.day-details .content img:hover {
+  transform: scale(1.05); /* Slight zoom effect */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Elevated shadow */
+}
+.content-dayplan {
+  display: flex;
+  gap: 10px;
 
 
 }
 
 .day-plan-sidebar {
-  min-width: 160px;
+  min-width: 180px;
   border-right: 1px solid #ddd;
   padding: 1rem;
 
 }
+.day-plan-heading{
+  margin-bottom: 10px;
+  font-weight: 600;
+}
 
 .day-item {
-  position: sticky;
-  top: 210px;
+  margin-bottom: 10px;
+cursor: pointer;
   height: auto;
   font-size: 14px;
 }
@@ -163,14 +193,16 @@
   padding: 10px;
   border-right: 1px solid #ddd;
   background: #fff;
+ 
+}
+.day-plan-sidebar-days{
+  position: sticky;
+  top: 210px;
 }
 
 
 
-.day-item:hover {
-  background: #eaf4ff;
-  border-color: #007bff;
-}
+
 
 .section h3 {
   font-size: 1.5rem;
@@ -282,7 +314,7 @@
 
 @media (max-width: 470px) {
 
-  .content {
+  .content-dayplan {
     flex-direction: column;
   }
 

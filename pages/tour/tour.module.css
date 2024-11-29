@@ -1,10 +1,10 @@
-
 .tour-main {
   max-width: 1350px;
   margin-inline: auto;
   margin-top: 50px;
   padding-inline: 20px;
 }
+
 .tour-details-panel {
   display: flex;
   width: 100%;
@@ -97,7 +97,7 @@
 }
 
 .tour-booking-panel {
-  padding: 20px;
+
   border-radius: 10px;
   max-width: 400px;
   min-width: 300px;
@@ -251,7 +251,8 @@
   align-items: center;
   gap: 8px;
 }
-.tour-details-highliglits{
+
+.tour-details-highliglits {
   display: flex;
   flex-direction: column;
 
@@ -283,6 +284,9 @@
   }
 }
 
+body {
+  position: relative;
+}
 
 @media screen and (max-width: 990px) {
   .gallery {
@@ -292,12 +296,23 @@
     height: auto;
   }
 
+  .tour-booking-button-pannel {
+    position: fixed;
+    bottom: 0;
+    margin-bottom: 0px !important;
+    width: 96%;
+    background-color: #edf2de !important;
+    z-index: 999999;
+  }
+
   .gallery-banner {
     width: 100%;
   }
-.tab-panel{
-  flex-direction: column;
-}
+
+  .tab-panel {
+    flex-direction: column;
+  }
+
   .gallery-images {
     width: 100%;
   }
@@ -315,18 +330,21 @@
 
 
 @media screen and (max-width: 640px) {
-  .tour-details-inc-exc{
+  .tour-details-inc-exc {
     flex-direction: column;
   }
-  .tour-details-overview{
+
+  .tour-details-overview {
     font-size: 14px;
     line-height: 28px;
   }
-  .tabs button{
+
+  .tabs button {
     font-size: 14px !important;
     padding: 10px 10px !important;
   }
-  .tour-main{
+
+  .tour-main {
     padding-inline: 10px;
   }
 
@@ -388,6 +406,7 @@
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -500,15 +519,16 @@
 .tab-active {
   border-bottom: 3px solid #63ab45 !important;
   color: #63ab45;
-  
+
 }
-.tab-panel{
+
+.tab-panel {
   display: flex;
   gap: 20px;
 }
 
 .tab-content {
-  box-shadow:  0 2px 30px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 30px 0 rgba(0, 0, 0, 0.1);
   width: 100%;
 }
 
@@ -539,4 +559,229 @@
 .policies,
 .summary {
   padding: 20px;
+}
+.policies > h2{
+  margin-block: 10px;
+}
+.tour-booking-button-pannel {
+  padding: 20px;
+  background: linear-gradient(125deg, #63ab451a 0%, #fbb03b1a 100%);
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.tour-booking-button-pannel>button {
+
+  background-color: #63ab45;
+  outline: none;
+  border: none;
+  font-size: 12px;
+  color: white;
+  padding: 10px 40px;
+  border-radius: 5px;
+}
+
+.tour-booking-taxes {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14px;
+  margin-bottom: 8px;
+  color: #757575;
+
+}
+
+.tour-booking-price {
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 22px;
+  margin-bottom: 8px;
+}
+
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.dialog-box {
+  background: white;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 600px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+  max-height: 80vh; /* Limits the height to 80% of the viewport */
+  overflow-y: auto; /* Adds a vertical scrollbar when content exceeds max height */
+}
+
+.dialog-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #999;
+  transition: color 0.3s;
+}
+
+.dialog-close:hover {
+  color: #333;
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.dialog-header h3 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.dialog-details {
+  display: flex;
+  gap: 10px;
+}
+
+.dialog-badge {
+  
+  color: black;
+  background-color: #edf2de;
+  border-radius: 15px;
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+.dialog-rating {
+  color: #ff9800;
+  font-size: 14px;
+}
+
+.dialog-button-primary {
+  background-color: #63ab45;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.dialog-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.dialog-input {
+  border: 1px solid #ddd;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.dialog-counter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dialog-counter button {
+  background-color: #edf2de;
+  border: 1px solid #0056b3;
+  color: #0056b3;
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.dialog-counter button:hover {
+  background-color: #63ab45;
+  color: white;
+}
+
+.dialog-counter span {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.dialog-room-section {
+  border-top: 1px solid #ddd;
+  padding-top: 15px;
+  margin-top: 15px;
+}
+
+.dialog-room {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #63ab45;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.dialog-room > span{
+  color: white;
+}
+
+.dialog-link {
+  color: #0056b3;
+  text-decoration: none;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.dialog-link:hover {
+  text-decoration: underline;
+}
+.dialog-remove-room {
+  background: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.dialog-remove-room:hover {
+  background: #ff9999;
+}
+
+.dialog-link {
+  background: none;
+  border: none;
+  color: #0056b3;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.dialog-link:hover {
+  text-decoration: underline;
 }

@@ -90,6 +90,7 @@ const TourPage = ({ tourAllData }) => {
         />
       </div>
 
+
       {/* Tabs */}
       <div className={styles['tabs']}>
         <button
@@ -114,37 +115,60 @@ const TourPage = ({ tourAllData }) => {
 
       {/* Tab Content */}
       <div className={styles['tab-panel']}>
-      <div className={styles['tab-content']}>
-        {activeTab === 'Itinerary' && (
-          <Itinerary categoryDetails={categoryDetails.itineraries
-          } date={date} />
-        )}
+        <div className={styles['tab-content']}>
+          {activeTab === 'Itinerary' && (
+            <Itinerary categoryDetails={categoryDetails.itineraries
+            } date={date} />
+          )}
 
-        {activeTab === 'Policies' && (
-          <div className={styles['policies']}>
-            <h2>Policies</h2>
-            <p>{tourData.policies}</p>
-          </div>
-        )}
+          {activeTab === 'Policies' && (
+            <div className={styles['policies']}>
+              <h2>Canecellation Policies</h2>
+              <p>{categoryDetails.
+                cancellationPolicy
+              }</p>
 
-        {activeTab === 'Summary' && (
-          <div className={styles['summary']}>
-            <h2>Summary</h2>
-            <p>{tourData.summary}</p>
-          </div>
-        )}
-      </div>
-   
+              {/* <h2>Terms and Conditions</h2>
+              <p>{tourAllData[0].termsAndConditions}</p> */}
+              <h2>Know before you go</h2>
+              <p>{tourAllData[0].
+                knowBeforeYouGo?.map((text) => {
+                  return (
+
+                    <>
+                      <p>{text}</p>
+                    </>
+                  )
+                })}</p>
+            </div>
+          )}
+
+          {activeTab === 'Summary' && (
+            <div className={styles['summary']}>
+              <h2>Know before you go</h2>
+              <p>{tourAllData[0].
+                knowBeforeYouGo?.map((text) => {
+                  return (
+
+                    <>
+                      <p>{text}</p>
+                    </>
+                  )
+                })}</p>
+            </div>
+          )}
+        </div>
+
 
         <TourBookingPanel
           availability={tourAllData.availability}
           uuid={tourAllData[0].uuid && tourAllData[0].uuid}
           categoryDetails={categoryDetails}
         />
-    
+
 
       </div>
-     
+
     </div>
   );
 };

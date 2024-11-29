@@ -293,14 +293,21 @@
   }
 
   .tour-booking-button-pannel {
-    position: fixed;
-    bottom: 0;
+    position: fixed !important;
+   bottom: 0;
+   justify-content: space-between;
+   top: auto !important;
+   display: flex;
+   padding: 10px !important;
     margin-bottom: 0px !important;
     width: 96%;
     background-color: #edf2de !important;
     z-index: 999999;
+    align-items: center;
   }
-
+  .tour-booking-button-pannel > button {
+padding: 10px 20px !important;
+  }
   .gallery-banner {
     width: 100%;
   }

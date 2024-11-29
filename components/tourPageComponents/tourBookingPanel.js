@@ -5,57 +5,28 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toast, ToastContainer } from 'react-toastify';
 import { SiOnstar } from 'react-icons/si';
 const TourBookingPanel = ({ uuid, categoryDetails }) => {
-  console.log(categoryDetails)
+  const [rooms, setRooms] = useState({
+    id: 1,
+    extraBeds: 0,
+    adults: 4,
+    children: 0,
+  });
 
-  const [rooms, setRooms] = useState([
-    { id: 1, adults: 1, children: 0, extraBeds: 0 }
-  ]);
-  const [totalPrice, setTotalPrice] = useState(categoryDetails?.pricing[3]?.price);
+  const [totalPrice, setTotalPrice] = useState(
+    categoryDetails?.pricing[rooms.adults - 1]?.price || 0
+  );
+  const updateRoom = (type, value) => {
+    setRooms((prev) => {
+      const updatedRooms = {
+        ...prev,
+        [type]: Math.max(1, prev[type] + value), 
+      };
+      const updatedPrice = categoryDetails?.pricing[updatedRooms.adults]?.price || 0;
+      setTotalPrice(updatedPrice);
 
-  function calculateInitialPrice(itineraries) {
-    return itineraries.reduce((total, day) => {
-      // Use pricing[3] if it exists, otherwise fallback to 0
-      const price = day.pricing && day.pricing[3] ? parseInt(day.pricing[3].price || 0) : 0;
-      return total + price;
-    }, 0);
-  }
-
-
-  // Add a new room
-  const handleAddRoom = () => {
-    const newRoom = { adults: 1, children: 0 };
-    setRooms((prevRooms) => [...prevRooms, newRoom]);
-
-    // Recalculate the total price
-    const newPrice = itineraries.reduce((total, day) => {
-      return total + parseInt(day.hotel.beds.doubleBed.price || 0);
-    }, 0);
-    setTotalPrice((prevPrice) => prevPrice + newPrice);
+      return updatedRooms;
+    });
   };
-  // Function to update room values
-  const updateRoom = (roomId, field, value) => {
-    setRooms((prevRooms) =>
-      prevRooms.map((room) =>
-        room.id === roomId
-          ? { ...room, [field]: Math.max(0, room[field] + value) } // Ensure value doesn't go below 0
-          : room
-      )
-    );
-  };
-
-  // Function to add a new room
-  const addRoom = () => {
-    setRooms((prevRooms) => [
-      ...prevRooms,
-      { id: prevRooms.length + 1, adults: 1, children: 0, extraBeds: 0 }
-    ]);
-  };
-
-  // Function to remove a room
-  const removeRoom = (roomId) => {
-    setRooms((prevRooms) => prevRooms.filter((room) => room.id !== roomId));
-  };
-
   const [showDialouge, setShowDialouge] = useState(false)
   const [formData, setFormData] = useState({
     fullName: '',
@@ -114,18 +85,25 @@ const TourBookingPanel = ({ uuid, categoryDetails }) => {
       <div className={styles['tour-booking-panel-outer']}>
 
         <div className={styles['tour-booking-button-pannel']}>
+          <div>
+            <p className={styles['tour-booking-price']}>
 
-          <p className={styles['tour-booking-price']}>
+              ₹ {totalPrice}
+            </p>
+            <p className={styles['tour-booking-taxes']}>Excluding applicable taxes</p>
+          </div>
 
-            ₹ {totalPrice}
-          </p>
-          <p className={styles['tour-booking-taxes']}>Excluding applicable taxes</p>
-          <button onClick={() => setShowDialouge(true)}>PROCEED TO PAYMENT</button>
+          <button onClick={() => setShowDialouge(true)}>Book Now</button>
         </div>
         {showDialouge && (
           <div className={styles["dialog-overlay"]}>
             <div className={styles["dialog-box"]}>
-              <button className={styles["dialog-close"]} onClick={() => setShowDialouge(false)}>&times;</button>
+              <button
+                className={styles["dialog-close"]}
+                onClick={() => setShowDialouge(false)}
+              >
+                &times;
+              </button>
               <div className={styles["dialog-header"]}>
                 <h3>7N-8D Royal Uttarakhand Package</h3>
                 <h4>Total Price: ₹{totalPrice}</h4>
@@ -137,67 +115,44 @@ const TourBookingPanel = ({ uuid, categoryDetails }) => {
               </div>
 
               <div className={styles["dialog-content"]}>
-                {rooms.map((room) => (
-                  <div key={room.id} className={styles["dialog-room-section"]}>
-                    <div className={styles["dialog-room"]}>
-                      <span>Room {room.id}</span>
-                      <span>
-                        {room.adults} Adult / {room.children} Children
-                      </span>
-                      {rooms.length > 1 && (
-                        <button
-                          className={styles["dialog-remove-room"]}
-                          onClick={() => removeRoom(room.id)}
-                        >
-                          Remove Room
-                        </button>
-                      )}
-                    </div>
 
-                    <div className={styles["dialog-row"]}>
-                      <label>Extra Bed</label>
-                      <div className={styles["dialog-counter"]}>
-                        <button onClick={() => updateRoom(room.id, "extraBeds", -1)}>
-                          -
-                        </button>
-                        <span>{room.extraBeds}</span>
-                        <button onClick={() => updateRoom(room.id, "extraBeds", 1)}>
-                          +
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className={styles["dialog-row"]}>
-                      <label>Adult</label>
-                      <div className={styles["dialog-counter"]}>
-                        <button onClick={() => updateRoom(room.id, "adults", -1)}>
-                          -
-                        </button>
-                        <span>{room.adults}</span>
-                        <button onClick={() => updateRoom(room.id, "adults", 1)}>
-                          +
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className={styles["dialog-row"]}>
-                      <label>Children</label>
-                      <div className={styles["dialog-counter"]}>
-                        <button onClick={() => updateRoom(room.id, "children", -1)}>
-                          -
-                        </button>
-                        <span>{room.children}</span>
-                        <button onClick={() => updateRoom(room.id, "children", 1)}>
-                          +
-                        </button>
-                      </div>
+                <div key={rooms.id} className={styles["dialog-room-section"]}>
+                  <div className={styles["dialog-row"]}>
+                    <label>Adult</label>
+                    <div className={styles["dialog-counter"]}>
+                      <button onClick={() => updateRoom("adults", -1)}>-</button>
+                      <span>{rooms.adults}</span>
+                      <button onClick={() => updateRoom("adults", 1)}>+</button>
                     </div>
                   </div>
-                ))}
 
-                <button className={styles["dialog-link"]} onClick={addRoom}>
-                  Add a room
-                </button>
+                  <div className={styles["dialog-row"]}>
+                    <label>Adult</label>
+                    <div className={styles["dialog-counter"]}>
+                      <button onClick={() => updateRoom(categoryDetails?.pricing[rooms.adults] + 1, "adults", -1)}>
+                        -
+                      </button>
+                      <span>{rooms.adults}</span>
+                      <button onClick={() => updateRoom(categoryDetails?.pricing[rooms.adults] + 1, "adults", 1)}>
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className={styles["dialog-row"]}>
+                    <label>Children</label>
+                    <div className={styles["dialog-counter"]}>
+                      <button onClick={() => updateRoom(rooms.id, "children", -1)}>
+                        -
+                      </button>
+                      <span>{rooms.children}</span>
+                      <button onClick={() => updateRoom(rooms.id, "children", 1)}>
+                        +
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>

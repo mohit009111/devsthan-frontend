@@ -309,8 +309,11 @@
 
     .home-banner {
         padding-inline: 15px;
-        height: 500px;
+        height: 620px;
         margin-top: 10px;
+    }
+    .banner-inner{
+        height: 475px;
     }
 
     .search-headings-tour {

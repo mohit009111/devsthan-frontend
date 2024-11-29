@@ -1,57 +1,72 @@
-import React, { useState,useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import Meals from '../tourPageComponents/meals'
 import styles from './itinery.module.css';
 import Transfers from '../tourPageComponents/transfers'
 import Hotels from '../tourPageComponents/hotels'
 import DayPlan from '../tourPageComponents/dayPlan';
-
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 const Itinerary = ({ categoryDetails, date }) => {
   console.log(categoryDetails)
+
   const dayRefs = useRef([]); // Array of refs for each day
 
   const handleDayClick = (index) => {
     setSelectedDay(index);
 
     // Scroll to the corresponding DayPlan
-    dayRefs.current[index-1]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    dayRefs.current[index - 1]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   const [activeTab, setActiveTab] = useState('day-plan');
   const [selectedDay, setSelectedDay] = useState(0);
-
+  const settings = {
+    dots: false,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  };
   return (
 
     <div className={styles['itinerary']}>
       {/* Tabs */}
       <div className={styles['tabs']}>
-
-        <button
-
-          className={activeTab === "day-plan" ? styles['active-tab'] : ''}
-          onClick={() => setActiveTab("day-plan")}
-        >
-          <p>{`${categoryDetails.length} Day Plan`}</p>
-        </button>
-        <button
-
-          className={activeTab === "transfer" ? styles['active-tab'] : ''}
-          onClick={() => setActiveTab("transfer")}
-        >
-          <p>Transfers</p>
-        </button>
-        <button
-          className={activeTab === "hotel" ? styles['active-tab'] : ''}
-          onClick={() => setActiveTab("hotel")}
-        >
-          <p>1 Hotel</p>
-        </button>
-        <button
-          className={activeTab === "meal" ? styles['active-tab'] : ''}
-          onClick={() => setActiveTab("meal")}
-        >
-          <p>Meals</p>
-        </button>
-
+        {/* <Slider {...settings}> */}
+          <button
+            className={activeTab === "day-plan" ? styles['active-tab'] : ''}
+            onClick={() => setActiveTab("day-plan")}
+          >
+            <p>{`${categoryDetails.length} Day Plan`}</p>
+          </button>
+          <button
+            className={activeTab === "transfer" ? styles['active-tab'] : ''}
+            onClick={() => setActiveTab("transfer")}
+          >
+            <p>Transfers</p>
+          </button>
+          <button
+            className={activeTab === "hotel" ? styles['active-tab'] : ''}
+            onClick={() => setActiveTab("hotel")}
+          >
+            <p>1 Hotel</p>
+          </button>
+          <button
+            className={activeTab === "meal" ? styles['active-tab'] : ''}
+            onClick={() => setActiveTab("meal")}
+          >
+            <p>Meals</p>
+          </button>
+        {/* </Slider> */}
       </div>
 
       {/* Content */}
@@ -74,7 +89,7 @@ const Itinerary = ({ categoryDetails, date }) => {
                 <div
                   key={index}
                   className={`${styles['day-item']} ${selectedDay === index ? styles['active-day'] : ''}`}
-             onClick={() => handleDayClick(index)}
+                  onClick={() => handleDayClick(index)}
                 >
                   <div>{`${day.day + parseInt(dayPart, 10)}-${monthPart}-${yearPart}`}</div>
                 </div>
@@ -90,8 +105,8 @@ const Itinerary = ({ categoryDetails, date }) => {
             categoryDetails.map((itinerary, index) => {
               return (
                 <div key={index} ref={(el) => (dayRefs.current[index] = el)}>
-                <DayPlan itinerary={itinerary} />
-              </div>
+                  <DayPlan itinerary={itinerary} />
+                </div>
               );
             })
           )}
@@ -104,9 +119,9 @@ const Itinerary = ({ categoryDetails, date }) => {
             categoryDetails.map((itinerary, index) => {
               return (
                 <div key={index} ref={(el) => (dayRefs.current[index] = el)}>
-                    <Transfers key={index} itinerary={itinerary} />
-              </div>
-          
+                  <Transfers key={index} itinerary={itinerary} />
+                </div>
+
               );
             })
           )}
@@ -119,9 +134,9 @@ const Itinerary = ({ categoryDetails, date }) => {
             categoryDetails.map((itinerary, index) => {
               return (
                 <div key={index} ref={(el) => (dayRefs.current[index] = el)}>
-                <Hotels key={index} itinerary={itinerary} />
-          </div>
-               
+                  <Hotels key={index} itinerary={itinerary} />
+                </div>
+
               );
             })
           )}
@@ -129,14 +144,14 @@ const Itinerary = ({ categoryDetails, date }) => {
         <div>
 
 
-{activeTab === "meal" && (
-  categoryDetails.map((itinerary, index) => {
-    return (
-      <Meals key={index} itinerary={itinerary} />
-    );
-  })
-)}
-</div>
+          {activeTab === "meal" && (
+            categoryDetails.map((itinerary, index) => {
+              return (
+                <Meals key={index} itinerary={itinerary} />
+              );
+            })
+          )}
+        </div>
 
 
 

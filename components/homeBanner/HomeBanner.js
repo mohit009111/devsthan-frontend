@@ -13,6 +13,7 @@ import { MdFlight } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown, MdOutlineArrowForwardIos, MdOutlineArrowBackIos } from "react-icons/md";
 import TourSearch from '../searchbar-components/tour-search';
 import Search from '../search/search'
+import { Autoplay } from 'swiper/modules';
 const BannerInner = styled(Slider)`
 height:100% !important;
  border-radius: 30px;
@@ -50,6 +51,7 @@ const PrevArrow = ({ onClick }) => (
 );
 const HomeBanner = ({ locations, homebanner }) => {
     const [selected, setSelected] = useState("Tour")
+    const [showComminSoon, setShowComminSoon] = useState(false)
     console.log(selected)
     const headings = [
         { title: 'Tour', isAvailable: true, icon: FiMapPin },
@@ -62,6 +64,10 @@ const HomeBanner = ({ locations, homebanner }) => {
         infinite: true,
         slidesToShow: 1,
         slidesToScroll: 1,
+        autoplay: true, // Enable autoplay
+        autoplaySpeed: 10000, // Set autoplay interval (in milliseconds)
+        speed: 500, // Transition speed
+        fade: true, // Enable fade transition
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />,
     };
@@ -89,29 +95,47 @@ const HomeBanner = ({ locations, homebanner }) => {
                 </BannerInner>
 
             </div>
-            <div className={styles['search-bar']} >
+            <div className={styles['search-bar']}>
+  <div className={styles['search-headings']}>
+  {headings.map((heading, index) => (
+  <div
+    key={index}
+    className={`${styles['search-headings-tour']} 
+      ${selected === heading.title ? styles['search-headings-tour-selected'] : styles['unavailable']}
+    `}
+    onClick={() => {
+      if (!heading.isAvailable) {
+        setSelected(heading.title);
+        setShowComminSoon(true); // Trigger the "Coming Soon" state
+    
+      } else {
+        setShowComminSoon(false); // Ensure "Coming Soon" state is hidden
+        setSelected(heading.title); // Update the selected heading
+      }
+    }}
+  >
+    {/* Conditionally display "Coming Soon" message if selected and unavailable */}
+    {selected === heading.title && showComminSoon && (
+      <p className={styles['coming-soon']}>Coming Soon</p>
+    )}
 
-                <div className={styles['search-headings']}>
-                    {headings.map((heading, index) => (
-                        <div
-                            key={index}
-                            className={`${styles['search-headings-tour']} 
-                ${selected === heading.title ? styles['search-headings-tour-selected'] : styles['unavailable']}
-            `}
-                            onClick={() => setSelected(heading.title)}
-                        >
-                            {heading.isAvailable === false ? <p className={styles['coming-soon']}>Coming Soon</p> : null}
+    {/* Render the heading icon */}
+    {React.createElement(heading.icon, { className: styles['icon-class'] })}
+
+    {/* Display the heading title */}
+    <p>{heading.title}</p>
+  </div>
+))}
+
+  </div>
+
+  <TourSearch locations={locations} />
+
+  {/* Conditional rendering based on selected type */}
+  {/* {['Hotel', 'Bus', 'Flight'].includes(selected) && <Search />} */}
+</div>
 
 
-                            {React.createElement(heading.icon, { className: styles['icon-class'] })}
-                            <p>{heading.title}</p>
-                        </div>
-                    ))}
-                </div>
- <TourSearch locations={locations} /> 
-                {/* {selected == "Hotel" || "Bus" || "Flight" ? <Search /> : null} */}
-
-            </div>
 
         </div>
     )

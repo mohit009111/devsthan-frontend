@@ -857,11 +857,11 @@ padding: 10px 20px !important;
 
 }
 
-:global(input) {
+/* :global(input) {
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ddd;
-}
+} */
 
 .customize-dialog-button {
   background: #63ab45;

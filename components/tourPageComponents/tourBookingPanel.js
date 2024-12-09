@@ -4,62 +4,156 @@ import { apiCall } from '../../utils/common';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast, ToastContainer } from 'react-toastify';
 import { SiOnstar } from 'react-icons/si';
-const TourBookingPanel = ({ uuid, categoryDetails,name,duration }) => {
+import { useRouter } from 'next/router';
+
+import CustomizedQuery from './customizedQuery';
+import { v4 as uuidv4 } from 'uuid';
+const TourBookingPanel = ({ uuid, categoryDetails, name, duration, category,date }) => {
+  const [roomsCount, setRoomsCount] = useState(1);
+  const [loading, setLoading] = useState(false)
+  const [showCustomizeDialog, setShowCustomizeDialog] = React.useState(false);
   const [rooms, setRooms] = useState({
     id: 1,
     extraBeds: 0,
     adults: 1,
     children: 0,
   });
-  
+  const router = useRouter();
   const [totalPrice, setTotalPrice] = useState(
     categoryDetails?.pricing.find((p) => p.person === rooms.adults)?.price || 0
   );
-  
+
+  const handleBookNow = async () => {
+    // Prepare user-selected data
+    const userSelected = {
+      category: category,
+      adults: rooms.adults,
+      children: rooms.children,
+      tourId: uuid,
+     
+    };
+
+    // Check if localStorage contains a token
+    const token = localStorage.getItem('token'); // Replace 'token' with the actual key used for token
+
+    // Generate userTempId if token is not available
+    const userTempId = token ? null : uuidv4();
+
+    // Add userTempId or token as separate keys in the object
+    const requestBody = {
+      ...userSelected,
+      ...(token ? { token } : { userTempId }), // Add token or userTempId depending on availability
+    };
+
+    try {
+      // Make API call to add to cart
+      const response = await apiCall({
+        endpoint: '/api/addToCart',
+        method: 'POST',
+        body: requestBody,
+      });
+
+
+      if (response.success) {
+        toast.success('Added to cart successfully!');
+
+        // Store userTempId in local storage if token doesn't exist
+        if (!token && userTempId) {
+          localStorage.setItem('userTempId', userTempId);
+        
+        }
+        const queryParams = {
+                
+         data:date
+        };
+        router.push({
+          pathname: '/bookingDetails',
+          query: queryParams,
+        });
+      
+      } else {
+        toast.error("Session expired? Please login again");
+      }
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      toast.error('An error occurred. Please try again.');
+    }
+  };
+
+
   const updateRoom = (type, value) => {
     setRooms((prev) => {
-      // Get the maximum number of people allowed (sum of adults and children)
-      const maxPersons = Math.max(...categoryDetails.pricing.map((p) => p.person)); 
-    
-      // Calculate the updated value for the type (either adults or children)
-      const updatedValue = prev[type] + value;
-    
-      // Ensure the updated value is not negative
-      if (updatedValue < 0) {
-        return prev; // Do not allow negative values
+      // Calculate the new value for the type (adults or children)
+      let newValue = prev[type] + value;
+
+      // Find the total number of persons (adults + children) after update
+      const totalPersons = prev.adults + prev.children;
+
+      // Find the pricing for the updated total number of persons (adults + children)
+      const pricingForTotalPersons = categoryDetails.pricing.find(
+        (p) => p.person === totalPersons + value
+      );
+
+      // If pricing is found, get the max allowed persons
+      const maxAllowedPersons = pricingForTotalPersons ? pricingForTotalPersons.person : 0;
+
+      // Ensure newValue does not exceed max allowed persons
+      if (type === "adults") {
+        const maxAllowedAdults = maxAllowedPersons - prev.children;
+        // Ensure total adults do not exceed max allowed adults
+        newValue = Math.min(newValue, maxAllowedAdults);
+      } else if (type === "children") {
+        const maxAllowedChildren = maxAllowedPersons - prev.adults;
+        // Ensure total children do not exceed max allowed children
+        newValue = Math.min(newValue, maxAllowedChildren);
       }
-    
-      // Ensure that the total number of adults and children does not exceed maxPersons
-      if (type === "adults" && updatedValue + prev.children > maxPersons) {
-        return prev; // Do not update if the total exceeds the maxPersons
-      }
-    
-      if (type === "children" && prev.adults + updatedValue > maxPersons) {
-        return prev; // Do not update if the total exceeds the maxPersons
-      }
-    
-      // Update the rooms state
+
+      // Prevent negative values (ensure new value is at least 0)
+      newValue = Math.max(0, newValue);
+
+      // Create updatedRooms object with new values
       const updatedRooms = {
         ...prev,
-        [type]: updatedValue,
+        [type]: newValue,
       };
-    
-      // Calculate total price: Adults + Half price for Children
-      const adultPrice = categoryDetails?.pricing.find((p) => p.person === updatedRooms.adults)?.price || 0;
-      console.log(adultPrice)
-      // Find the price for one person (used for children)
-      const pricePerPerson = categoryDetails?.pricing.find((p) => p.person === updatedRooms.adults)?.price || 0;
-  
-      // Calculate children price as half of the price per person
-      const childrenPrice = (updatedRooms.children * pricePerPerson) / 2;
-    
-      // Set the total price
-      setTotalPrice(adultPrice - childrenPrice/4);
-    
+
+      // Total persons after the update
+      const totalPersonsUpdated = updatedRooms.adults + updatedRooms.children;
+
+      // Find pricing and room info based on updated total persons
+      const pricing = categoryDetails.pricing.find(
+        (p) => p.person === totalPersonsUpdated
+      );
+
+      const priceForTotalPersons = pricing ? pricing.price : 0;
+      const roomsForTotalPersons = pricing ? pricing.rooms : 0;
+
+      // Calculate per person price and child price
+      const perPersonPrice =
+        totalPersonsUpdated > 0 ? priceForTotalPersons / totalPersonsUpdated : 0;
+      const childPrice = perPersonPrice / 2;
+
+      // Add extra bed cost (assuming fixed cost per bed, e.g., 2000)
+      const extraBedCost = updatedRooms.extraBeds * 2000;
+
+      // Total price calculation
+      const computedTotalPrice =
+        updatedRooms.adults * perPersonPrice +
+        updatedRooms.children * childPrice +
+        extraBedCost;
+
+      console.log("Updated Rooms:", updatedRooms);
+      console.log("Computed Total Price:", computedTotalPrice);
+      console.log("Rooms for Total Persons:", roomsForTotalPersons); // Log the number of rooms
+
+      // Update the total price and the number of rooms to display
+      setTotalPrice(Math.round(computedTotalPrice));
+      setRoomsCount(roomsForTotalPersons); // Update the room count based on selected total persons
+
       return updatedRooms;
     });
   };
-  
+
   const [showDialouge, setShowDialouge] = useState(false)
   const [formData, setFormData] = useState({
     fullName: '',
@@ -119,14 +213,11 @@ const TourBookingPanel = ({ uuid, categoryDetails,name,duration }) => {
 
         <div className={styles['tour-booking-button-pannel']}>
           <div>
-            <p className={styles['tour-booking-price']}>
-
-              ₹ {totalPrice}
-            </p>
+            <p className={styles['tour-booking-price']}>₹ {totalPrice}</p>
             <p className={styles['tour-booking-taxes']}>Excluding applicable taxes</p>
           </div>
-
           <button onClick={() => setShowDialouge(true)}>Book Now</button>
+          <button onClick={() => setShowCustomizeDialog(true)}>Customize Tour</button>
         </div>
         {showDialouge && (
           <div className={styles["dialog-overlay"]}>
@@ -139,15 +230,26 @@ const TourBookingPanel = ({ uuid, categoryDetails,name,duration }) => {
               </button>
               <div className={styles["dialog-header"]}>
                 <div>
-
-                <h3>{name}</h3>
-                <h4>Total Price: ₹{totalPrice}</h4>
+                  <h3>{name}</h3>
+                  <h4>Total Price: ₹{totalPrice}</h4>
+                  <div className={styles["dialog-row"]}>
+                    <label>Number of Rooms</label>
+                    <div className={styles["dialog-counter"]}>
+                      <span>{roomsCount}</span>
+                    </div>
                   </div>
+                </div>
                 <div className={styles["dialog-details"]}>
                   <span className={styles["dialog-badge"]}>{duration}</span>
-                
                 </div>
-                <button className={styles["dialog-button-primary"]}>Book Now</button>
+                <button
+                  className={styles["dialog-button-primary"]}
+                  onClick={handleBookNow}
+                  disabled={loading} // Optionally disable the button while loading
+                >
+                  {loading ? 'Adding to Cart...' : 'Book Now'}
+                </button>
+                <ToastContainer position="top-right" autoClose={3000} />
               </div>
 
               <div className={styles["dialog-content"]}>
@@ -162,25 +264,26 @@ const TourBookingPanel = ({ uuid, categoryDetails,name,duration }) => {
                     </div>
                   </div>
 
-                 
-
                   <div className={styles["dialog-row"]}>
                     <label>Children</label>
                     <div className={styles["dialog-counter"]}>
-                      <button onClick={() => updateRoom( "children", -1)}>
-                        -
-                      </button>
+                      <button onClick={() => updateRoom("children", -1)}>-</button>
                       <span>{rooms.children}</span>
-                      <button onClick={() => updateRoom( "children", 1)}>
-                        +
-                      </button>
+                      <button onClick={() => updateRoom("children", 1)}>+</button>
                     </div>
                   </div>
+
+
+
                 </div>
 
               </div>
             </div>
           </div>
+        )}
+        {showCustomizeDialog && (
+          <CustomizedQuery uuid={uuid} />
+
         )}
 
 

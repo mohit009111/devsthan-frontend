@@ -16,10 +16,21 @@ export default function TourCard({ duration, location, imageUrl, title, starting
   const [selectedDate, setSelectedDate] = useState(null);
 
   // Format date as dd-MM-yyyy
-  
+
   const formatDate = (date) => {
     const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
     return new Intl.DateTimeFormat('en-GB', options).format(date).replace(/\//g, '-');
+  };
+
+  const handleGoToTour = () => {
+    if (selectedDate) {
+      localStorage.setItem('selectedDate', formatDate(selectedDate));
+      
+
+    
+      // Navigate to the tour page
+      window.location.href = `/tour/${uuid}`;
+    }
   };
 
   // Open the dialog
@@ -88,24 +99,18 @@ export default function TourCard({ duration, location, imageUrl, title, starting
               dateFormat="dd-MM-yyyy"
               className={styles['datepicker-input']}
             />
-          <div className={styles['dialog-actions']}>
-  <button onClick={closeDialog} className={styles['close-btn']}>Cancel</button>
-  {selectedDate ? (
-    <Link
-      href={{
-        pathname: `/tour/${uuid}`,
-        query: { date: formatDate(selectedDate) }, // Send formatted date
-      }}
-      passHref
-    >
-      <button className={styles['confirm-btn']}>Go to Tour</button>
-    </Link>
-  ) : (
-    <button disabled className={styles['confirm-btn-disabled']}>
-      Select a Date
-    </button>
-  )}
-</div>
+            <div className={styles['dialog-actions']}>
+              <button onClick={closeDialog} className={styles['close-btn']}>Cancel</button>
+              {selectedDate ? (
+                <button className={styles['confirm-btn']} onClick={handleGoToTour}>
+                  Go to Tour
+                </button>
+              ) : (
+                <button disabled className={styles['confirm-btn-disabled']}>
+                  Select a Date
+                </button>
+              )}
+            </div>
           </div>
         </div>
       )}

@@ -1,0 +1,78 @@
+.bookedTourPage {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .bookedTourPage .header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .bookedTourPage .header h1 {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin-bottom: 10px;
+  }
+  
+  .bookedTourPage .header p {
+    font-size: 1rem;
+    color: #7f8c8d;
+  }
+  
+  .bookedTourPage .form-section {
+    margin-bottom: 20px;
+  }
+  
+  .bookedTourPage .form-section-title {
+    font-size: 1.4rem;
+    color: #34495e;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 5px;
+  }
+  
+  .bookedTourPage .input-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .bookedTourPage .input-group label {
+    font-size: 1rem;
+    color: #34495e;
+    font-weight: bold;
+    flex: 1;
+  }
+  
+  .bookedTourPage .input-group span {
+    font-size: 1rem;
+    color: #2c3e50;
+    flex: 1;
+    text-align: right;
+  }
+  
+  .bookedTourPage .input-group.total span {
+    font-size: 1.2rem;
+    color: #e74c3c;
+    font-weight: bold;
+  }
+  
+  .bookedTourPage .footer {
+    text-align: center;
+    background: #ecf0f1;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+  }
+  
+  .bookedTourPage .footer p {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+  }
+  

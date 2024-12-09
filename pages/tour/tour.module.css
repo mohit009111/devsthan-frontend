@@ -793,3 +793,141 @@ padding: 10px 20px !important;
 .dialog-link:hover {
   text-decoration: underline;
 }
+
+
+
+.customize-dialog-container {
+  display: flex;
+  flex-wrap: wrap;
+  background: #fff;
+  max-width: 1100px;
+  margin: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  
+}
+
+.customize-dialog-left {
+  background: #f8f9fa;
+  flex: 1;
+  padding: 20px;
+}
+
+.customize-dialog-right {
+  background-color: #edf2de ;
+  color: #fff;
+ max-width: 550px;
+ width: 100%;
+ margin-inline: 20px;
+  padding: 20px;
+  border-radius: 8px;
+
+}
+
+.customize-dialog-title {
+  margin-bottom: 10px;
+  color: black;
+}
+
+.customize-dialog-list {
+  list-style: none;
+  padding: 0;
+}
+
+.customize-dialog-list li {
+  padding: 10px 0;
+  line-height: 1.5;
+}
+
+.highlight-text {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  color: black;
+  margin-bottom: 15px;
+}
+.form-group > label{
+  margin-block: 5px;
+  font-size: 14px;
+
+}
+
+:global(input) {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.customize-dialog-button {
+  background: #63ab45;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.customize-dialog-button:hover {
+  background: #e76f51;
+}
+
+.approval-section {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.approval-section img {
+  width: 60px;
+  margin: 5px;
+}
+
+.approval-section p {
+  font-size: 14px;
+  color: black;
+  line-height: 1.6;
+}
+.success-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: #f0f8ff; /* Light blue background */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  margin: 20px 0;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.success-message h3 {
+  color: #2e7d32; /* Success green */
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.success-message p {
+  color: #333; /* Dark text color */
+  font-size: 1.2rem;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

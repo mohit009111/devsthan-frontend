@@ -9,9 +9,10 @@ import { useRouter } from 'next/router';
 import Itinerary from '../../components/itinery/itinery';
 
 const TourPage = ({ tourAllData }) => {
-  console.log(tourAllData)
- 
+
+
   const router = useRouter();
+
   const { date } = router.query;
 
   const [selectedCategory, setSelectedCategory] = useState('standardDetails');
@@ -25,7 +26,7 @@ const TourPage = ({ tourAllData }) => {
       selectedCategory === 'deluxeDetails' ? tourAllData[0].deluxeDetails :
         selectedCategory === 'premiumDetails' ? tourAllData[0].premiumDetails :
           null;
-
+     
 
   return (
     <div className={styles['tour-main']}>
@@ -112,9 +113,8 @@ const TourPage = ({ tourAllData }) => {
 
         <TourBookingPanel
           duration={tourAllData[0].duration}
-       
-       
-        
+          date={date}
+        category={selectedCategory}
           state={tourAllData[0].state}
           city={tourAllData[0].city}
           location={tourAllData[0].location}

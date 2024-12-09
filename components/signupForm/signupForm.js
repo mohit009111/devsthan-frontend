@@ -6,7 +6,7 @@ import { apiCall } from "../../utils/common";
 import { toast } from 'react-toastify';
 import { useRouter } from "next/router";
 import Link from "next/link";
-const signupForm = ({  isComponent, toggleToSignup  }) => {
+const SignupForm = ({  isComponent, toggleToSignup  }) => {
   const router=useRouter()
     const [formData, setFormData] = useState({
         name: "",
@@ -323,4 +323,4 @@ const signupForm = ({  isComponent, toggleToSignup  }) => {
   )
 }
 
-export default signupForm
+export default SignupForm

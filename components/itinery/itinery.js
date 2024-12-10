@@ -42,30 +42,30 @@ const Itinerary = ({ categoryDetails, date }) => {
       {/* Tabs */}
       <div className={styles['tabs']}>
         {/* <Slider {...settings}> */}
-          <button
-            className={activeTab === "day-plan" ? styles['active-tab'] : ''}
-            onClick={() => setActiveTab("day-plan")}
-          >
-            <p>{`${categoryDetails.length} Day Plan`}</p>
-          </button>
-          <button
-            className={activeTab === "transfer" ? styles['active-tab'] : ''}
-            onClick={() => setActiveTab("transfer")}
-          >
-            <p>Transfers</p>
-          </button>
-          <button
-            className={activeTab === "hotel" ? styles['active-tab'] : ''}
-            onClick={() => setActiveTab("hotel")}
-          >
-            <p>1 Hotel</p>
-          </button>
-          <button
-            className={activeTab === "meal" ? styles['active-tab'] : ''}
-            onClick={() => setActiveTab("meal")}
-          >
-            <p>Meals</p>
-          </button>
+        <button
+          className={activeTab === "day-plan" ? styles['active-tab'] : ''}
+          onClick={() => setActiveTab("day-plan")}
+        >
+          <p>{`${categoryDetails.length} Day Plan`}</p>
+        </button>
+        <button
+          className={activeTab === "transfer" ? styles['active-tab'] : ''}
+          onClick={() => setActiveTab("transfer")}
+        >
+          <p>Transfers</p>
+        </button>
+        <button
+          className={activeTab === "hotel" ? styles['active-tab'] : ''}
+          onClick={() => setActiveTab("hotel")}
+        >
+          <p>1 Hotel</p>
+        </button>
+        <button
+          className={activeTab === "meal" ? styles['active-tab'] : ''}
+          onClick={() => setActiveTab("meal")}
+        >
+          <p>Meals</p>
+        </button>
         {/* </Slider> */}
       </div>
 
@@ -74,31 +74,30 @@ const Itinerary = ({ categoryDetails, date }) => {
         {/* Day Plan Sidebar */}
         <div className={styles['day-plan-sidebar']}>
           <div className={styles['day-plan-sidebar-days']}>
-            <p className={styles['day-plan-heading']}>Day Plan</p>
-            {categoryDetails.map((day, index) => {
-              // Parse the date from "DD-MM-YYYY" format
-              const date = new Date(2024, 9, 29); // October 29, 2024 (0-based month index)
-              const dayPart = String(date.getDate()).padStart(2, '0'); // "29"
-              const monthPart = String(date.getMonth() + 1).padStart(2, '0'); // "10"
-              const yearPart = date.getFullYear(); // "2024"
-              // "29-10-2024"
 
+            <div className={styles['date-container']}>
+              {categoryDetails.map((day, index) => {
+                const currentDate = new Date(2024, 4, 23 + index); // Starting from May 23
+                const dayName = currentDate.toLocaleString('en-US', { weekday: 'short' });
+                const monthName = currentDate.toLocaleString('en-US', { month: 'short' });
+                const date = currentDate.getDate();
 
+                return (
+                  <div
+                    key={index}
+                    className={`${styles['day-item']} ${selectedDay === index ? styles['active-day'] : ''}`}
+                    onClick={() => handleDayClick(index)}
+                  >
+                    <div className={styles['month-name']}>{monthName.toUpperCase()}</div>
 
-              return (
-                <div
-                  key={index}
-                  className={`${styles['day-item']} ${selectedDay === index ? styles['active-day'] : ''}`}
-                  onClick={() => handleDayClick(index)}
-                >
-                  <div>{`${day.day + parseInt(dayPart, 10)}-${monthPart}-${yearPart}`}</div>
-                </div>
-              );
-            })}
-
-
+                    <div className={styles['date-number']}>{date}</div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
+
         <div>
 
           {activeTab === "day-plan" && (

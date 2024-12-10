@@ -115,6 +115,7 @@
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  
 }
 
 .counter {
@@ -508,7 +509,7 @@ padding: 10px 20px !important;
 
 
 .tour-main {
-  font-family: Arial, sans-serif;
+ 
 }
 
 .tabs {
@@ -579,7 +580,7 @@ padding: 10px 20px !important;
 }
 
 .tour-booking-button-pannel>button {
-
+margin-bottom: 10px;
   background-color: #63ab45;
   outline: none;
   border: none;

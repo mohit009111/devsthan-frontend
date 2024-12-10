@@ -7,7 +7,7 @@ const dayPlan = ({ itinerary }) => {
             {/* Heading Section */}
             <div className={styles['day-details-heading']}>
                 <div className={styles['day-details-inner']}>
-                    <p>Day {itinerary.day}</p>
+                    <p className={styles['day-details-dayheading']}>Day {itinerary.day} :</p>
                     <p>{itinerary.title}</p>
                 </div>
 
@@ -17,8 +17,7 @@ const dayPlan = ({ itinerary }) => {
             <div className={styles['day-details']}>
                 {/* Flight Section */}
                 <div className={styles['content']}>
-                    <p>{itinerary.description}</p>
-                    {
+                {
                         itinerary.photos.map((photo) => {
                             return (
 
@@ -28,6 +27,8 @@ const dayPlan = ({ itinerary }) => {
                             )
                         })
                     }
+                    <p>{itinerary.description}</p>
+                  
                 </div>
 
               

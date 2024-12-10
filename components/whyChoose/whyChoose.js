@@ -13,7 +13,7 @@ const whyChoose = ({whyChoose}) => {
   return (
     <>
      <section className={styles['about-us-section']}>
-      <h2 className={styles['section-title']}>About Us</h2>
+      <h2 className={styles['section-title']}>Why Chosse Us</h2>
       <div className={styles['cards-container']}>
         {whyChoose.data.map((card) => (
           <div key={card.id} className={styles['about-card']}>

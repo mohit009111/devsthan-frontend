@@ -9,9 +9,11 @@
 .tabs {
   display: flex;
   position: sticky;
-  top: 128px;
+  overflow-x: auto;
+  top: 123px;
   gap: 1rem;
-
+  white-space: no-wrap;
+align-items: center;
   padding: 1rem;
   border-bottom: 1px solid #ddd;
   justify-content: space-between;
@@ -36,6 +38,8 @@
   border-radius: 20px;
   border: 1px solid #63ab45;
   color: #63ab45;
+  white-space: nowrap;
+    height: fit-content;
 }
 
 .day-details-heading {
@@ -45,11 +49,15 @@
   justify-content: space-between;
   align-items: center;
 }
+.day-details-dayheading{
+  white-space: nowrap;
+}
 
 .day-details-inner {
-  display: flex
-  ;
-      align-items: center;
+  display: flex;
+  gap: 10px;
+
+      align-items: flex-start;
       padding: 13px 18px;
       font-size: 14px;
       background-color: #63ab45;
@@ -90,7 +98,7 @@
 }
 
 .day-plan-sidebar {
-  min-width: 180px;
+  min-width: 130px;
   border-right: 1px solid #ddd;
   padding: 1rem;
 
@@ -98,10 +106,15 @@
 .day-plan-heading{
   margin-bottom: 10px;
   font-weight: 600;
+  
 }
 
 .day-item {
-  margin-bottom: 10px;
+  display: flex
+  ;
+  gap: 5px;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
 cursor: pointer;
   height: auto;
   font-size: 14px;
@@ -111,6 +124,10 @@ cursor: pointer;
   border-left: 3px solid #63ab45;
   background-color: #edf2de;
   padding: 0.5rem;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  gap: 5px;
   cursor: pointer;
   font-size: 15px;
  
@@ -288,11 +305,7 @@ cursor: pointer;
     padding: 15px;
   }
 
-  .tabs {
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-
+ 
   .section img {
     width: 100%;
   }
@@ -308,7 +321,7 @@ cursor: pointer;
   .section p {
     font-size: 14px;
   }
-
+ 
 
 }
 
@@ -316,13 +329,67 @@ cursor: pointer;
 
   .content-dayplan {
     flex-direction: column;
+    gap: 0;
   }
-
+.tabs{
+  padding-block: 10px;
+}
   .tabs button {
     font-size: 14px;
   }
   .day-plan-sidebar{
     position: sticky;
-    top: 241px;
+    top: 185px;
   }
+ 
+  .day-plan-heading {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  
+  .date-container {
+    display: flex;
+    overflow-x: auto; /* Enables horizontal scrolling on small screens */
+    gap: 8px;
+    padding: 8px 0;
+  }
+  
+  .day-item {
+    min-width: 50px;
+    background-color: white;
+    border-radius: 8px;
+    padding: 8px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .day-item:hover {
+   
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+ 
+  
+  .month-name {
+    font-size: 0.7rem;
+    font-weight: bold;
+  }
+  
+  .day-name {
+    font-size: 0.9rem;
+    margin-top: 4px;
+    color: #666;
+  }
+  
+  .date-number {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-top: 4px;
+  }
+  
+  
 }

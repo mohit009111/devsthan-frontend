@@ -5,7 +5,7 @@ const toursList = ({ tourData }) => {
   return (
     <>
      
-        {tourData.length > 0 && tourData && tourData.map((data) => {
+        {tourData.length > 0 && tourData && tourData.slice(0,6).map((data) => {
        
           return (
             <>

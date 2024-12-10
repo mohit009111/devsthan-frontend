@@ -8,7 +8,7 @@ const blogs = ({blogs}) => {
     <h1 className={styles.blogsHeading}>Blogs</h1>
     <div className={styles.blogsContainer}>
       
-    {blogs.map((blogs) => (
+    {blogs.slice(0,6).map((blogs) => (
       <BlogCard key={blogs.id} blogs={blogs} />
     ))}
   </div>

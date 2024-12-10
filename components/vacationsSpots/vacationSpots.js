@@ -11,7 +11,7 @@ const VacationSpots = ({ destinations }) => {
         <h2 className={styles['title']}>Desired Vacation Spots</h2>
       </div>
       <div className={styles['grid']}>
-        {destinations.map((dest) => {
+        {destinations.slice(0,8).map((dest) => {
           return (
             <>
 

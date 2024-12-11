@@ -6,7 +6,7 @@ import { apiCall } from "../../utils/common";
 import { toast } from 'react-toastify';
 import { useRouter } from "next/router";
 import Link from "next/link";
-const SignupForm = ({  isComponent, toggleToSignup  }) => {
+const SignupForm = ({  isComponent, toggleToSignup ,toggleToHide }) => {
   const router=useRouter()
     const [formData, setFormData] = useState({
         name: "",
@@ -114,16 +114,21 @@ const SignupForm = ({  isComponent, toggleToSignup  }) => {
               setLoading(false);
               setOtpSent(true);
               toast.success('Otp Verified seccessfully ');
-            
+              toggleToHide()
   
               localStorage.clear();
-  
+
               localStorage.setItem("token", response.token);
-              localStorage.setItem("user", JSON.stringify(response.user));
-  
+              localStorage.setItem("username", (response.user.name));
+              localStorage.setItem("phone", (response.user.phone));
+              localStorage.setItem("userId", (response.user.id));
+              localStorage.setItem("email", (response.user.email));
+
               if (isComponent!=true) {
+
                   router.push("/");
               }
+
             }
   
   

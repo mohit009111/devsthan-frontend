@@ -75,9 +75,11 @@ const TourPage = ({ tourAllData }) => {
           {activeTab === 'Policies' && (
             <div className={styles['policies']}>
               <h2>Canecellation Policies</h2>
-              <p>{categoryDetails.
-                cancellationPolicy
-              }</p>
+              <p  dangerouslySetInnerHTML={{
+                            __html: categoryDetails.
+                            cancellationPolicy && categoryDetails.
+                            cancellationPolicy
+                        }}></p>
 
               {/* <h2>Terms and Conditions</h2>
               <p>{tourAllData[0].termsAndConditions}</p> */}

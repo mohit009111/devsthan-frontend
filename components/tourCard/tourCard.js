@@ -23,14 +23,14 @@ export default function TourCard({ duration, location, imageUrl, title, starting
   };
 
   const handleGoToTour = () => {
-    if (selectedDate) {
+  
       localStorage.setItem('selectedDate', formatDate(selectedDate));
       
 
     
       // Navigate to the tour page
       window.location.href = `/tour/${uuid}`;
-    }
+   
   };
 
   // Open the dialog
@@ -42,7 +42,7 @@ export default function TourCard({ duration, location, imageUrl, title, starting
   return (
     <div className={styles['tour-card']}>
       {/* Image Container */}
-      <div className={styles['image-container']} onClick={openDialog}>
+      <div className={styles['image-container']}  onClick={handleGoToTour}>
         <Image src={imageUrl} alt={location} width={350} height={200} className={styles['image']} />
         <div className={styles['tag']}>
           <span className={styles['duration']}>{duration}</span>
@@ -88,7 +88,7 @@ export default function TourCard({ duration, location, imageUrl, title, starting
       </div>
 
       {/* Dialog Box */}
-      {isDialogOpen && (
+      {/* {isDialogOpen && (
         <div className={styles['dialog-overlay']}>
           <div className={styles['dialog-box']}>
             <h3>Select Departure Date</h3>
@@ -113,7 +113,7 @@ export default function TourCard({ duration, location, imageUrl, title, starting
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

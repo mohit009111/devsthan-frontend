@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { apiCall } from "../../utils/common";
 
-const LoginForm = ({  isComponent,toggleToLogin }) => {
+const LoginForm = ({  isComponent,toggleToLogin,toggleToHide }) => {
     
 console.log(isComponent)
     const router = useRouter()
@@ -85,7 +85,7 @@ console.log(isComponent)
                 setLoading(false);
                 setOtpSent(true);
                 toast.success('Otp Verified seccessfully ');
-              
+                toggleToHide()
 
                 localStorage.clear();
 

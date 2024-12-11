@@ -28,40 +28,43 @@ export default function TravellerDetails() {
     const userId = localStorage.getItem("userId");
     const date = localStorage.getItem("selectedDate");
     const username = localStorage.getItem("username");
+    const userTempId = localStorage.getItem("userTempId")
     setUsername(username)
     setDate(date)
-    if (token && userId) {
-      setIsLoggedIn(true);
-      const userData = { token, userId };
+if(token && userId){
+  
+  setIsLoggedIn(true);
+}
+    const userData = { token, userId, userTempId };
 
-      const fetchCartData = async () => {
-        try {
-          setLoading(true);
-          const response = await apiCall({
-            endpoint: `/api/getCart`,
-            method: 'POST',
-            body: userData,
-          });
+    const fetchCartData = async () => {
+      try {
+        setLoading(true);
+        const response = await apiCall({
+          endpoint: `/api/getCart`,
+          method: 'POST',
+          body: userData,
+        });
 
-          setTourInfo(response.tour)
-          distributePersons(response.cart.adults, response.cart.children);
-          setCartData(response.cart);
-          setTourid(response.cart.tourId)
-          if (!response.ok) {
-            throw new Error('Failed to fetch cart data');
-          }
-
-
-
-        } catch (err) {
-          setError(err.message);
-        } finally {
-          setLoading(false);
+        setTourInfo(response.tour)
+        distributePersons(response.cart.adults, response.cart.children);
+        setCartData(response.cart);
+        setTourid(response.cart.tourId)
+        if (!response.ok) {
+          throw new Error('Failed to fetch cart data');
         }
-      };
 
-      fetchCartData();
-    }
+
+
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCartData();
+
   }, []);
 
 
@@ -95,6 +98,13 @@ export default function TravellerDetails() {
     setRooms(updatedRooms);
   };
 
+  
+  const hidePanel = () => {
+    setIsLoggedIn(true); // Toggle the state
+  };
+  const toggleRegisterMode = () => {
+    setShowSignup((prev) => !prev); // Toggle the state
+  };
 
   const handleRazorpay = async () => {
     try {
@@ -139,7 +149,7 @@ export default function TravellerDetails() {
               const response = await apiCall({
                 endpoint: `/create-order`,
                 method: 'POST',
-                body: { tourId: tourid, userId: userId, category: cartData.category, address: address, mobile: mobile, email: email, rooms: rooms,username:username },
+                body: { tourId: tourid, userId: userId, category: cartData.category, address: address, mobile: mobile, email: email, rooms: rooms, username: username },
               });
               console.log(response)
               if (response.success === true) {
@@ -202,15 +212,15 @@ export default function TravellerDetails() {
       <div className={styles['form-section']}>
         {!isLoggedIn ? (
           showSignup ? (
-            <SignupForm isComponent={true}/>
+            <SignupForm isComponent={true} toggleToSignup={toggleRegisterMode} toggleToHide={hidePanel}/>
           ) : (
-            <LoginForm isComponent={true}/>
+            <LoginForm isComponent={true}  toggleToLogin={toggleRegisterMode} toggleToHide={hidePanel}/>
           )
         ) : (
           <h2>Welcome Back!</h2>
         )}
 
-   
+
 
         <h2>Please Enter Traveller(s) Details</h2>
         <form
@@ -237,30 +247,30 @@ export default function TravellerDetails() {
                   <div key={personIndex} className={styles["traveller-row"]}>
                     <h4>{label}</h4>
                     <div className={styles["traveller-row-merge"]}>
-                    <label>
-                      First Name:
-                      <input
-                        type="text"
-                        required
-                        value={person.firstName}
-                        onChange={(e) =>
-                          handleInputChange(roomIndex, personIndex, "firstName", e.target.value)
-                        }
-                      />
-                    </label>
-                    <label>
-                      Last Name:
-                      <input
-                        type="text"
-                        required
-                        value={person.lastName}
-                        onChange={(e) =>
-                          handleInputChange(roomIndex, personIndex, "lastName", e.target.value)
-                        }
-                      />
-                    </label>
-</div>
-                   
+                      <label>
+                        First Name:
+                        <input
+                          type="text"
+                          required
+                          value={person.firstName}
+                          onChange={(e) =>
+                            handleInputChange(roomIndex, personIndex, "firstName", e.target.value)
+                          }
+                        />
+                      </label>
+                      <label>
+                        Last Name:
+                        <input
+                          type="text"
+                          required
+                          value={person.lastName}
+                          onChange={(e) =>
+                            handleInputChange(roomIndex, personIndex, "lastName", e.target.value)
+                          }
+                        />
+                      </label>
+                    </div>
+
                   </div>
                 );
               })}

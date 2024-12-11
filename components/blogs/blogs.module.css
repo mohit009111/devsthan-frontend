@@ -11,7 +11,34 @@
     margin-top: 20px;
   
   }
-  
+  .prevArrow,
+.nextArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.prevArrow {
+  left: 0px; /* Adjust position as needed */
+}
+
+.nextArrow {
+  right: 0px; /* Adjust position as needed */
+}
+
+.prevArrow:hover,
+.nextArrow:hover {
+  background-color: #555;
+}
+
   @media (max-width: 740px) {
     .blogsContainer {
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive columns */

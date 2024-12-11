@@ -1,0 +1,27 @@
+.prevArrow,
+.nextArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.prevArrow {
+  left: -20px; /* Adjust position */
+}
+
+.nextArrow {
+  right: -20px; /* Adjust position */
+}
+
+.prevArrow:hover,
+.nextArrow:hover {
+  background-color: #555;
+}

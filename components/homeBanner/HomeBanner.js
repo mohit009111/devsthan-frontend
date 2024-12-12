@@ -77,7 +77,7 @@ const HomeBanner = ({ locations, homebanner }) => {
 
                 <BannerInner {...settings}>
                     {
-                        homebanner.data.bannerUrls.map((image, index) => (
+                        homebanner?.data?.bannerUrls?.map((image, index) => (
                             <div key={index} className={styles['banner-inner']}>
                                 <img className={styles['banner-img']} src={image} alt={`Banner ${index}`} />
                                 {/* <div className={styles['banner-overlay']}></div> */}
@@ -108,14 +108,14 @@ const HomeBanner = ({ locations, homebanner }) => {
                                     setSelected(heading.title);
                                     setShowComminSoon(true); // Trigger the "Coming Soon" state
                                     alert("not available")
-                                    
+
                                 } else {
                                     setShowComminSoon(false); // Ensure "Coming Soon" state is hidden
                                     setSelected(heading.title); // Update the selected heading
                                 }
                             }}
                         >
-{/*                             
+                            {/*                             
                             {selected === heading.title && showComminSoon && (
                                 <p className={styles['coming-soon']}>Coming Soon</p>
                             )} */}

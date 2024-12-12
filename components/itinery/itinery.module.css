@@ -2,10 +2,12 @@
   display: flex;
   flex-direction: column;
 }
-.day-details-outer{
+
+.day-details-outer {
   display: flex;
   flex-direction: column;
 }
+
 .tabs {
   display: flex;
   position: sticky;
@@ -13,7 +15,7 @@
   top: 123px;
   gap: 1rem;
   white-space: no-wrap;
-align-items: center;
+  align-items: center;
   padding: 1rem;
   border-bottom: 1px solid #ddd;
   justify-content: space-between;
@@ -28,7 +30,8 @@ align-items: center;
   font-size: 1rem;
   white-space: nowrap;
 }
-.content > p{
+
+.content>p {
   font-size: 14px;
   color: #9b9b9b;
 }
@@ -40,7 +43,7 @@ align-items: center;
   border: 1px solid #63ab45;
   color: #63ab45;
   white-space: nowrap;
-    height: fit-content;
+  height: fit-content;
 }
 
 .day-details-heading {
@@ -50,7 +53,8 @@ align-items: center;
   justify-content: space-between;
   align-items: center;
 }
-.day-details-dayheading{
+
+.day-details-dayheading {
   white-space: nowrap;
 }
 
@@ -58,12 +62,12 @@ align-items: center;
   display: flex;
   gap: 10px;
 
-      align-items: flex-start;
-      padding: 13px 18px;
-      font-size: 14px;
-      background-color: #63ab45;
-      font-weight: 900;
-      color: #fff;
+  align-items: flex-start;
+  padding: 13px 18px;
+  font-size: 14px;
+  background-color: #63ab45;
+  font-weight: 900;
+  color: #fff;
 }
 
 .day-details-icluded {
@@ -79,18 +83,26 @@ align-items: center;
 }
 
 .day-details .content img {
-  width: 100%; 
-  max-width: 200px; /* Limits the max width */
-  height: auto; /* Maintains aspect ratio */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Adds hover effect */
+  width: 100%;
+  max-width: 200px;
+  /* Limits the max width */
+  height: auto;
+  /* Maintains aspect ratio */
+  border-radius: 8px;
+  /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  /* Adds hover effect */
 }
 
 .day-details .content img:hover {
-  transform: scale(1.05); /* Slight zoom effect */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Elevated shadow */
+  transform: scale(1.05);
+  /* Slight zoom effect */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  /* Elevated shadow */
 }
+
 .content-dayplan {
   display: flex;
   gap: 10px;
@@ -104,19 +116,19 @@ align-items: center;
   padding: 1rem;
 
 }
-.day-plan-heading{
+
+.day-plan-heading {
   margin-bottom: 10px;
   font-weight: 600;
-  
+
 }
 
 .day-item {
-  display: flex
-  ;
+  display: flex;
   gap: 5px;
-      flex-direction: row-reverse;
-      justify-content: flex-end;
-cursor: pointer;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  cursor: pointer;
   height: auto;
   font-size: 14px;
 }
@@ -131,7 +143,7 @@ cursor: pointer;
   gap: 5px;
   cursor: pointer;
   font-size: 15px;
- 
+
 }
 
 .content>img {
@@ -208,9 +220,10 @@ cursor: pointer;
   padding: 10px;
   border-right: 1px solid #ddd;
   background: #fff;
- 
+
 }
-.day-plan-sidebar-days{
+
+.day-plan-sidebar-days {
   position: sticky;
   top: 210px;
 }
@@ -303,7 +316,7 @@ cursor: pointer;
     padding: 15px;
   }
 
- 
+
   .section img {
     width: 100%;
   }
@@ -319,11 +332,12 @@ cursor: pointer;
   .section p {
     font-size: 14px;
   }
+
   .tabs button {
-font-size: 12px !important;
+    font-size: 12px !important;
 
   }
- 
+
 
 }
 
@@ -333,31 +347,35 @@ font-size: 12px !important;
     flex-direction: column;
     gap: 0;
   }
-.tabs{
-  padding-block: 10px;
-}
+
+  .tabs {
+    padding-block: 10px;
+  }
+
   .tabs button {
     font-size: 14px;
   }
-  .day-plan-sidebar{
+
+  .day-plan-sidebar {
     position: sticky;
     top: 174px;
   }
- 
+
   .day-plan-heading {
     font-size: 1.2rem;
     font-weight: bold;
     margin-bottom: 16px;
     text-align: center;
   }
-  
+
   .date-container {
     display: flex;
-    overflow-x: auto; /* Enables horizontal scrolling on small screens */
+    overflow-x: auto;
+    /* Enables horizontal scrolling on small screens */
     gap: 8px;
     padding: 8px 0;
   }
-  
+
   .day-item {
     min-width: 50px;
     background-color: white;
@@ -368,30 +386,30 @@ font-size: 12px !important;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
-  
+
   .day-item:hover {
-   
+
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
-  
- 
-  
+
+
+
   .month-name {
     font-size: 0.7rem;
     font-weight: bold;
   }
-  
+
   .day-name {
     font-size: 0.9rem;
     margin-top: 4px;
     color: #666;
   }
-  
+
   .date-number {
     font-size: 0.8rem;
     font-weight: bold;
     margin-top: 4px;
   }
-  
-  
+
+
 }

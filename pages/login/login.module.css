@@ -81,7 +81,7 @@
   }
   
   .submit-button {
-    background: #333;
+    background-color: #63ab45;
     color: #fff;
     padding: 10px 15px;
     border: none;
@@ -90,10 +90,7 @@
     cursor: pointer;
   }
   
-  .submit-button:hover {
-    background: #555;
-  }
-  
+
   .login-text {
     text-align: center;
     margin-top: 15px;

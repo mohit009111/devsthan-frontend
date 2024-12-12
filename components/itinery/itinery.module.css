@@ -26,6 +26,7 @@ align-items: center;
   padding: 0.5rem 1rem;
   cursor: pointer;
   font-size: 1rem;
+  white-space: nowrap;
 }
 .content > p{
   font-size: 14px;
@@ -123,7 +124,7 @@ cursor: pointer;
 .day-item.active-day {
   border-left: 3px solid #63ab45;
   background-color: #edf2de;
-  padding: 0.5rem;
+  padding: 0.4rem;
   display: flex;
   flex-direction: row-reverse;
   justify-content: flex-end;
@@ -196,10 +197,7 @@ cursor: pointer;
   transition: transform 0.3s ease;
 }
 
-.hotel-details {
-  display: flex;
-  gap: 10px;
-}
+
 
 .photos img:hover {
   transform: scale(1.1);
@@ -321,6 +319,10 @@ cursor: pointer;
   .section p {
     font-size: 14px;
   }
+  .tabs button {
+font-size: 12px !important;
+
+  }
  
 
 }
@@ -386,7 +388,7 @@ cursor: pointer;
   }
   
   .date-number {
-    font-size: 1.1rem;
+    font-size: 0.8rem;
     font-weight: bold;
     margin-top: 4px;
   }

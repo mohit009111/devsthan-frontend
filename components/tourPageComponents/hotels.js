@@ -9,12 +9,7 @@ const hotels = ({ itinerary }) => {
                     <h3>Hotel</h3>
 
                     <div className={styles['hotel-details']}>
-                        <div className="photos">
-                            {itinerary.hotel.hotelImages.map((image, idx) => (
-                                <Image key={idx} src={image} alt="Hotel" width={300} height={300} />
-                            ))}
-                        </div>
-                        <div>
+                    <div>
                             <p><strong>{itinerary.hotel.name}</strong></p>
                             <p>
                                 <a href={itinerary.hotel.url} target="_blank" rel="noopener noreferrer">
@@ -33,6 +28,12 @@ const hotels = ({ itinerary }) => {
 
                             <p>Location: {itinerary.hotel.location}</p>
                         </div>
+                        <div className="photos">
+                            {itinerary.hotel.hotelImages.map((image, idx) => (
+                                <Image key={idx} src={image} alt="Hotel" width={300} height={300} />
+                            ))}
+                        </div>
+                      
                     </div>
 
 

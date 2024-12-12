@@ -11,7 +11,7 @@ const transfers = ({ itinerary }) => {
                 </div>
 
             </div>
-            <h1>Transportation</h1>
+           
             {itinerary.transportation.flight?.isIncluded && (
                 <div className={styles['section']}>
                     <h3>Flight</h3>

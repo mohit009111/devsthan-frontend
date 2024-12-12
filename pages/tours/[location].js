@@ -87,7 +87,7 @@ const TourCategory = ({ tourData, categories, location }) => {
           <div className={styles['filter-section__destination']}>
             <h3 className={styles['filter-section__title']}>Tour Categories</h3>
             <div className={styles['filter-section__options']}>
-              {categories.map((category) => (
+              {/* {categories.map((category) => (
                 <label key={category.name} className={styles['filter-section__option']}>
                   <input
                     type="checkbox" 
@@ -97,7 +97,7 @@ const TourCategory = ({ tourData, categories, location }) => {
                   />
                   {category.name}
                 </label>
-              ))}
+              ))} */}
             </div>
           </div>
         </div>

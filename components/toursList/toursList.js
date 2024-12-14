@@ -10,12 +10,13 @@ const toursList = ({ tourData }) => {
           return (
             <>
               <TourCard
+              data={data}
                 duration={data.duration}
                 location={data.location}
                 uuid={data.uuid}
                 imageUrl={data.bannerImage}
                 title={data.name}
-                startingPrice={`Rs.${data.standardDetails.pricing[0] && data.standardDetails.pricing[0].price}`} originalPrice="$450"
+                startingPrice={`Rs.${data.standardDetails.pricing[0] && data.standardDetails.pricing[0].price}`} 
                 
               />
             </>

@@ -148,3 +148,34 @@ display: flex;
     padding-inline: 10px;
   }
   }
+  .carousel {
+    padding: 20px 0;
+  }
+  
+  .carousel-item {
+    text-align: center;
+    height: 100%;
+  }
+  
+
+  .prevArrow,
+  .nextArrow {
+    background-color: #007bff;
+    border: none;
+    color: #fff;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+  
+  .prevArrow {
+    left: -30px;
+  }
+  
+  .nextArrow {
+    right: -30px;
+  }

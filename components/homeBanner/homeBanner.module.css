@@ -10,26 +10,28 @@
 }
 
 .coming-soon {
-    position: absolute;
-    top: -10px;
+    /* position: absolute;
+    top: -10px; */
     z-index: 99;
+    background-color: rgba(240, 240, 240, 0.8); /* Light gray background with slight transparency */
     font-size: 12px;
     /* Set the size you prefer */
     color: #ff6b6b;
     /* Red or a noticeable color for emphasis */
     font-weight: bold;
-    margin-top: 5px;
+  
     /* Adds spacing if necessary */
     text-transform: uppercase;
     letter-spacing: 0.5px;
    
     /* Light background for emphasis */
-    padding: 5px 10px;
+    padding: 1px 10px;
     border-radius: 5px;
     text-align: center;
     display: inline-block;
 
 }
+
 
 .banner-outer {
 

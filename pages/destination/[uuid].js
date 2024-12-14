@@ -3,16 +3,18 @@ import { useState } from 'react';
 import React, { useEffect } from 'react';
 import styles from './destination.module.css';
 import { apiCall } from '../../utils/common';
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 import Slider from "react-slick";
-
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import styled from "styled-components";
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
-import { Pagination, Navigation } from 'swiper';
+
+
+
 import { MdOutlineKeyboardArrowDown, MdOutlineArrowForwardIos, MdOutlineArrowBackIos } from "react-icons/md";
-import DestinationHighlighs from '../../components/destinationHighlights/destinationHighlights';
+
+import TourCard from '../../components/tourCard/tourCard';
 
 const NextArrow = ({ onClick }) => (
 
@@ -33,14 +35,59 @@ var settings = {
   nextArrow: <NextArrow />,
   prevArrow: <PrevArrow />,
 };
+const responsive = {
+  superLargeDesktop: {
+    breakpoint: { max: 4000, min: 1024 },
+    items: 3,
+  },
+  desktop: {
+    breakpoint: { max: 1024, min: 600 },
+    items: 2,
+  },
+  tablet: {
+    breakpoint: { max: 600, min: 464 },
+    items: 1,
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1,
+  },
+};
 
 
 const SubDestinationCarousel = styled(Slider)`
 
 
 `;
+const TourCarousel = styled(Carousel)`
+
+.react-multi-carousel-item > div{
+ margin-right:15px;
+}
+`;
 
 const Destination = ({ destinationData, destinationBanner }) => {
+  const [tours,setTours]=useState()
+
+  useEffect(() => {
+    const fetchTours = async () => {
+      try {
+        const tourData = await apiCall({
+          endpoint: `/api/tours/${destinationData.state.label}`,
+          method: 'POST',
+        });
+        setTours(tourData);
+        console.log('Fetched Tours:', tourData);
+      } catch (error) {
+        console.error('Error fetching tours:', error);
+      }
+    };
+
+    fetchTours();
+  }, [destinationData.state.label]);
+
+  console.log(tours);
+ 
   const handleScrollParallax = () => {
     const parallaxImage = document.querySelector(`.${styles['parallax-image']}`);
     if (parallaxImage) {
@@ -125,7 +172,31 @@ const Destination = ({ destinationData, destinationBanner }) => {
           <button className={styles.offerButton}>View All Package</button>
         </div>
       </aside> */}
+      
+
       </div>
+      <div className={styles['carousel-tour']}>
+      {tours?.length > 0 ? (
+        <TourCarousel responsive={responsive} infinite={true} autoPlay={false} autoPlaySpeed={3000}>
+          {tours.map((data) => (
+            <div key={data.uuid}>
+              <TourCard
+                data={data}
+                duration={data.duration}
+                location={data.location}
+                uuid={data.uuid}
+                imageUrl={data.bannerImage}
+                title={data.name}
+                startingPrice={`Rs.${data.standardDetails.pricing[0]?.price || 'N/A'}`}
+              />
+            </div>
+          ))}
+        </TourCarousel>
+      ) : (
+        <p>Loading tours...</p>
+      )}
+    </div>
+     
     </>
 
   );

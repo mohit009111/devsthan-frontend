@@ -8,7 +8,8 @@ export default function footer() {
       <div className={styles['footer-content']}>
         <div className={styles['promo-section']}>
           <h2 className={styles['promo-title']}>Want To Take Tour Packages?</h2>
-          <button className={styles['promo-button']}>Book A Tour</button>
+        <Link  href="/tours/uttarakhand"> <button className={styles['promo-button']}>Book A Tour</button></Link>
+         
         </div>
         <div className={styles['footer-links']}>
           <div className={styles['quick-links']}>
@@ -17,7 +18,7 @@ export default function footer() {
              <Link href={'/about'} className={styles['li']}><li >About Us</li></Link> 
              <Link href={'/destinations'} className={styles['li']}><li >Destinations</li></Link> 
              <Link href={'/blogs'} className={styles['li']}><li >Blogs</li></Link> 
-             <Link href={'/privacy-policy'} className={styles['li']}><li >Privacy Policy</li></Link> 
+             
              <Link href={'/contact'} className={styles['li']}><li >Contact Us</li></Link> 
              
             </ul>
@@ -46,7 +47,11 @@ export default function footer() {
       </div>
       <div className={styles['footer-bottom']}>
         <p>©Copyright 2024 Devsthan Expert </p>
-        <p><a href="#">Privacy Policy</a> • <a href="#">Terms & Condition</a></p>
+        <div className={styles['footer-bottom-pages']}>
+
+
+       <Link href={'/privacy-policy'} ><p >Privacy Policy</p></Link> •   <Link href={'/terms-and-conditions'} ><p >Terms & Condition</p></Link>
+        </div>
       </div>
     </footer>
   );

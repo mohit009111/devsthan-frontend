@@ -9,6 +9,11 @@
   .mainContent {
     flex: 2;
   }
+  .carousel-tour{
+    max-width: 1350px;
+    margin-inline: auto;
+        padding: 2rem;
+  }
   
   .mainContent h1 {
     font-size: 2.5rem;
@@ -264,6 +269,10 @@
     flex-direction: column;
     padding: 10px;
    }
+    .carousel-tour{
+   
+        padding: 1rem;
+  }
    .mainContent > h1{
     font-size: 2rem;
     margin-bottom: 5px;

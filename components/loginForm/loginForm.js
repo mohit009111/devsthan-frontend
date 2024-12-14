@@ -85,7 +85,7 @@ console.log(isComponent)
                 setLoading(false);
                 setOtpSent(true);
                 toast.success('Otp Verified seccessfully ');
-                toggleToHide()
+              
 
                 localStorage.clear();
 
@@ -98,7 +98,9 @@ console.log(isComponent)
                 if (isComponent!=true) {
 
                     router.push("/");
-                }
+                }else(
+                    toggleToHide()
+                )
 
 
             } else {

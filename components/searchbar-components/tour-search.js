@@ -8,7 +8,17 @@ import "react-datepicker/dist/react-datepicker.css";
 import Link from 'next/link';
 
 // Sample locations list
+const formatDate = (date) => {
+  const day = String(date.getDate()).padStart(2, '0'); // Ensure 2-digit day
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Ensure 2-digit month
+  const year = date.getFullYear();
+  return `${day}-${month}-${year}`;
+};
 
+const parseDate = (dateString) => {
+  const [day, month, year] = dateString.split('-').map(Number);
+  return new Date(year, month - 1, day);
+};
 
 const TourSearch = ({ locations }) => {
   console.log(locations)
@@ -29,6 +39,15 @@ const TourSearch = ({ locations }) => {
     setFilteredOptions(filtered);
   };
 
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    if (date) {
+      // Format the date as dd-MM-yyyy and save it
+      const formattedDate = formatDate(date);
+      localStorage.setItem('departureDate', formattedDate);
+    }
+  };
   const handleOptionClick = (option) => {
     setDestination(option);
     setSearchText(option);
@@ -80,7 +99,7 @@ const TourSearch = ({ locations }) => {
             <p>Departure Date</p>
             <DatePicker
               selected={selectedDate}
-              onChange={(date) => setSelectedDate(date)}
+              onChange={handleDateChange}
               placeholderText="Select Date"
               dateFormat="dd/MM/yyyy"
               className={styles['datepicker-input']}

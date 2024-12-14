@@ -1,5 +1,5 @@
 // This should be in a file like pages/tour/[uuid].js
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TourGallery from '../../components/tourPageComponents/tourGallery';
 import TourDetails from '../../components/tourPageComponents/tourDetails';
 import TourBookingPanel from '../../components/tourPageComponents/tourBookingPanel';
@@ -10,10 +10,13 @@ import Itinerary from '../../components/itinery/itinery';
 
 const TourPage = ({ tourAllData }) => {
 
+  const [date, setDate] = useState()
 
-  const router = useRouter();
+  useEffect(() => {
+    setDate(localStorage.getItem("departureDate"))
 
-  const { date } = router.query;
+  }, []);
+  console.log(date)
 
   const [selectedCategory, setSelectedCategory] = useState('standardDetails');
   const [activeTab, setActiveTab] = useState('Itinerary');
@@ -26,7 +29,7 @@ const TourPage = ({ tourAllData }) => {
       selectedCategory === 'deluxeDetails' ? tourAllData[0].deluxeDetails :
         selectedCategory === 'premiumDetails' ? tourAllData[0].premiumDetails :
           null;
-     
+
 
   return (
     <div className={styles['tour-main']}>
@@ -41,9 +44,11 @@ const TourPage = ({ tourAllData }) => {
           city={tourAllData[0].city}
           location={tourAllData[0].location}
         />
+     
       </div>
 
       <div className={styles['tabs']}>
+
         <button
           className={activeTab === 'Itinerary' ? styles['tab-active'] : ''}
           onClick={() => handleTabChange('Itinerary')}
@@ -62,6 +67,19 @@ const TourPage = ({ tourAllData }) => {
         >
           Summary
         </button>
+           <div className={styles['category-selector']}>
+          <label htmlFor="category-select">Choose a Category: </label>
+          <select
+            id="category-select"
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className={styles['category-dropdown']}
+          >
+            <option value="standardDetails">Standard</option>
+            <option value="deluxeDetails">Deluxe</option>
+            <option value="premiumDetails">Premium</option>
+          </select>
+        </div>
       </div>
 
       {/* Tab Content */}
@@ -75,11 +93,11 @@ const TourPage = ({ tourAllData }) => {
           {activeTab === 'Policies' && (
             <div className={styles['policies']}>
               <h2>Canecellation Policies</h2>
-              <p  dangerouslySetInnerHTML={{
-                            __html: categoryDetails.
-                            cancellationPolicy && categoryDetails.
-                            cancellationPolicy
-                        }}></p>
+              <p dangerouslySetInnerHTML={{
+                __html: categoryDetails.
+                  cancellationPolicy && categoryDetails.
+                    cancellationPolicy
+              }}></p>
 
               {/* <h2>Terms and Conditions</h2>
               <p>{tourAllData[0].termsAndConditions}</p> */}
@@ -96,27 +114,43 @@ const TourPage = ({ tourAllData }) => {
             </div>
           )}
 
-          {activeTab === 'Summary' && (
-            <div className={styles['summary']}>
-              <h2>Know before you go</h2>
-              <p>{tourAllData[0].
-                knowBeforeYouGo?.map((text) => {
-                  return (
+{activeTab === 'Summary' && (
+  <div className={styles['summary']}>
+    <h2>Highlights</h2>
+    <ol className={styles['highlights']}>
+      {categoryDetails.highlights?.map((text, index) => (
+        <li key={index}>{text}</li>
+      ))}
+    </ol>
 
-                    <>
-                      <p>{text}</p>
-                    </>
-                  )
-                })}</p>
-            </div>
-          )}
+    <div className={styles['details-container']}>
+      <div className={styles['inclusions']}>
+        <h2>Inclusions</h2>
+        <ol>
+          {categoryDetails.whatsIncluded?.map((text, index) => (
+            <li key={index}>{text}</li>
+          ))}
+        </ol>
+      </div>
+      <div className={styles['exclusions']}>
+        <h2>Exclusions</h2>
+        <ol>
+          {categoryDetails.whatsExcluded?.map((text, index) => (
+            <li key={index}>{text}</li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </div>
+)}
+
         </div>
 
 
         <TourBookingPanel
           duration={tourAllData[0].duration}
           date={date}
-        category={selectedCategory}
+          category={selectedCategory}
           state={tourAllData[0].state}
           city={tourAllData[0].city}
           location={tourAllData[0].location}

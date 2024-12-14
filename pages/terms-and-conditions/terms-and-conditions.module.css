@@ -1,0 +1,70 @@
+
+  .terms-and-conditions{
+    margin: 20px auto;
+  }
+  .container {
+    padding-inline: 20px;
+    max-width: 1300px;
+    margin: 20px auto;
+    line-height: 1.6;
+    border-inline: 1px solid rgb(173, 172, 172);
+
+  }
+  
+  .title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #222;
+    text-align: center;
+  }
+  
+  .last-updated {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 20px;
+  }
+  
+  .section {
+    margin-bottom: 20px;
+  }
+  
+  .section-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #444;
+  }
+  
+  .section-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+  }
+  
+  .list {
+    list-style: disc;
+    margin-left: 20px;
+    padding-left: 20px;
+  }
+  
+  .list-item {
+    margin-bottom: 8px;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+  
+  .contact-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .contact-item {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+  
+  .contact-item strong {
+    color: #333;
+  }
+  

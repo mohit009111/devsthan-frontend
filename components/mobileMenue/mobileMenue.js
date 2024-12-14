@@ -16,7 +16,7 @@ const MobileMenu = ({ isOpen, toggleMenu }) => {
             </div>
             <ul className={styles['menu-list']}>
             <li onClick={toggleMenu}>
-                    <Link href={`/tour/uttarakhand`}>
+                    <Link href={`/tours/uttarakhand`}>
                         Tours <FaArrowRight className={styles['arrow-icon']} />
                     </Link>
                 </li>

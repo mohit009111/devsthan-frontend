@@ -114,7 +114,7 @@ const SignupForm = ({  isComponent, toggleToSignup ,toggleToHide }) => {
               setLoading(false);
               setOtpSent(true);
               toast.success('Otp Verified seccessfully ');
-              toggleToHide()
+       
   
               localStorage.clear();
 
@@ -126,8 +126,10 @@ const SignupForm = ({  isComponent, toggleToSignup ,toggleToHide }) => {
 
               if (isComponent!=true) {
 
-                  router.push("/");
-              }
+                router.push("/");
+            }else(
+                toggleToHide()
+            )
 
             }
   

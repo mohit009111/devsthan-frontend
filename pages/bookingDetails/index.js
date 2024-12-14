@@ -100,10 +100,10 @@ if(token && userId){
 
   
   const hidePanel = () => {
-    setIsLoggedIn(true); // Toggle the state
+    setIsLoggedIn(true); 
   };
   const toggleRegisterMode = () => {
-    setShowSignup((prev) => !prev); // Toggle the state
+    setShowSignup((prev) => !prev); 
   };
 
   const handleRazorpay = async () => {
@@ -116,7 +116,7 @@ if(token && userId){
         body: { tourId: tourid, userId: userId, category: cartData.category },
       });
 
-      console.log("Order creation response:", response);
+   
 
       if (!response.success || !response.order) {
         throw new Error("Order creation failed: Invalid response");
@@ -225,14 +225,14 @@ if(token && userId){
         <h2>Please Enter Traveller(s) Details</h2>
         <form
           onSubmit={(e) => {
-            // The browser will handle required field validation automatically
+           
             if (!e.target.checkValidity()) {
-              e.preventDefault(); // Prevent submission if form is invalid
+              e.preventDefault(); 
               return;
             }
 
-            e.preventDefault(); // Prevent default submission behavior
-            handleRazorpay(); // Process payment if form is valid
+            e.preventDefault();
+            handleRazorpay(); 
           }}
         >
           {rooms.map((room, roomIndex) => (

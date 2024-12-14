@@ -9,20 +9,62 @@ import { useRouter } from 'next/router';
 import CustomizedQuery from './customizedQuery';
 import { v4 as uuidv4 } from 'uuid';
 const TourBookingPanel = ({ uuid, categoryDetails, name, duration, category,date }) => {
+
+  console.log(categoryDetails)
+const close =(()=>{
+  setShowCustomizeDialog(false)
+})
+const [pricePerPerson, setPricePerPerson] = useState();
   const [roomsCount, setRoomsCount] = useState(1);
   const [loading, setLoading] = useState(false)
   const [showCustomizeDialog, setShowCustomizeDialog] = React.useState(false);
   const [rooms, setRooms] = useState({
     id: 1,
     extraBeds: 0,
-    adults: 1,
+    adults: 4,
     children: 0,
   });
   const router = useRouter();
   const [totalPrice, setTotalPrice] = useState(
-    categoryDetails?.pricing.find((p) => p.person === rooms.adults)?.price || 0
+  
   );
-
+  useEffect(() => {
+    if (!categoryDetails || !categoryDetails.pricing) return;
+  
+    // Total persons (adults + children)
+    const totalPersons = rooms.adults + rooms.children;
+  
+    // Find the pricing based on total persons
+    const pricing = categoryDetails.pricing.find((p) => p.person === totalPersons);
+  
+    if (pricing) {
+      const priceForTotalPersons = pricing.price;
+  
+      // Safeguard against division by zero
+      const perPersonPrice = totalPersons > 0 ? priceForTotalPersons / totalPersons : 0;
+  
+      // Children are charged half the per-person price
+      const childPrice = perPersonPrice / 2;
+  
+      // Extra bed cost (assuming a fixed cost per bed, e.g., 2000)
+      const extraBedCost = rooms.extraBeds * 2000;
+  
+      // Calculate the total price
+      const computedTotalPrice =
+        rooms.adults * perPersonPrice +
+        rooms.children * childPrice +
+        extraBedCost;
+  
+      // Update the total price and price per person
+      setTotalPrice(Math.round(computedTotalPrice));
+      setPricePerPerson(Math.round(perPersonPrice)); // Store price per person
+    } else {
+      // Reset the total price and price per person if no matching pricing is found
+      setTotalPrice(0);
+      setPricePerPerson(0);
+    }
+  }, [categoryDetails, rooms]);
+  
   const handleBookNow = async () => {
     // Prepare user-selected data
     const userSelected = {
@@ -73,6 +115,11 @@ const TourBookingPanel = ({ uuid, categoryDetails, name, duration, category,date
       
       } else {
         toast.error("Session expired? Please login again");
+        router.push({
+          pathname: '/login',
+        
+        });
+        
       }
     } catch (error) {
       console.error('Error adding to cart:', error);
@@ -83,76 +130,78 @@ const TourBookingPanel = ({ uuid, categoryDetails, name, duration, category,date
 
   const updateRoom = (type, value) => {
     setRooms((prev) => {
-      // Calculate the new value for the type (adults or children)
+      // Calculate the new value for the selected type (adults or children)
       let newValue = prev[type] + value;
-
-      // Find the total number of persons (adults + children) after update
+  
+      // Total persons before updating
       const totalPersons = prev.adults + prev.children;
-
-      // Find the pricing for the updated total number of persons (adults + children)
+  
+      // Find pricing for the updated total persons
       const pricingForTotalPersons = categoryDetails.pricing.find(
         (p) => p.person === totalPersons + value
       );
-
-      // If pricing is found, get the max allowed persons
+  
+      // Get the maximum allowed persons
       const maxAllowedPersons = pricingForTotalPersons ? pricingForTotalPersons.person : 0;
-
-      // Ensure newValue does not exceed max allowed persons
+  
       if (type === "adults") {
         const maxAllowedAdults = maxAllowedPersons - prev.children;
-        // Ensure total adults do not exceed max allowed adults
-        newValue = Math.min(newValue, maxAllowedAdults);
+        newValue = Math.min(newValue, maxAllowedAdults); // Limit adults to the max allowed
       } else if (type === "children") {
         const maxAllowedChildren = maxAllowedPersons - prev.adults;
-        // Ensure total children do not exceed max allowed children
-        newValue = Math.min(newValue, maxAllowedChildren);
+        newValue = Math.min(newValue, maxAllowedChildren); // Limit children to the max allowed
       }
-
-      // Prevent negative values (ensure new value is at least 0)
+  
+      // Ensure the new value is not negative
       newValue = Math.max(0, newValue);
-
-      // Create updatedRooms object with new values
+  
+      // Update the rooms object with the new value
       const updatedRooms = {
         ...prev,
         [type]: newValue,
       };
-
+  
       // Total persons after the update
       const totalPersonsUpdated = updatedRooms.adults + updatedRooms.children;
-
-      // Find pricing and room info based on updated total persons
+  
+      // Find pricing for the updated total persons
       const pricing = categoryDetails.pricing.find(
         (p) => p.person === totalPersonsUpdated
       );
-
+  
       const priceForTotalPersons = pricing ? pricing.price : 0;
       const roomsForTotalPersons = pricing ? pricing.rooms : 0;
-
-      // Calculate per person price and child price
+  
+      // Calculate price per person
       const perPersonPrice =
         totalPersonsUpdated > 0 ? priceForTotalPersons / totalPersonsUpdated : 0;
+  
+      // Calculate child price as half of the per-person price
       const childPrice = perPersonPrice / 2;
-
-      // Add extra bed cost (assuming fixed cost per bed, e.g., 2000)
+  
+      // Extra bed cost (assuming fixed cost per bed, e.g., 2000)
       const extraBedCost = updatedRooms.extraBeds * 2000;
-
-      // Total price calculation
+  
+      // Total price calculation for all persons
       const computedTotalPrice =
         updatedRooms.adults * perPersonPrice +
         updatedRooms.children * childPrice +
         extraBedCost;
-
+  
       console.log("Updated Rooms:", updatedRooms);
       console.log("Computed Total Price:", computedTotalPrice);
-      console.log("Rooms for Total Persons:", roomsForTotalPersons); // Log the number of rooms
-
-      // Update the total price and the number of rooms to display
-      setTotalPrice(Math.round(computedTotalPrice));
-      setRoomsCount(roomsForTotalPersons); // Update the room count based on selected total persons
-
+      console.log("Price Per Person:", perPersonPrice);
+      console.log("Rooms for Total Persons:", roomsForTotalPersons);
+  
+      // Update state with calculated values
+      setTotalPrice(Math.round(computedTotalPrice)); // Total price for all persons
+      setPricePerPerson(Math.round(perPersonPrice)); // Price per individual
+      setRoomsCount(roomsForTotalPersons); // Update room count based on selected total persons
+  
       return updatedRooms;
     });
   };
+  
 
   const [showDialouge, setShowDialouge] = useState(false)
   const [formData, setFormData] = useState({
@@ -213,7 +262,9 @@ const TourBookingPanel = ({ uuid, categoryDetails, name, duration, category,date
 
         <div className={styles['tour-booking-button-pannel']}>
           <div>
-            <p className={styles['tour-booking-price']}>₹ {totalPrice}</p>
+          
+            <p className={styles['tour-booking-price']}>₹ {totalPrice} <span>Total Price</span></p>
+          <p className={styles['tour-booking-price']}>₹ {pricePerPerson}/per person</p>
             <p className={styles['tour-booking-taxes']}>Excluding applicable taxes</p>
           </div>
           <button onClick={() => setShowDialouge(true)}>Book Now</button>
@@ -232,6 +283,7 @@ const TourBookingPanel = ({ uuid, categoryDetails, name, duration, category,date
                 <div>
                   <h3>{name}</h3>
                   <h4>Total Price: ₹{totalPrice}</h4>
+                  <h4>₹ {pricePerPerson}/per person</h4>
                   <div className={styles["dialog-row"]}>
                     <label>Number of Rooms</label>
                     <div className={styles["dialog-counter"]}>
@@ -282,7 +334,7 @@ const TourBookingPanel = ({ uuid, categoryDetails, name, duration, category,date
           </div>
         )}
         {showCustomizeDialog && (
-          <CustomizedQuery uuid={uuid} />
+          <CustomizedQuery uuid={uuid} handleClose={close}/>
 
         )}
 

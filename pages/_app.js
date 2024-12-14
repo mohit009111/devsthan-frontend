@@ -43,7 +43,7 @@ function MyApp({ Component, pageProps }) {
         rel="noopener noreferrer"
         style={{
           position: 'fixed',
-          bottom: '40px',
+          bottom: '100px',
           right: '40px',
           backgroundColor: '#25D366',
           color: '#fff',

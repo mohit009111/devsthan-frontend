@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styles from '../whyChoose/whyChoose.module.css'
-const whyChoose = ({ whyChoose }) => {
+const WhyChoose = ({ whyChoose }) => {
 
   const [isClient, setIsClient] = useState(false);
 
@@ -32,4 +32,4 @@ const whyChoose = ({ whyChoose }) => {
   )
 }
 
-export default whyChoose
+export default WhyChoose

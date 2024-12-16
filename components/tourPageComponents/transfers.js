@@ -1,7 +1,14 @@
-import React from 'react'
+import React from 'react';
 import styles from '../../components/itinery/itinery.module.css';
 import Image from 'next/image';
-const transfers = ({ itinerary }) => {
+
+const Transfers = ({ itinerary }) => {
+    const hasTransportation = 
+        itinerary.transportation.flight?.isIncluded ||
+        itinerary.transportation.car?.isIncluded ||
+        itinerary.transportation.bus?.isIncluded ||
+        itinerary.transportation.train?.isIncluded;
+
     return (
         <div>
             <div className={styles['day-details-heading']}>
@@ -9,9 +16,8 @@ const transfers = ({ itinerary }) => {
                     <p>Day {itinerary.day}</p>
                     <p>{itinerary.title}</p>
                 </div>
-
             </div>
-           
+
             {itinerary.transportation.flight?.isIncluded && (
                 <div className={styles['section']}>
                     <h3>Flight</h3>
@@ -24,7 +30,9 @@ const transfers = ({ itinerary }) => {
                         <p>
                             <strong>{itinerary.transportation.flight.name}</strong>
                             <br />
-                            Departure Time: {itinerary.transportation.flight.departureTime}
+                            <strong>Departure Time: </strong> {itinerary.transportation.flight.departureTime}
+                            <br />
+                            <strong>Category: </strong> {itinerary.transportation.flight.category}
                             <br />
                             {itinerary.transportation.flight.description}
                         </p>
@@ -32,7 +40,6 @@ const transfers = ({ itinerary }) => {
                 </div>
             )}
 
-            {/* Car Section */}
             {itinerary.transportation.car?.isIncluded && (
                 <div className={styles['section']}>
                     <h3>Car</h3>
@@ -45,20 +52,25 @@ const transfers = ({ itinerary }) => {
                         <p>
                             <strong>{itinerary.transportation.car.name}</strong>
                             <br />
+                            <strong>Departure Time: </strong> {itinerary.transportation.car.departureTime}
+                            <br />
+                            <strong>Category: </strong> {itinerary.transportation.car.category}
+                            <br />
                             {itinerary.transportation.car.description}
                         </p>
-
                     </div>
-
                 </div>
             )}
-
 
             {itinerary.transportation.bus?.isIncluded && (
                 <div className={styles['section']}>
                     <h3>Bus</h3>
                     <p>
                         <strong>{itinerary.transportation.bus.name}</strong>
+                        <br />
+                        <strong>Departure Time: </strong> {itinerary.transportation.bus.departureTime}
+                        <br />
+                        <strong>Category: </strong> {itinerary.transportation.bus.category}
                         <br />
                         {itinerary.transportation.bus.description}
                     </p>
@@ -70,14 +82,15 @@ const transfers = ({ itinerary }) => {
                 </div>
             )}
 
-
             {itinerary.transportation.train?.isIncluded && (
                 <div className={styles['section']}>
                     <h3>Train</h3>
                     <p>
                         <strong>{itinerary.transportation.train.name}</strong>
                         <br />
-                        Departure Time: {itinerary.transportation.train.departureTime}
+                        <strong>Departure Time: </strong> {itinerary.transportation.train.departureTime}
+                        <br />
+                        <strong>Category: </strong> {itinerary.transportation.train.category}
                         <br />
                         {itinerary.transportation.train.description}
                     </p>
@@ -88,8 +101,15 @@ const transfers = ({ itinerary }) => {
                     </div>
                 </div>
             )}
-        </div>
-    )
-}
 
-export default transfers
+            {/* Show "No transportation" message if no options are available */}
+            {!hasTransportation && (
+                <div className={styles['no-transportation']}>
+                    <p>No transportation for this day</p>
+                </div>
+            )}
+        </div>
+    );
+};
+
+export default Transfers;

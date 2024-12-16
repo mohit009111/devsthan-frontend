@@ -32,8 +32,6 @@ const TourCategory = ({ tourData, categories, location }) => {
         },
       });
 
-      // Handle response (e.g., update state or display data)
-      console.log('Fetched Tours:', response);
     } catch (error) {
       console.error('Error fetching tours:', error);
     }

@@ -5,16 +5,69 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toast, ToastContainer } from 'react-toastify';
 import { SiOnstar } from 'react-icons/si';
 import { useRouter } from 'next/router';
-
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 import CustomizedQuery from './customizedQuery';
 import { v4 as uuidv4 } from 'uuid';
-const TourBookingPanel = ({ uuid, categoryDetails, name, duration, category,date }) => {
+const formatDate = (date) => {
 
-  console.log(categoryDetails)
-const close =(()=>{
-  setShowCustomizeDialog(false)
-})
-const [pricePerPerson, setPricePerPerson] = useState();
+  const day = String(date.getDate()).padStart(2, '0'); // Ensure 2-digit day
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Ensure 2-digit month
+  const year = date.getFullYear();
+  return `${day}-${month}-${year}`;
+};
+
+const TourBookingPanel = ({ uuid, categoryDetails, name, duration, category, date }) => {
+  const [storedUUID, setStoredUUID] = useState()
+
+  const [showDialouge, setShowDialouge] = useState(false)
+  const [formData, setFormData] = useState({
+    fullName: '',
+    phone: '',
+    email: '',
+    message: '',
+    uuid: ''
+  });
+console.log(formData)
+  // Set storedUUID when uuid prop changes
+  useEffect(() => {
+    console.log("UUID from props:", uuid); // Debugging
+    if (uuid) {
+      setStoredUUID(uuid);
+    }
+  }, [uuid]);
+
+  // Synchronize formData.uuid with storedUUID
+  useEffect(() => {
+    setFormData((prevData) => ({
+      ...prevData,
+      uuid: storedUUID
+    }));
+  }, [storedUUID])
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+   
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+
+  const [selectedDate, setSelectedDate] = useState(null);
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    if (date) {
+      // Format the date as dd-MM-yyyy and save it
+      const formattedDate = formatDate(date);
+      localStorage.setItem('departureDate', formattedDate);
+    }
+  };
+
+  const close = (() => {
+    setShowCustomizeDialog(false)
+  })
+  const [pricePerPerson, setPricePerPerson] = useState();
   const [roomsCount, setRoomsCount] = useState(1);
   const [loading, setLoading] = useState(false)
   const [showCustomizeDialog, setShowCustomizeDialog] = React.useState(false);
@@ -26,35 +79,35 @@ const [pricePerPerson, setPricePerPerson] = useState();
   });
   const router = useRouter();
   const [totalPrice, setTotalPrice] = useState(
-  
+
   );
   useEffect(() => {
     if (!categoryDetails || !categoryDetails.pricing) return;
-  
+
     // Total persons (adults + children)
     const totalPersons = rooms.adults + rooms.children;
-  
+
     // Find the pricing based on total persons
     const pricing = categoryDetails.pricing.find((p) => p.person === totalPersons);
-  
+
     if (pricing) {
       const priceForTotalPersons = pricing.price;
-  
+
       // Safeguard against division by zero
       const perPersonPrice = totalPersons > 0 ? priceForTotalPersons / totalPersons : 0;
-  
+
       // Children are charged half the per-person price
       const childPrice = perPersonPrice / 2;
-  
+
       // Extra bed cost (assuming a fixed cost per bed, e.g., 2000)
       const extraBedCost = rooms.extraBeds * 2000;
-  
+
       // Calculate the total price
       const computedTotalPrice =
         rooms.adults * perPersonPrice +
         rooms.children * childPrice +
         extraBedCost;
-  
+
       // Update the total price and price per person
       setTotalPrice(Math.round(computedTotalPrice));
       setPricePerPerson(Math.round(perPersonPrice)); // Store price per person
@@ -64,29 +117,35 @@ const [pricePerPerson, setPricePerPerson] = useState();
       setPricePerPerson(0);
     }
   }, [categoryDetails, rooms]);
-  
+
   const handleBookNow = async () => {
+    // Check if departure date is available in localStorage
+    const departureDate = localStorage.getItem('departureDate'); // Assuming the key is 'departureDate'
+    if (!departureDate) {
+      toast.error('Please select a departure date before proceeding.');
+      return; // Stop execution if departure date is not available
+    }
+  
     // Prepare user-selected data
     const userSelected = {
       category: category,
       adults: rooms.adults,
       children: rooms.children,
       tourId: uuid,
-     
+      departureDate, // Include the departure date in the request
     };
-
-    // Check if localStorage contains a token
-    const token = localStorage.getItem('token'); // Replace 'token' with the actual key used for token
-
+  
+    const token = localStorage.getItem('token'); 
+  
     // Generate userTempId if token is not available
     const userTempId = token ? null : uuidv4();
-
+  
     // Add userTempId or token as separate keys in the object
     const requestBody = {
       ...userSelected,
       ...(token ? { token } : { userTempId }), // Add token or userTempId depending on availability
     };
-
+  
     try {
       // Make API call to add to cart
       const response = await apiCall({
@@ -94,56 +153,51 @@ const [pricePerPerson, setPricePerPerson] = useState();
         method: 'POST',
         body: requestBody,
       });
-
-
+  
       if (response.success) {
         toast.success('Added to cart successfully!');
-
+  
         // Store userTempId in local storage if token doesn't exist
         if (!token && userTempId) {
           localStorage.setItem('userTempId', userTempId);
-        
         }
+  
         const queryParams = {
-                
-         data:date
+          data: date,
         };
         router.push({
           pathname: '/bookingDetails',
           query: queryParams,
         });
-      
       } else {
-        toast.error("Session expired? Please login again");
+        toast.error('Session expired? Please login again.');
         router.push({
           pathname: '/login',
-        
         });
-        
       }
     } catch (error) {
       console.error('Error adding to cart:', error);
       toast.error('An error occurred. Please try again.');
     }
   };
-
+  
 
   const updateRoom = (type, value) => {
     setRooms((prev) => {
       // Calculate the new value for the selected type (adults or children)
       let newValue = prev[type] + value;
-  
+
       // Total persons before updating
       const totalPersons = prev.adults + prev.children;
-  
+
       // Find pricing for the updated total persons
       const pricingForTotalPersons = categoryDetails.pricing.find(
         (p) => p.person === totalPersons + value
       );
-  
+
       // Get the maximum allowed persons
       const maxAllowedPersons = pricingForTotalPersons ? pricingForTotalPersons.person : 0;
-  
+
       if (type === "adults") {
         const maxAllowedAdults = maxAllowedPersons - prev.children;
         newValue = Math.min(newValue, maxAllowedAdults); // Limit adults to the max allowed
@@ -151,81 +205,53 @@ const [pricePerPerson, setPricePerPerson] = useState();
         const maxAllowedChildren = maxAllowedPersons - prev.adults;
         newValue = Math.min(newValue, maxAllowedChildren); // Limit children to the max allowed
       }
-  
+
       // Ensure the new value is not negative
       newValue = Math.max(0, newValue);
-  
+
       // Update the rooms object with the new value
       const updatedRooms = {
         ...prev,
         [type]: newValue,
       };
-  
+
       // Total persons after the update
       const totalPersonsUpdated = updatedRooms.adults + updatedRooms.children;
-  
+
       // Find pricing for the updated total persons
       const pricing = categoryDetails.pricing.find(
         (p) => p.person === totalPersonsUpdated
       );
-  
+
       const priceForTotalPersons = pricing ? pricing.price : 0;
       const roomsForTotalPersons = pricing ? pricing.rooms : 0;
-  
+
       // Calculate price per person
       const perPersonPrice =
         totalPersonsUpdated > 0 ? priceForTotalPersons / totalPersonsUpdated : 0;
-  
+
       // Calculate child price as half of the per-person price
       const childPrice = perPersonPrice / 2;
-  
+
       // Extra bed cost (assuming fixed cost per bed, e.g., 2000)
       const extraBedCost = updatedRooms.extraBeds * 2000;
-  
+
       // Total price calculation for all persons
       const computedTotalPrice =
         updatedRooms.adults * perPersonPrice +
         updatedRooms.children * childPrice +
         extraBedCost;
-  
-      console.log("Updated Rooms:", updatedRooms);
-      console.log("Computed Total Price:", computedTotalPrice);
-      console.log("Price Per Person:", perPersonPrice);
-      console.log("Rooms for Total Persons:", roomsForTotalPersons);
-  
+
+   
+
       // Update state with calculated values
       setTotalPrice(Math.round(computedTotalPrice)); // Total price for all persons
       setPricePerPerson(Math.round(perPersonPrice)); // Price per individual
       setRoomsCount(roomsForTotalPersons); // Update room count based on selected total persons
-  
+
       return updatedRooms;
     });
   };
-  
-
-  const [showDialouge, setShowDialouge] = useState(false)
-  const [formData, setFormData] = useState({
-    fullName: '',
-    phone: '',
-    email: '',
-    message: '',
-    uuid: uuid
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    console.log(`Input changed: ${name} => ${value}`); // Add logging here
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-  useEffect(() => {
-    setFormData((prevData) => ({
-      ...prevData,
-      uuid: uuid
-    }));
-  }, [uuid]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -243,7 +269,7 @@ const [pricePerPerson, setPricePerPerson] = useState();
 
         toast.error('Error submitting inquiry. Please try again later.');
       }
-      setFormData({ fullName: '', phone: '', email: '', message: '' });
+      // setFormData({ fullName: '', phone: '', email: '', message: '' });
     } catch (error) {
       console.error('Error submitting inquiry:', error);
     }
@@ -262,9 +288,9 @@ const [pricePerPerson, setPricePerPerson] = useState();
 
         <div className={styles['tour-booking-button-pannel']}>
           <div>
-          
-            <p className={styles['tour-booking-price']}>₹ {totalPrice} <span>Total Price</span></p>
-          <p className={styles['tour-booking-price']}>₹ {pricePerPerson}/per person</p>
+
+            {/* <p className={styles['tour-booking-price']}>₹ {totalPrice} <span>Total Price</span></p> */}
+            <p className={styles['tour-booking-price']}>₹ {pricePerPerson}/per person</p>
             <p className={styles['tour-booking-taxes']}>Excluding applicable taxes</p>
           </div>
           <button onClick={() => setShowDialouge(true)}>Book Now</button>
@@ -334,7 +360,7 @@ const [pricePerPerson, setPricePerPerson] = useState();
           </div>
         )}
         {showCustomizeDialog && (
-          <CustomizedQuery uuid={uuid} handleClose={close}/>
+          <CustomizedQuery uuid={uuid} handleClose={close} />
 
         )}
 
@@ -343,7 +369,16 @@ const [pricePerPerson, setPricePerPerson] = useState();
           <p className={styles['panel-heading']}>Book Your Tour</p>
           <p className={styles['panel-des']}>Reserve your ideal trip early for a hassle-free trip; secure comfort and convenience!</p>
 
-
+          <div className={styles['search-options-destination']}>
+            <p>Departure Date</p>
+            <DatePicker
+              selected={selectedDate}
+              onChange={handleDateChange}
+              placeholderText="Select Date"
+              dateFormat="dd/MM/yyyy"
+              className={styles['datepicker-input']}
+            />
+          </div>
           <form className={styles.inquiryForm} onSubmit={handleSubmit}>
             <label>Full Name</label>
             <input

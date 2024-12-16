@@ -14,7 +14,7 @@ const CustomizedQuery = ({uuid,handleClose}) => {
     noOfAdult: '',
     noOfChild: '',
   });
-console.log(formData)
+
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
   const handleChange = (e) => {

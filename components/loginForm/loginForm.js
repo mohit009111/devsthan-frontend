@@ -8,7 +8,6 @@ import { apiCall } from "../../utils/common";
 
 const LoginForm = ({  isComponent,toggleToLogin,toggleToHide }) => {
     
-console.log(isComponent)
     const router = useRouter()
     const [formData, setFormData] = useState({
 
@@ -60,7 +59,7 @@ console.log(isComponent)
         try {
 
             const response = await submitDataToApi(formData);
-            console.log(response)
+      
 
         } catch (err) {
             setLoading(false);
@@ -69,7 +68,7 @@ console.log(isComponent)
 
     };
     const verifyOtpdApi = async (data) => {
-        console.log(data)
+
 
         try {
 
@@ -79,7 +78,7 @@ console.log(isComponent)
 
                 body: data,
             });
-            console.log(response)
+
 
             if (response.success) {
                 setLoading(false);
@@ -189,7 +188,7 @@ console.log(isComponent)
                     </button>
                 </form>
             )}
-            {console.log(isComponent)}
+  
 
             <div className={styles["login-text"]}>
                 Want to create an account?{" "}

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import DestinationCard from '../../components/destinationCard/destinationCard';
 
 const Destinations = ({ destinations,destinationsBanner }) => {
-  console.log(destinationsBanner)
+ 
   const handleScrollParallax = () => {
     const parallaxImage = document.querySelector(`.${styles['parallax-image']}`);
     if (parallaxImage) {

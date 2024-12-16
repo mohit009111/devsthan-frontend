@@ -109,7 +109,7 @@ const SignupForm = ({  isComponent, toggleToSignup ,toggleToHide }) => {
             setOtpSent(true); // Show OTP form after successful signup
             toast.success('Otp Verified seccessfully ');
            
-            console.log(response)
+      
             if (response.success) {
               setLoading(false);
               setOtpSent(true);
@@ -152,7 +152,7 @@ const SignupForm = ({  isComponent, toggleToSignup ,toggleToHide }) => {
           setLoading(true);
     
           // Call the API to verify OTP and receive the response
-          const response = await verifyOtpdApi({ email: formData.email, otp });
+          const response = await verifyOtpdApi({ email: formData.email, otp ,phone:formData.phone,name:formData.name});
    
     
           // Redirect to the home page or dashboard after successful login/verification

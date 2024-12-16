@@ -21,7 +21,7 @@ const parseDate = (dateString) => {
 };
 
 const TourSearch = ({ locations }) => {
-  console.log(locations)
+
   const [destination, setDestination] = useState(null);
   const [showSelect, setShowSelect] = useState(false);
   const [searchText, setSearchText] = useState('');

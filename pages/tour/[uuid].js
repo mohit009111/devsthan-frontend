@@ -16,7 +16,7 @@ const TourPage = ({ tourAllData }) => {
     setDate(localStorage.getItem("departureDate"))
 
   }, []);
-  console.log(date)
+
 
   const [selectedCategory, setSelectedCategory] = useState('standardDetails');
   const [activeTab, setActiveTab] = useState('Itinerary');
@@ -44,7 +44,7 @@ const TourPage = ({ tourAllData }) => {
           city={tourAllData[0].city}
           location={tourAllData[0].location}
         />
-     
+
       </div>
 
       <div className={styles['tabs']}>
@@ -67,8 +67,8 @@ const TourPage = ({ tourAllData }) => {
         >
           Summary
         </button>
-           <div className={styles['category-selector']}>
-          <label htmlFor="category-select">Choose a Category: </label>
+        <div className={styles['category-selector']}>
+
           <select
             id="category-select"
             value={selectedCategory}
@@ -114,35 +114,35 @@ const TourPage = ({ tourAllData }) => {
             </div>
           )}
 
-{activeTab === 'Summary' && (
-  <div className={styles['summary']}>
-    <h2>Highlights</h2>
-    <ol className={styles['highlights']}>
-      {categoryDetails.highlights?.map((text, index) => (
-        <li key={index}>{text}</li>
-      ))}
-    </ol>
+          {activeTab === 'Summary' && (
+            <div className={styles['summary']}>
+              <h2>Highlights</h2>
+              <ol className={styles['highlights']}>
+                {categoryDetails.highlights?.map((text, index) => (
+                  <li key={index}>{text}</li>
+                ))}
+              </ol>
 
-    <div className={styles['details-container']}>
-      <div className={styles['inclusions']}>
-        <h2>Inclusions</h2>
-        <ol>
-          {categoryDetails.whatsIncluded?.map((text, index) => (
-            <li key={index}>{text}</li>
-          ))}
-        </ol>
-      </div>
-      <div className={styles['exclusions']}>
-        <h2>Exclusions</h2>
-        <ol>
-          {categoryDetails.whatsExcluded?.map((text, index) => (
-            <li key={index}>{text}</li>
-          ))}
-        </ol>
-      </div>
-    </div>
-  </div>
-)}
+              <div className={styles['details-container']}>
+                <div className={styles['inclusions']}>
+                  <h2>Inclusions</h2>
+                  <ol>
+                    {categoryDetails.whatsIncluded?.map((text, index) => (
+                      <li key={index}>{text}</li>
+                    ))}
+                  </ol>
+                </div>
+                <div className={styles['exclusions']}>
+                  <h2>Exclusions</h2>
+                  <ol>
+                    {categoryDetails.whatsExcluded?.map((text, index) => (
+                      <li key={index}>{text}</li>
+                    ))}
+                  </ol>
+                </div>
+              </div>
+            </div>
+          )}
 
         </div>
 

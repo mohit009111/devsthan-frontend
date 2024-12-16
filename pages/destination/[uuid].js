@@ -77,7 +77,7 @@ const Destination = ({ destinationData, destinationBanner }) => {
           method: 'POST',
         });
         setTours(tourData);
-        console.log('Fetched Tours:', tourData);
+
       } catch (error) {
         console.error('Error fetching tours:', error);
       }
@@ -86,7 +86,7 @@ const Destination = ({ destinationData, destinationBanner }) => {
     fetchTours();
   }, [destinationData.state.label]);
 
-  console.log(tours);
+
  
   const handleScrollParallax = () => {
     const parallaxImage = document.querySelector(`.${styles['parallax-image']}`);
@@ -100,7 +100,7 @@ const Destination = ({ destinationData, destinationBanner }) => {
     window.addEventListener('scroll', handleScrollParallax);
     return () => window.removeEventListener('scroll', handleScrollParallax);
   }, []);
-  console.log(destinationBanner)
+
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleReadMore = () => {
@@ -144,7 +144,7 @@ const Destination = ({ destinationData, destinationBanner }) => {
                   <h2>{dest.name}</h2>
                   <p>{dest.description}</p>
                   <div className={styles['image-grid']}>
-                    {dest.photos.map((photo, photoIndex) => (
+                    {dest.photos.slice(0,4).map((photo, photoIndex) => (
                       <img key={photoIndex} src={photo} alt={`Photo ${photoIndex + 1}`} />
                     ))}
                   </div>

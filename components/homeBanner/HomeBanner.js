@@ -52,7 +52,7 @@ const PrevArrow = ({ onClick }) => (
 const HomeBanner = ({ locations, homebanner }) => {
   const [selected, setSelected] = useState("Tour")
   const [showComminSoon, setShowComminSoon] = useState(false)
-  console.log(selected)
+ 
   const headings = [
     { title: 'Tour', isAvailable: true, icon: FiMapPin },
     { title: 'Hotel', isAvailable: false, icon: FaHotel },

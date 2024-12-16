@@ -26,9 +26,10 @@ export default function TravellerDetails() {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const userId = localStorage.getItem("userId");
-    const date = localStorage.getItem("selectedDate");
+    const date = localStorage.getItem("departureDate");
     const username = localStorage.getItem("username");
     const userTempId = localStorage.getItem("userTempId")
+    
     setUsername(username)
     setDate(date)
 if(token && userId){
@@ -66,7 +67,7 @@ if(token && userId){
     fetchCartData();
 
   }, []);
-
+console.log(date)
 
   const distributePersons = (adults, children) => {
     const totalPersons = adults + children;
@@ -149,10 +150,10 @@ if(token && userId){
               const response = await apiCall({
                 endpoint: `/create-order`,
                 method: 'POST',
-                body: { tourId: tourid, userId: userId, category: cartData.category, address: address, mobile: mobile, email: email, rooms: rooms, username: username },
+                body: { tourId: tourid, userId: userId, category: cartData.category, address: address, mobile: mobile, email: email, rooms: rooms, username: username ,date:date},
               });
-              console.log(response)
-              if (response.success === true) {
+             
+              if (response.success) {
                 const queryParams = {
 
                   tourName: tourInfo.name,
@@ -160,7 +161,7 @@ if(token && userId){
                   adults: cartData.adults,
                   children: cartData.children
                 };
-                console.log("Redirecting to booking details...");
+              
                 router.push({
                   pathname: '/booked-tour',
                   query: queryParams,
@@ -169,7 +170,7 @@ if(token && userId){
                 console.error("Order creation failed", response);
               }
             }
-            console.log("Payment verification response:", verifyResponse);
+          
           } catch (verifyError) {
             console.error("Error verifying payment:", verifyError.message);
           }
@@ -219,8 +220,6 @@ if(token && userId){
         ) : (
           <h2>Welcome Back!</h2>
         )}
-
-
 
         <h2>Please Enter Traveller(s) Details</h2>
         <form

@@ -11,7 +11,7 @@ import Blogs from "../components/blogs/blogs";
 import { apiCall } from "../utils/common";
 
 export default function Home({ tourData, destinations,locations,whyChoose,blogs,homebanner }) {
-  console.log(homebanner);
+ 
   
   return (
     <>

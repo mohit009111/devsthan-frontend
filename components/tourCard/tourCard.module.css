@@ -1,6 +1,6 @@
 .tour-card {
   /* width: 300px; */
-  background: #fff;
+  background-color: #edf2de;
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -136,7 +136,7 @@
   cursor: pointer;
   transition: transform 0.3s, color 0.3s;
   color: #333;
-  background-color: #fff;
+
   border-radius: 8px;
 
 }

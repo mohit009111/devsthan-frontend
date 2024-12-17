@@ -48,7 +48,7 @@ const VacationSpots = ({ destinations }) => {
           arrows 
           showDots
         >
-          {destinations.slice(0, 8).map((dest) => (
+          {destinations.length>0 && destinations && destinations?.slice(0, 8).map((dest) => (
             <div key={dest.uuid} className={styles['carousel-item']}>
               <Link href={`/destination/${dest.uuid}`}>
                 <DestinationCard destination={dest} />
@@ -58,7 +58,7 @@ const VacationSpots = ({ destinations }) => {
         </Carousel>
       ) : (
         <div className={styles['grid']}>
-          {destinations.slice(0, 8).map((dest) => (
+          {destinations.length>0 && destinations && destinations?.slice(0, 8).map((dest) => (
             <div key={dest.uuid} className={styles['grid-item']}>
               <Link href={`/destination/${dest.uuid}`}>
                 <DestinationCard destination={dest} />

@@ -13,6 +13,36 @@
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
+  .filtersection{
+    display: none !important;
+  }
+  .filter-section-mobile{
+    
+    display: flex;
+    position: fixed !important;
+    bottom: 0;
+    flex-direction: column;
+    height: 500px;
+  overflow-y: scroll;
+   width: 100%;
+
+    gap: 1.5rem;
+
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  .filter-mobile-button{
+    display: none !important;
+    position: absolute;
+    bottom: 10px;
+    background-color: #272727;
+    padding: 10px;
+    border-radius: 15px;
+    color: white;
+  left: 40%;
+  }
   .header {
     margin-bottom: 2rem;
     background-image: url("https://res.cloudinary.com/dmyzudtut/image/upload/v1730914616/inner-banner-bg_aomm7x.jpg");
@@ -48,6 +78,7 @@
     display: grid;
       gap: 20px;
       grid-template-columns: repeat(2, 1fr);
+      width: 100%;
       
     }
     
@@ -148,6 +179,12 @@
        .filter-section{
         display: none;
        }
+       .filter-mobile-button{
+        display: block !important;
+       }
+       .filtersection{
+     display: block !important;
+      }
  }
  @media screen and (max-width: 740px) {
    
@@ -155,5 +192,9 @@
      .imageGrid{
        grid-template-columns: repeat(2, 1fr);
      }
+     .tour-cards {
     
+        grid-template-columns: repeat(1, 1fr);
+        
+      }
 }

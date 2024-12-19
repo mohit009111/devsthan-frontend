@@ -52,9 +52,18 @@ const Transfers = ({ itinerary }) => {
                         <p>
                             <strong>{itinerary.transportation.car.name}</strong>
                             <br />
+                            <strong>Departure From: </strong> {itinerary.transportation.car.departureFrom}
+                            <br />
+                            <strong>Arrival To: </strong> {itinerary.transportation.car.arrivalTo}
+
+                            <br />
                             <strong>Departure Time: </strong> {itinerary.transportation.car.departureTime}
                             <br />
                             <strong>Category: </strong> {itinerary.transportation.car.category}
+                            <br />
+                            <strong>Maximum capacity: </strong> {itinerary.transportation.car.maxPeople} People
+                            <br />
+                            <strong>Price: </strong> {itinerary.transportation.car.price} People
                             <br />
                             {itinerary.transportation.car.description}
                         </p>

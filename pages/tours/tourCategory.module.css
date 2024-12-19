@@ -13,6 +13,45 @@
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
+  .filter-section__search > button{
+    color: red;
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+  }
+  .filter-section__search {
+  position: relative;
+}
+
+.filter-section__search-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.filter-section__location-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.filter-section__location-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.filter-section__location-item:hover {
+  background: #f0f0f0;
+}
+
   .filtersection{
     display: none !important;
   }
@@ -35,7 +74,8 @@
   }
   .filter-mobile-button{
     display: none !important;
-    position: absolute;
+      position: fixed;
+    bottom: 15px;
     bottom: 10px;
     background-color: #272727;
     padding: 10px;
@@ -158,6 +198,7 @@
   .filter-section__option {
     display: flex;
     align-items: center;
+    gap: 5px;
     font-size: 1rem;
   }
   

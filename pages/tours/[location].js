@@ -3,9 +3,12 @@ import styles from './tourCategory.module.css';
 import { apiCall } from '../../utils/common'; // Adjust path based on where your apiCall is defined
 import ToursList from '../../components/toursList/toursList';
 import { BASE_URL } from '../../utils/headers';
+import { useRouter } from 'next/router';
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import { RxCross2 } from "react-icons/rx";
 import { IoFilter } from "react-icons/io5";
+import Link from 'next/link';
 // `getStaticPaths` to define the list of dynamic routes to pre-render
 const durationOptions = [
   { label: "2 Days", count: 2 },
@@ -13,21 +16,33 @@ const durationOptions = [
   { label: "7 Days", count: 7 },
   { label: "15 Days", count: 15 },
 ];
-const TourCategory = ({ tourData, categories, location }) => {
+const TourCategory = ({ tourData, categories, locations ,location}) => {
+  console.log(location)
+  const [isListVisible, setIsListVisible] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [filteredOptions, setFilteredOptions] = useState(locations.destinations);
+    const router = useRouter();
 
   const toggleDialog = () => {
     setIsDialogOpen(!isDialogOpen);
   };
+  const handleSearch = (e) => {
+    const query = e.target.value;
+    setSearchText(query);
+
+    const filtered = locations.filter((location) =>
+      location.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredOptions(filtered);
+  };
+
 
   const [tours, setTours] = useState(tourData);
-  const [range, setRange] = useState([2000, 25000]);
-  const [minPrice, setMinPrice] = useState(2000);
-  const [maxPrice, setMaxPrice] = useState(25000);
+  const [range, setRange] = useState([5000, 500000]);
+  const [minPrice, setMinPrice] = useState(5000);
+  const [maxPrice, setMaxPrice] = useState(500000);
   const [checkedCategories, setCheckedCategories] = useState([]);
   const [checkedDuration, setCheckedDuration] = useState([]);
-  console.log(minPrice)
-  console.log(maxPrice)
   const handleRangeChange = (newRange) => {
     const [start, end] = newRange.sort((a, b) => a - b);
     setRange([start, end]);
@@ -35,14 +50,14 @@ const TourCategory = ({ tourData, categories, location }) => {
     setMaxPrice(end);
   };
   const marks = {
-    2000: { label: '2000' },
-    4000: { label: '4000' },
-    8000: { label: '8000' },
-    10000: { label: '10000' },
-    20000: { label: '20000' },
-    25000: { label: '25000' }
+    5000: { label: '5000' },
+    100000: { label: '100000' },
+    200000: { label: '200000' },
+    300000: { label: '300000' },
+    400000: { label: '400000' },
+    500000: { label: '500000' }
   };
-  const stepSize = 100000 / (marks.length - 4);
+  const stepSize = 500000 / 5;
   const handleCheckboxChange = (categoryName) => {
     const lowerCaseCategoryName = categoryName.trim().toLowerCase();
 
@@ -56,17 +71,32 @@ const TourCategory = ({ tourData, categories, location }) => {
       }
     });
   };
-  console.log(checkedDuration)
+ 
   const handleDurationChange = (duration) => {
     setCheckedDuration((prevCheckedDuration) => {
       if (prevCheckedDuration.includes(duration)) {
-        // Remove the duration if it's already checked
+       
         return prevCheckedDuration.filter((d) => d !== duration);
       } else {
-        // Add the duration if it's not already checked
+      
         return [...prevCheckedDuration, duration];
       }
     });
+  };
+
+  const handleInputChange = (e) => {
+    const query = e.target.value.toLowerCase();
+    setFilteredOptions(
+      locations.filter(location => location.toLowerCase().includes(query))
+    );
+  };
+
+  const handleListClick = (e) => {
+    e.stopPropagation(); // Prevent blur when clicking inside the list
+  };
+  const handleRedirect = (location) => {
+    const slug = location.toLowerCase().replace(/\s+/g, '-'); // Create a URL-friendly slug
+    router.push(`/tours/${slug}`); // Redirect to the location page
   };
 
   useEffect(() => {
@@ -79,7 +109,7 @@ const TourCategory = ({ tourData, categories, location }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            // location: locationParam,
+            location: location,
 
             tourType: checkedCategories,
             minPrice,
@@ -97,7 +127,7 @@ const TourCategory = ({ tourData, categories, location }) => {
     };
 
     fetchToursByCategories();
-  }, [checkedCategories, checkedDuration, minPrice, maxPrice]);
+  }, [checkedCategories, checkedDuration, minPrice, maxPrice,location]);
   return (
     <>
       <header className={styles.header}>
@@ -109,22 +139,38 @@ const TourCategory = ({ tourData, categories, location }) => {
         <div className={styles['filter-section']}>
           {/* Search Input */}
           <div className={styles['filter-section__search']}>
-            <input
-              type="text"
-              placeholder="Search"
-              className={styles['filter-section__search-input']}
-            />
-            <button className={styles['filter-section__search-button']}>
-              🔍
-            </button>
-          </div>
-
+      <input
+        type="text"
+        placeholder="Search"
+        className={styles['filter-section__search-input']}
+        onFocus={() => setIsListVisible(true)}
+        onBlur={() => setIsListVisible(false)} // Optional: Hide list on blur
+        onChange={handleInputChange}
+      />
+       {isListVisible && filteredOptions.length > 0 && (
+        <ul 
+          className={styles['filter-section__location-list']} 
+          onMouseDown={(e) => e.preventDefault()} // Prevent blur on list click
+        >
+          {filteredOptions.map((location, index) => (
+            <li 
+              key={index} 
+              className={styles['filter-section__location-item']}
+              onClick={() => handleRedirect(location)} // Redirect on click
+            >
+              {location}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
           {/* Price Filter */}
           <div className={styles['filter-section__price']}>
             <h3 className={styles['filter-section__title']}>Price Filter</h3>
             <Slider
-              min={2000}
-              max={25000}
+               style={{marginBottom:"20px"}}
+              min={5000}
+              max={500000}
               value={range}
               onChange={handleRangeChange}
               step={stepSize}
@@ -206,7 +252,7 @@ const TourCategory = ({ tourData, categories, location }) => {
               placeholder="Search"
               className={styles['filter-section__search-input']}
             />
-           <button onClick={toggleDialog}> x</button>
+           <button onClick={toggleDialog}><RxCross2/></button>
           </div>
 
           {/* Price Filter */}
@@ -214,8 +260,8 @@ const TourCategory = ({ tourData, categories, location }) => {
             <h3 className={styles['filter-section__title']}>Price Filter</h3>
             <Slider
             style={{marginBottom:"20px"}}
-              min={2000}
-              max={25000}
+              min={5000}
+              max={500000}
               value={range}
               onChange={handleRangeChange}
               step={stepSize}
@@ -315,7 +361,10 @@ export async function getStaticProps({ params }) {
       endpoint: '/api/categories',
       method: 'GET',
     });
-
+    const locations = await apiCall({
+      endpoint: '/api/getAllLocations',
+      method: 'GET',
+    });
     const tourData = await apiCall({
       endpoint: `/api/tours/${location}`,
       method: 'POST',
@@ -324,7 +373,8 @@ export async function getStaticProps({ params }) {
       props: {
         tourData,
         categories,
-        location
+        location,
+        locations
       },
     };
   } catch (error) {
@@ -333,7 +383,8 @@ export async function getStaticProps({ params }) {
       props: {
         tourData: [],
         categories: [],
-        location: ''
+        location: '',
+        locations:[]
       },
     };
   }

@@ -5,6 +5,7 @@ import ToursList from '../../components/toursList/toursList';
 import { BASE_URL } from '../../utils/headers';
 import { useRouter } from 'next/router';
 import Slider from "rc-slider";
+import Loader from '../../components/loader/loader'
 import "rc-slider/assets/index.css";
 import { RxCross2 } from "react-icons/rx";
 import { IoFilter } from "react-icons/io5";
@@ -16,12 +17,13 @@ const durationOptions = [
   { label: "7 Days", count: 7 },
   { label: "15 Days", count: 15 },
 ];
-const TourCategory = ({ tourData, categories, locations ,location}) => {
+const TourCategory = ({ tourData, categories, locations, location }) => {
+  const [loading, setLoading] = useState(true);
   console.log(location)
   const [isListVisible, setIsListVisible] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const [filteredOptions, setFilteredOptions] = useState(locations.destinations);
-    const router = useRouter();
+  const [filteredOptions, setFilteredOptions] = useState(locations.destinations);
+  const router = useRouter();
 
   const toggleDialog = () => {
     setIsDialogOpen(!isDialogOpen);
@@ -71,14 +73,14 @@ const TourCategory = ({ tourData, categories, locations ,location}) => {
       }
     });
   };
- 
+
   const handleDurationChange = (duration) => {
     setCheckedDuration((prevCheckedDuration) => {
       if (prevCheckedDuration.includes(duration)) {
-       
+
         return prevCheckedDuration.filter((d) => d !== duration);
       } else {
-      
+
         return [...prevCheckedDuration, duration];
       }
     });
@@ -95,6 +97,7 @@ const TourCategory = ({ tourData, categories, locations ,location}) => {
     e.stopPropagation(); // Prevent blur when clicking inside the list
   };
   const handleRedirect = (location) => {
+    setIsDialogOpen(false)
     const slug = location.toLowerCase().replace(/\s+/g, '-'); // Create a URL-friendly slug
     router.push(`/tours/${slug}`); // Redirect to the location page
   };
@@ -103,6 +106,7 @@ const TourCategory = ({ tourData, categories, locations ,location}) => {
 
     const fetchToursByCategories = async () => {
       try {
+        setLoading(true);
         const response = await fetch(`${BASE_URL}/api/allTours`, {
           method: "POST",
           headers: {
@@ -124,10 +128,13 @@ const TourCategory = ({ tourData, categories, locations ,location}) => {
       } catch (error) {
         console.error("Error fetching tours:", error);
       }
+      finally {
+        setLoading(false);
+      }
     };
 
     fetchToursByCategories();
-  }, [checkedCategories, checkedDuration, minPrice, maxPrice,location]);
+  }, [checkedCategories, checkedDuration, minPrice, maxPrice, location]);
   return (
     <>
       <header className={styles.header}>
@@ -139,36 +146,36 @@ const TourCategory = ({ tourData, categories, locations ,location}) => {
         <div className={styles['filter-section']}>
           {/* Search Input */}
           <div className={styles['filter-section__search']}>
-      <input
-        type="text"
-        placeholder="Search"
-        className={styles['filter-section__search-input']}
-        onFocus={() => setIsListVisible(true)}
-        onBlur={() => setIsListVisible(false)} // Optional: Hide list on blur
-        onChange={handleInputChange}
-      />
-       {isListVisible && filteredOptions.length > 0 && (
-        <ul 
-          className={styles['filter-section__location-list']} 
-          onMouseDown={(e) => e.preventDefault()} // Prevent blur on list click
-        >
-          {filteredOptions.map((location, index) => (
-            <li 
-              key={index} 
-              className={styles['filter-section__location-item']}
-              onClick={() => handleRedirect(location)} // Redirect on click
-            >
-              {location}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+            <input
+              type="text"
+              placeholder="Search"
+              className={styles['filter-section__search-input']}
+              onFocus={() => setIsListVisible(true)}
+              onBlur={() => setIsListVisible(false)} // Optional: Hide list on blur
+              onChange={handleInputChange}
+            />
+            {isListVisible && filteredOptions.length > 0 && (
+              <ul
+                className={styles['filter-section__location-list']}
+                onMouseDown={(e) => e.preventDefault()} // Prevent blur on list click
+              >
+                {filteredOptions.map((location, index) => (
+                  <li
+                    key={index}
+                    className={styles['filter-section__location-item']}
+                    onClick={() => handleRedirect(location)} // Redirect on click
+                  >
+                    {location}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
           {/* Price Filter */}
           <div className={styles['filter-section__price']}>
             <h3 className={styles['filter-section__title']}>Price Filter</h3>
             <Slider
-               style={{marginBottom:"20px"}}
+              style={{ marginBottom: "20px" }}
               min={5000}
               max={500000}
               value={range}
@@ -234,7 +241,13 @@ const TourCategory = ({ tourData, categories, locations ,location}) => {
         </div>
 
         <div className={styles['tour-cards']}>
-          <ToursList tourData={tours} />
+          {loading ? (
+            <div className={styles['loader']}>Loading...</div>
+          ) : tours.length === 0 ? (
+            <div className={styles['no-tours']}>No Tour Found</div>
+          ) : (
+            <ToursList tourData={tours} />
+          )}
         </div>
       </div>
       <div>
@@ -242,87 +255,107 @@ const TourCategory = ({ tourData, categories, locations ,location}) => {
           <IoFilter /> Filter
         </div>
 
-       
+
         {isDialogOpen ?
-        <div className={`${styles['filter-section-mobile']} ${styles['filtersection']}`}>
-          {/* Search Input */}
-          <div className={styles['filter-section__search']}>
+          <div className={`${styles['filter-section-mobile']} ${styles['filtersection']}`}>
+            {/* Search Input */}
+            <div className={styles['filter-section__search']}>
             <input
               type="text"
               placeholder="Search"
               className={styles['filter-section__search-input']}
+              onFocus={() => setIsListVisible(true)}
+              onBlur={() => setIsListVisible(false)} // Optional: Hide list on blur
+              onChange={handleInputChange}
             />
-           <button onClick={toggleDialog}><RxCross2/></button>
-          </div>
-
-          {/* Price Filter */}
-          <div className={styles['filter-section__price']}>
-            <h3 className={styles['filter-section__title']}>Price Filter</h3>
-            <Slider
-            style={{marginBottom:"20px"}}
-              min={5000}
-              max={500000}
-              value={range}
-              onChange={handleRangeChange}
-              step={stepSize}
-              range
-              marks={marks}
-              allowCross={false}
-              dots
-            />
-            <div className={styles['filter-section__price-inputs']}>
-              <input
-                type="number"
-                defaultValue={minPrice}
-                className={styles['filter-section__price-min']}
-              />
-              <input
-                type="number"
-                defaultValue={maxPrice}
-                className={styles['filter-section__price-max']}
-              />
+            {isListVisible && filteredOptions.length > 0 && (
+              <ul
+                className={styles['filter-section__location-list']}
+                onMouseDown={(e) => e.preventDefault()} // Prevent blur on list click
+              >
+                {filteredOptions.map((location, index) => (
+                  <li
+                    key={index}
+                    className={styles['filter-section__location-item']}
+                    onClick={() => handleRedirect(location)} // Redirect on click
+                  >
+                    {location}
+                  </li>
+                ))}
+              </ul>
+            )}
+         
+              <button onClick={toggleDialog}><RxCross2 /></button>
             </div>
-          </div>
 
-          {/* Destination Filter */}
-          <div className={styles['filter-section__destination']}>
-            <h3 className={styles['filter-section__title']}>Tour Categories</h3>
-            <div className={styles['filter-section__options']}>
-              {categories?.map((category) => (
-                <label key={category.name} className={styles['filter-section__option']}>
-                  <input
-                    type="checkbox"
-                    name="tourType"
-                    value={category.name}
-                    onChange={() =>
-                      handleCheckboxChange(category.name)
-                    }
-                  />
-                  {category.name}
-                </label>
-              ))}
+            {/* Price Filter */}
+            <div className={styles['filter-section__price']}>
+              <h3 className={styles['filter-section__title']}>Price Filter</h3>
+              <Slider
+                style={{ marginBottom: "20px" }}
+                min={5000}
+                max={500000}
+                value={range}
+                onChange={handleRangeChange}
+                step={stepSize}
+                range
+                marks={marks}
+                allowCross={false}
+                dots
+              />
+              <div className={styles['filter-section__price-inputs']}>
+                <input
+                  type="number"
+                  defaultValue={minPrice}
+                  className={styles['filter-section__price-min']}
+                />
+                <input
+                  type="number"
+                  defaultValue={maxPrice}
+                  className={styles['filter-section__price-max']}
+                />
+              </div>
             </div>
+
+            {/* Destination Filter */}
             <div className={styles['filter-section__destination']}>
-              <h3 className={styles['filter-section__title']}>Tour Duration</h3>
+              <h3 className={styles['filter-section__title']}>Tour Categories</h3>
               <div className={styles['filter-section__options']}>
-                {durationOptions?.map((duration) => (
-                  <label key={duration.label} className={styles['filter-section__option']}>
-
+                {categories?.map((category) => (
+                  <label key={category.name} className={styles['filter-section__option']}>
                     <input
                       type="checkbox"
-                      name="duration"
-                      value={duration.label}
+                      name="tourType"
+                      value={category.name}
                       onChange={() =>
-                        handleDurationChange(duration.count)
+                        handleCheckboxChange(category.name)
                       }
                     />
-                    More than  {duration.label}
+                    {category.name}
                   </label>
                 ))}
               </div>
+              <div className={styles['filter-section__destination']}>
+                <h3 className={styles['filter-section__title']}>Tour Duration</h3>
+                <div className={styles['filter-section__options']}>
+                  {durationOptions?.map((duration) => (
+                    <label key={duration.label} className={styles['filter-section__option']}>
+
+                      <input
+                        type="checkbox"
+                        name="duration"
+                        value={duration.label}
+                        onChange={() =>
+                          handleDurationChange(duration.count)
+                        }
+                      />
+                      More than  {duration.label}
+                    </label>
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
-        </div> : null}
+          </div> : null}
       </div>
     </>
   );
@@ -384,7 +417,7 @@ export async function getStaticProps({ params }) {
         tourData: [],
         categories: [],
         location: '',
-        locations:[]
+        locations: []
       },
     };
   }

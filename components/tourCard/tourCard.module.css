@@ -5,6 +5,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   text-align: left;
+  height: fit-content;
   /* max-width: 400px; */
   padding: 4%;
   position: relative;
@@ -24,7 +25,8 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
-  font-size: 1.25rem;
+  font-size: 18px;
+
 
 
 

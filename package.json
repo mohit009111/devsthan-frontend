@@ -23,7 +23,7 @@
     "react-toastify": "^10.0.6",
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.13",
-    "swiper": "^11.1.14",
+    "swiper": "^11.1.15",
     "uuidv4": "^6.2.13",
     "world-countries-capitals": "^3.4.0"
   },

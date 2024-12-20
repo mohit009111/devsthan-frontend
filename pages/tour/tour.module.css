@@ -4,12 +4,32 @@
   margin-top: 50px;
   padding-inline: 20px;
 }
+.tour-booking-tax{
+  font-size: 14px;
+}
 /* styles.module.css */
 .summary {
   padding: 20px;
 
   border-radius: 8px; /* Optional styling */
 }
+.tour-booking-pricing{
+  display: flex;
+  align-items: center;
+}
+.tour-booking-price {
+  font-size: 24px; /* Larger size for price */
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.tour-booking-taxes {
+  font-size: 14px; /* Smaller size for taxes */
+  color: #777; /* Subtle color for less emphasis */
+  margin: 0;
+}
+
 
 .highlights {
   margin-bottom: 20px;
@@ -448,6 +468,16 @@ padding: 10px 20px !important;
   .tour-details-inc-exc {
     flex-direction: column;
   }
+  .tour-booking-tax{
+  font-size: 12px;
+}
+  .tour-booking-taxes{
+    font-size: 10px;
+  }
+  .tour-booking-price {
+  font-size: 18px; /* Larger size for price */
+
+}
 .details-container{
   flex-direction: column;
 }
@@ -464,6 +494,7 @@ padding: 10px 20px !important;
   .tour-main {
     padding-inline: 10px;
   }
+  
 
 }
 
@@ -670,6 +701,7 @@ padding: 10px 20px !important;
   display: flex;
   position: sticky;
   top: 73px;
+  z-index: 99;
   background-color: white;
   margin: 20px 0;
 }
@@ -745,24 +777,9 @@ margin-bottom: 10px;
   border-radius: 5px;
 }
 
-.tour-booking-price {
-  font-size: 1.5rem;         /* Larger text for total price */
-  font-weight: bold;         /* Make the price stand out */
-  color: #333;               /* Dark color for the price */
-     /* Spacing between price and other text */
-}
 
-.tour-booking-price + .tour-booking-price {
-  font-size: 1.2rem;         /* Slightly smaller font for price per person */
-  color: #666;               /* Lighter color for price per person */
-}
 
-.tour-booking-taxes {
-  font-size: 1rem;           /* Standard size for tax info */
-  color: #999;      
-  margin-block: 5px;         /* Lighter color for tax note */
-          /* Small space above tax note */
-}
+
 .dialog-overlay {
   position: fixed;
   top: 0;

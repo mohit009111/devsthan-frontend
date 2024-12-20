@@ -28,7 +28,7 @@ const TourBookingPanel = ({ uuid, categoryDetails, name, duration, category, dat
     message: '',
     uuid: ''
   });
-console.log(formData)
+ 
   // Set storedUUID when uuid prop changes
   useEffect(() => {
     console.log("UUID from props:", uuid); // Debugging
@@ -46,7 +46,7 @@ console.log(formData)
   }, [storedUUID])
   const handleChange = (e) => {
     const { name, value } = e.target;
-   
+
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -125,7 +125,7 @@ console.log(formData)
       toast.error('Please select a departure date before proceeding.');
       return; // Stop execution if departure date is not available
     }
-  
+
     // Prepare user-selected data
     const userSelected = {
       category: category,
@@ -134,18 +134,18 @@ console.log(formData)
       tourId: uuid,
       departureDate, // Include the departure date in the request
     };
-  
-    const token = localStorage.getItem('token'); 
-  
+
+    const token = localStorage.getItem('token');
+
     // Generate userTempId if token is not available
     const userTempId = token ? null : uuidv4();
-  
+
     // Add userTempId or token as separate keys in the object
     const requestBody = {
       ...userSelected,
       ...(token ? { token } : { userTempId }), // Add token or userTempId depending on availability
     };
-  
+
     try {
       // Make API call to add to cart
       const response = await apiCall({
@@ -153,15 +153,15 @@ console.log(formData)
         method: 'POST',
         body: requestBody,
       });
-  
+
       if (response.success) {
         toast.success('Added to cart successfully!');
-  
+
         // Store userTempId in local storage if token doesn't exist
         if (!token && userTempId) {
           localStorage.setItem('userTempId', userTempId);
         }
-  
+
         const queryParams = {
           data: date,
         };
@@ -180,7 +180,7 @@ console.log(formData)
       toast.error('An error occurred. Please try again.');
     }
   };
-  
+
 
   const updateRoom = (type, value) => {
     setRooms((prev) => {
@@ -242,7 +242,7 @@ console.log(formData)
         updatedRooms.children * childPrice +
         extraBedCost;
 
-   
+
 
       // Update state with calculated values
       setTotalPrice(Math.round(computedTotalPrice)); // Total price for all persons
@@ -287,10 +287,13 @@ console.log(formData)
       <div className={styles['tour-booking-panel-outer']}>
 
         <div className={styles['tour-booking-button-pannel']}>
-          <div>
+          <div style={{minWidth:'145px'}}>
 
-            {/* <p className={styles['tour-booking-price']}>₹ {totalPrice} <span>Total Price</span></p> */}
-            <p className={styles['tour-booking-price']}>₹ {pricePerPerson}/per person</p>
+           <div className={styles['tour-booking-pricing']}>
+
+
+            <p className={styles['tour-booking-price']}>₹ {pricePerPerson}</p> <p className={styles['tour-booking-tax']}>/per person</p>
+           </div>
             <p className={styles['tour-booking-taxes']}>Excluding applicable taxes</p>
           </div>
           <button onClick={() => setShowDialouge(true)}>Book Now</button>

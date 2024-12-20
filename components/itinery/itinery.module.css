@@ -9,7 +9,16 @@
   color: #ff0000;
   font-weight: bold;
 }
-
+.day-carousel{
+max-width: 100%;
+}
+.banner-inner{
+    max-width: 500px !important;
+}
+.dayplan-images{
+  width: 100% !important;
+  max-width: 400px !important;
+}
 .no-meals {
   text-align: center;
   margin-top: 20px;
@@ -34,6 +43,7 @@
   display: flex;
   position: sticky;
   overflow-x: auto;
+      z-index: 99;
   top: 123px;
   gap: 1rem;
   white-space: no-wrap;
@@ -88,7 +98,7 @@
   padding: 13px 18px;
   font-size: 14px;
   background-color: #63ab45;
-  font-weight: 900;
+  font-weight: 400;
   color: #fff;
 }
 
@@ -106,7 +116,7 @@
 
 .day-details .content img {
   width: 100%;
-  max-width: 200px;
+ 
   /* Limits the max width */
   height: auto;
   /* Maintains aspect ratio */

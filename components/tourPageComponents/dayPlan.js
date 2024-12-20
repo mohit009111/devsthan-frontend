@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import styles from '../../components/itinery/itinery.module.css';
 import Image from 'next/image';
-const dayPlan = ({ itinerary }) => {
+const DayPlan = ({ itinerary }) => {
       const [isClient, setIsClient] = useState(false);
     
         useEffect(() => {
@@ -70,7 +70,7 @@ const dayPlan = ({ itinerary }) => {
     )
 }
 
-export default dayPlan
+export default DayPlan
 
 // import React from 'react'
 // import styles from '../../components/itinery/itinery.module.css';

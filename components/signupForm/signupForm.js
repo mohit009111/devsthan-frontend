@@ -6,6 +6,7 @@ import { apiCall } from "../../utils/common";
 import { toast } from 'react-toastify';
 import { useRouter } from "next/router";
 import Link from "next/link";
+
 const SignupForm = ({  isComponent, toggleToSignup ,toggleToHide }) => {
   const router=useRouter()
     const [formData, setFormData] = useState({
@@ -55,6 +56,7 @@ const SignupForm = ({  isComponent, toggleToSignup ,toggleToHide }) => {
     
       const submitDataToApi = async (formData) => {
         try {
+          setLoading(true)
           const response = await apiCall({
             endpoint: `/api/user/signup`,
             method: 'POST',
@@ -62,11 +64,11 @@ const SignupForm = ({  isComponent, toggleToSignup ,toggleToHide }) => {
             body: formData,
           });
           if (response.success) {
-            setLoading(false);
+          
             setOtpSent(true); // Show OTP form after successful signup
             toast.success('Account Created Successfully.Please verify OTP to Login ');
           } else {
-            setLoading(false);
+          
             setErrors({ general: "Signup failed. Please try again." });
             toast.error(response.error);
           }
@@ -74,6 +76,8 @@ const SignupForm = ({  isComponent, toggleToSignup ,toggleToHide }) => {
         } catch (error) {
           console.error("API call error:", error);
           return { success: false, error: error.message };
+        }finally{
+          setLoading(false)
         }
       };
       // Handle form submission to signup
@@ -148,8 +152,8 @@ const SignupForm = ({  isComponent, toggleToSignup ,toggleToHide }) => {
       // Handle OTP verification
       const handleOtpSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
-          setLoading(true);
     
           // Call the API to verify OTP and receive the response
           const response = await verifyOtpdApi({ email: formData.email, otp ,phone:formData.phone,name:formData.name});
@@ -159,8 +163,10 @@ const SignupForm = ({  isComponent, toggleToSignup ,toggleToHide }) => {
       
     
         } catch (err) {
-          setLoading(false);
+         
           setOtpError("Error occurred. Please try again.");
+        }finally{
+          setLoading(false);
         }
       };
     
@@ -193,9 +199,12 @@ const SignupForm = ({  isComponent, toggleToSignup ,toggleToHide }) => {
       />
       {otpError && <span className={styles["error"]}>{otpError}</span>}
     </div>
-    <button type="submit" className={styles["submit-button"]}>
+    {
+      loading ? <Loader/> : <button type="submit" className={styles["submit-button"]}>
       Verify OTP
     </button>
+    }
+    
   </form>
 ) : (
   // Signup form
@@ -311,21 +320,35 @@ const SignupForm = ({  isComponent, toggleToSignup ,toggleToHide }) => {
         I agree to receive emails and marketing messages.
       </label>
     </div>
-
+    {
+      loading ? <Loader/> :
     <button type="submit" className={styles["submit-button"]}>
       Register
     </button>
+}
   </form>
 )}
 
 <div className={styles["login-text"]}>
-  Already have an account?{" "}
- {isComponent ==true?  <p  className={styles["link"]}  onClick={toggleToSignup}>
-    Login
-  </p>: <Link href="/login" className={styles["link"]}>
-    Login
-  </Link>}
-</div>
+      Already have an account?{" "}
+      {isComponent ? (
+        <p className={styles["link"]} onClick={toggleToSignup}>
+          {loading ? (
+           <Loader/>
+          ) : (
+            "Login"
+          )}
+        </p>
+      ) : (
+        <Link href="/login" className={styles["link"]}>
+          {loading ? (
+             <Loader/>
+          ) : (
+            "Login"
+          )}
+        </Link>
+      )}
+    </div>
  </>
   )
 }

@@ -35,7 +35,7 @@ const TourGallery = ({ images, name, state, city, location, duration }) => {
       <div className={styles['header']}>
         <h1>{name}</h1>
         <div className={styles['sub-header']}>
-          <span className={styles['duration']}>{duration}</span>
+          <span className={styles['duration']}>{`${duration} Days / ${duration-1} Nights`}</span>
           <span className={styles['location']}>{location}</span>
         </div>
       </div>

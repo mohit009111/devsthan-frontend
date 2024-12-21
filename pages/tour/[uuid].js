@@ -10,13 +10,7 @@ import Itinerary from '../../components/itinery/itinery';
 
 const TourPage = ({ tourAllData }) => {
 
-  const [date, setDate] = useState()
-
-  useEffect(() => {
-    setDate(localStorage.getItem("departureDate"))
-
-  }, []);
-
+ 
 
   const [selectedCategory, setSelectedCategory] = useState('standardDetails');
   const [activeTab, setActiveTab] = useState('Itinerary');
@@ -87,7 +81,7 @@ const TourPage = ({ tourAllData }) => {
         <div className={styles['tab-content']}>
           {activeTab === 'Itinerary' && (
             <Itinerary categoryDetails={categoryDetails.itineraries
-            } date={date} />
+            }  />
           )}
 
           {activeTab === 'Policies' && (
@@ -149,7 +143,7 @@ const TourPage = ({ tourAllData }) => {
 
         <TourBookingPanel
           duration={tourAllData[0].duration}
-          date={date}
+        
           category={selectedCategory}
           state={tourAllData[0].state}
           city={tourAllData[0].city}

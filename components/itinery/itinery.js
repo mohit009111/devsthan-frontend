@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState,forwardRef , useRef } from 'react';
 import Meals from '../tourPageComponents/meals';
 import styles from './itinery.module.css';
 import Transfers from '../tourPageComponents/transfers';
@@ -10,24 +10,39 @@ import "react-datepicker/dist/react-datepicker.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-const Itinerary = ({ categoryDetails, date }) => {
+const Itinerary = ({ categoryDetails }) => {
   const dayRefs = useRef([]); // Array of refs for each day
- const [selectedDate, setSelectedDate] = useState(null);
- const formatDate = (date) => {
- 
-   const day = String(date.getDate()).padStart(2, '0'); // Ensure 2-digit day
-   const month = String(date.getMonth() + 1).padStart(2, '0'); // Ensure 2-digit month
-   const year = date.getFullYear();
-   return `${day}-${month}-${year}`;
- };
+  const [selectedDate, setSelectedDate] = useState(new Date()); // Default to today's date
+  const [startDate, setStartDate] = useState(new Date()); // State for start date
+  const CustomInput = forwardRef(({ value, onClick }, ref) => (
+    <input
+      className={styles['datepicker-input']}
+      value={value}
+      onClick={onClick}
+      readOnly // Prevent keyboard from opening
+      ref={ref}
+      placeholder="Select Date"
+    />
+  ));
+  const formatDate = (date) => {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
+
   const handleDateChange = (date) => {
     setSelectedDate(date);
     if (date) {
+      // Update the start date when date changes
+      setStartDate(date);
+
       // Format the date as dd-MM-yyyy and save it
       const formattedDate = formatDate(date);
       localStorage.setItem('departureDate', formattedDate);
     }
   };
+
   const [activeTab, setActiveTab] = useState('day-plan');
   const [selectedDay, setSelectedDay] = useState(0);
 
@@ -37,24 +52,6 @@ const Itinerary = ({ categoryDetails, date }) => {
     // Scroll to the corresponding DayPlan
     dayRefs.current[index]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
-  const parseDate = (dateString) => {
-    // Parse date assuming the format is DD-MM-YYYY
-    const [day, month, year] = dateString.split('-').map(Number);
-    return new Date(year, month - 1, day); // Months are zero-indexed in JS
-  };
-  
-  const startDate = (() => {
-    try {
-      if (date) {
-        const parsedDate = parseDate(date);
-        if (isNaN(parsedDate)) throw new Error("Invalid date format");
-        return parsedDate;
-      }
-      return new Date(); // Default to today's date
-    } catch {
-      return new Date(); // Default to today's date
-    }
-  })();
 
   return (
     <div className={styles['itinerary']}>
@@ -92,16 +89,14 @@ const Itinerary = ({ categoryDetails, date }) => {
         <div className={styles['day-plan-sidebar']}>
           <div className={styles['day-plan-sidebar-days']}>
             <div className={styles['date-container']}>
-            <div className={styles['search-options-destination']}>
-         
-            <DatePicker
-              selected={selectedDate}
-              onChange={handleDateChange}
-              placeholderText="Select Date"
-              dateFormat="dd/MM/yyyy"
-              className={styles['datepicker-input']}
-            />
-          </div>
+              <div className={styles['search-options-destination']}>
+              <DatePicker
+  selected={selectedDate}
+  onChange={handleDateChange}
+  dateFormat="dd/MM/yyyy"
+  customInput={<CustomInput />} // Use custom input
+/>
+              </div>
               {categoryDetails.map((_, index) => {
                 const currentDate = new Date(startDate);
                 currentDate.setDate(startDate.getDate() + index); // Increment date by index

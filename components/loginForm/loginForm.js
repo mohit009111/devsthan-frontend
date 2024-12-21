@@ -31,6 +31,7 @@ const LoginForm = ({  isComponent,toggleToLogin,toggleToHide }) => {
 
     const submitDataToApi = async (formData) => {
         try {
+            setLoading(true);
             const response = await apiCall({
                 endpoint: `/api/user/login`,
                 method: 'POST',
@@ -38,11 +39,11 @@ const LoginForm = ({  isComponent,toggleToLogin,toggleToHide }) => {
                 body: formData,
             });
             if (response.success) {
-                setLoading(false);
+              
                 setOtpSent(true);
                 toast.success('Please verify OTP to Login ');
             } else {
-                setLoading(false);
+               
                 setErrors({ general: "Login failed. Please try again." });
                 toast.error(response.error);
             }
@@ -50,6 +51,8 @@ const LoginForm = ({  isComponent,toggleToLogin,toggleToHide }) => {
         } catch (error) {
             console.error("API call error:", error);
             return { success: false, error: error.message };
+        }finally{
+            setLoading(false);
         }
     };
     // Handle form submission to signup
@@ -163,9 +166,14 @@ const userTempId=localStorage.getItem("userTempId")
                         />
                         {otpError && <span className={styles["error"]}>{otpError}</span>}
                     </div>
-                    <button type="submit" className={styles["submit-button"]}>
-                        Verify OTP
-                    </button>
+                    {
+      loading ? <Loader/> :
+    
+      <button type="submit" className={styles["submit-button"]}>
+      Verify OTP
+  </button>
+}
+
                 </form>
             ) : (
                 // Signup form
@@ -186,9 +194,13 @@ const userTempId=localStorage.getItem("userTempId")
                         />
                         {errors.email && <span className={styles["error"]}>{errors.email}</span>}
                     </div>
-                    <button type="submit" className={styles["submit-button"]}>
-                        Login
-                    </button>
+                    {
+      loading ? <Loader/> :
+      <button type="submit" className={styles["submit-button"]}>
+      Login
+  </button>
+}
+                  
                 </form>
             )}
   

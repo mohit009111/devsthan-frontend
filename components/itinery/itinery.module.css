@@ -271,9 +271,7 @@ max-width: 100%;
 
 
 
-.photos img:hover {
-  transform: scale(1.1);
-}
+
 
 /* Day Plan Sidebar */
 .day-plan-sidebar {

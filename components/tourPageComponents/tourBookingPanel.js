@@ -13,7 +13,7 @@ import { v4 as uuidv4 } from 'uuid';
 const TourBookingPanel = ({ uuid, categoryDetails, name, duration, category, date }) => {
   const [storedUUID, setStoredUUID] = useState()
   const [isLoadingBook, setIsLoadingBook] = useState(false);
-  const [isLoadingCustomize, setIsLoadingCustomize] = useState(false);
+ 
   const [showDialouge, setShowDialouge] = useState(false)
   const [formData, setFormData] = useState({
     fullName: '',
@@ -152,7 +152,7 @@ const TourBookingPanel = ({ uuid, categoryDetails, name, duration, category, dat
         }
 
         const queryParams = {
-          data: date,
+          date: date,
         };
         router.push({
           pathname: '/bookingDetails',
@@ -160,8 +160,14 @@ const TourBookingPanel = ({ uuid, categoryDetails, name, duration, category, dat
         });
       } else {
         toast.error('Session expired? Please login again.');
+        localStorage.clear()
+        localStorage.setItem('userTempId', userTempId);
+        const queryParams = {
+          date: date,
+        };
         router.push({
-          pathname: '/login',
+          pathname: '/bookingDetails',
+          query: queryParams,
         });
       }
     } catch (error) {

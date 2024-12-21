@@ -3,8 +3,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from '../../pages/tour/tour.module.css';
 import { apiCall } from '../../utils/common';
-
+import Loader from '../loader/loader';
 const CustomizedQuery = ({uuid,handleClose}) => {
+   const [isLoadingCustomize, setIsLoadingCustomize] = useState(false);
   const [formData, setFormData] = useState({
     uuid:uuid,
     name: '',
@@ -24,7 +25,7 @@ const CustomizedQuery = ({uuid,handleClose}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setIsLoadingCustomize(true)
     try {
         const response = await apiCall({
             endpoint: `/api/customizedQuery`,
@@ -32,7 +33,7 @@ const CustomizedQuery = ({uuid,handleClose}) => {
         
             body: formData,
           });
-      
+      console.log(response)
 
       if (response.success==true) {
         toast.success('Query submitted successfully!');
@@ -43,6 +44,8 @@ const CustomizedQuery = ({uuid,handleClose}) => {
     } catch (error) {
       console.error('Error submitting form:', error);
       toast.error('An error occurred. Please try again.');
+    }finally{
+      setIsLoadingCustomize(false)
     }
   };
 
@@ -121,7 +124,8 @@ const CustomizedQuery = ({uuid,handleClose}) => {
             required
           />
         </div>
-        <button type="submit" className={styles['customize-dialog-button']}>Submit</button>
+        {isLoadingCustomize ? <Loader/> :   <button type="submit" className={styles['customize-dialog-button']}>Submit</button>}
+       
         <div className={styles['approval-section']}>
           <p>
             Call us For Details: +91 9816348636 <br />

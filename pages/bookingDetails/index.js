@@ -379,10 +379,10 @@ if(token && userId){
         <h3 className={styles['total-amount']}>Total Amount: ₹{cartData?.totalPrice.toFixed(2)}</h3>
 
         <div className={styles['transaction-safe']}>
-          <img
+          {/* <img
             src="/path/to/google-play-image.jpg" // You can replace with dynamic image URL if needed
             alt="Google Play"
-            className={styles['transaction-image']} />
+            className={styles['transaction-image']} /> */}
           <div>
             <strong>Your transaction is safe because:</strong>
             <ul>

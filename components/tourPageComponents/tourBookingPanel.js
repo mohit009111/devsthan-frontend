@@ -105,14 +105,15 @@ const TourBookingPanel = ({ uuid, categoryDetails, name, duration, category, dat
       setRoomsCount(1); // Default room count
     }
   }, [categoryDetails, rooms]);
-
+console.log(isLoadingBook)
   const handleBookNow = async () => {
     setIsLoadingBook(true)
-    // Check if departure date is available in localStorage
     const departureDate = localStorage.getItem('departureDate'); // Assuming the key is 'departureDate'
     if (!departureDate) {
       toast.error('Please select a departure date before proceeding.');
+      setIsLoadingBook(false)
       return; // Stop execution if departure date is not available
+      
     }
 
     // Prepare user-selected data

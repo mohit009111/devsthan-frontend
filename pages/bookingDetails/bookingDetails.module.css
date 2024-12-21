@@ -1,212 +1,224 @@
 .container {
-    display: flex;
+  display: flex;
   gap: 20px;
-    padding: 16px;
-    max-width: 1324px;
-    margin: auto;
-  }
-  
-  .form-section {
-    background-color: #f9f9f9;
-    padding: 20px;
-    width: 100%;
-    border-radius: 8px;
-  }
-  
-  .room-section {
-  
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-    background-color: #f9f9f9;
-   
-  }
-  .traveller-row-merge{
-    display: flex;
-    width: 100%;
-    gap: 10px;
-  }
-  .button{
-    font-size: 14px;
-    font-weight: 500;
-   
-    outline: none;
-    border: none;
-    cursor: pointer;
+  padding: 16px;
+  max-width: 1324px;
+  margin: auto;
+}
 
-    white-space: nowrap;
-    background-color: #63ab45;
-    padding: 10px 10px;
-   
-    color: white;
-  }
-  
-  .room-section h3 {
-    font-size: 1.5rem;
-    margin-bottom: 15px;
-    color: #333;
-    text-align: center;
-  }
-  
-  .traveller-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    margin-bottom: 16px;
-  }
-  .traveller-row label {
-    display: flex;
-    flex-direction: column;
-    font-weight: bold;
-    color: #555;
-    width: 100%;
-  }
-  
-  .traveller-row input {
-    padding: 8px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-top: 4px;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  
- .traveller-row input:focus {
-    border-color: #007bff;
-  }
-  
-  .input-group textarea {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-    resize: vertical;
-  }
-  
-  .input-group input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
-  }
-  
-  .input-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-  }
-  
-  .input-group {
-    margin-bottom: 16px;
-  }
-  
+.form-section {
+  background-color: #f9f9f9;
+  padding: 20px;
+  width: 100%;
+  border-radius: 8px;
+}
 
-  .submit-button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 16px;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    margin-top: 16px;
-  }
-  
-  .submit-button:hover {
-    background-color: #0056b3;
-  }
-   
-  /* .submit-button:disabled {
+.room-section {
+
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+
+}
+
+.traveller-row-merge {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+}
+
+.button {
+  font-size: 14px;
+  font-weight: 500;
+
+  outline: none;
+  border: none;
+  cursor: pointer;
+
+  white-space: nowrap;
+  background-color: #63ab45;
+  padding: 10px 10px;
+
+  color: white;
+}
+
+.room-section h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #333;
+  text-align: center;
+}
+
+.traveller-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.traveller-row label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  color: #555;
+  width: 100%;
+}
+
+.traveller-row input {
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 4px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.traveller-row input:focus {
+  border-color: #007bff;
+}
+
+.input-group textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  resize: vertical;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.input-group {
+  margin-bottom: 16px;
+}
+
+
+.submit-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: 16px;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+/* .submit-button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
   } */
-  
-  @media (max-width: 768px) {
-   .container{
+
+@media (max-width: 768px) {
+  .container {
     flex-direction: column;
-   }
-   .package-details-box{
-    max-width: none !important;
-   }
   }
-  
+
+ 
   .package-details-box {
-    background: #f9f9f9;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    max-width: 400px;
+    max-width: none !important;
   }
-  
-  .section-title {
-    color: #3498db;
-    font-size: 1.2rem;
-    margin-bottom: 10px;
+}
+
+@media (max-width: 450px) {
+
+  .traveller-row-merge {
+    flex-direction: column;
   }
-  
-  .package-info {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-  }
-  
-  .package-image {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    margin-right: 10px;
-    border-radius: 4px;
-  }
-  
-  .view-detail-link {
-    color: #3498db;
-    text-decoration: underline;
-    font-size: 0.9rem;
-  }
-  
-  .package-summary,
-  .pricing-info {
-    margin-bottom: 15px;
-  }
-  
-  .package-summary p,
-  .pricing-info p {
-    display: flex;
-    justify-content: space-between;
-    margin: 5px 0;
-    font-size: 0.9rem;
-  }
-  
-  .total-amount {
-    color: #007bff;
-    font-size: 1.2rem;
-    font-weight: bold;
-    text-align: center;
-  }
-  
-  .transaction-safe {
-    display: flex;
-    align-items: flex-start;
-    margin-top: 20px;
-  }
-  
-  .transaction-image {
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
-  }
-  
-  .transaction-safe ul {
-    padding-left: 20px;
-    margin: 0;
-    font-size: 0.9rem;
-  }
-  
-  .transaction-safe strong {
-    font-size: 1rem;
-  }
-  
+
+}
+
+.package-details-box {
+  background: #f9f9f9;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  max-width: 400px;
+}
+
+.section-title {
+  color: #3498db;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.package-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.package-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  margin-right: 10px;
+  border-radius: 4px;
+}
+
+.view-detail-link {
+  color: #3498db;
+  text-decoration: underline;
+  font-size: 0.9rem;
+}
+
+.package-summary,
+.pricing-info {
+  margin-bottom: 15px;
+}
+
+.package-summary p,
+.pricing-info p {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+  font-size: 0.9rem;
+}
+
+.total-amount {
+  color: #007bff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.transaction-safe {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+.transaction-image {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.transaction-safe ul {
+  padding-left: 20px;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.transaction-safe strong {
+  font-size: 1rem;
+}

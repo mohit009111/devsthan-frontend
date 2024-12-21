@@ -1,4 +1,4 @@
-import React, { useState,forwardRef , useRef } from 'react';
+import React, { useState, forwardRef, useRef } from 'react';
 import Meals from '../tourPageComponents/meals';
 import styles from './itinery.module.css';
 import Transfers from '../tourPageComponents/transfers';
@@ -7,13 +7,13 @@ import DayPlan from '../tourPageComponents/dayPlan';
 import Slider from "react-slick";
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 const Itinerary = ({ categoryDetails }) => {
   const dayRefs = useRef([]); // Array of refs for each day
+  const parentRef = useRef(null); // Ref for the parent container
   const [selectedDate, setSelectedDate] = useState(new Date()); // Default to today's date
   const [startDate, setStartDate] = useState(new Date()); // State for start date
+
   const CustomInput = React.forwardRef(({ value, onClick }, ref) => (
     <input
       className={styles['datepicker-input']}
@@ -25,6 +25,7 @@ const Itinerary = ({ categoryDetails }) => {
     />
   ));
   CustomInput.displayName = "CustomInput";
+
   const formatDate = (date) => {
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -35,10 +36,7 @@ const Itinerary = ({ categoryDetails }) => {
   const handleDateChange = (date) => {
     setSelectedDate(date);
     if (date) {
-      // Update the start date when date changes
       setStartDate(date);
-
-      // Format the date as dd-MM-yyyy and save it
       const formattedDate = formatDate(date);
       localStorage.setItem('departureDate', formattedDate);
     }
@@ -49,36 +47,41 @@ const Itinerary = ({ categoryDetails }) => {
 
   const handleDayClick = (index) => {
     setSelectedDay(index);
-
-    // Scroll to the corresponding DayPlan
     dayRefs.current[index]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+
+    // Scroll to the top of the parent container
+    parentRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <div className={styles['itinerary']}>
+    <div className={styles['itinerary']} ref={parentRef}>
       {/* Tabs */}
       <div className={styles['tabs']}>
         <button
           className={activeTab === "day-plan" ? styles['active-tab'] : ''}
-          onClick={() => setActiveTab("day-plan")}
+          onClick={() => handleTabChange("day-plan")}
         >
           <p>{`${categoryDetails.length} Day Plan`}</p>
         </button>
         <button
           className={activeTab === "transfer" ? styles['active-tab'] : ''}
-          onClick={() => setActiveTab("transfer")}
+          onClick={() => handleTabChange("transfer")}
         >
           <p>Transfers</p>
         </button>
         <button
           className={activeTab === "hotel" ? styles['active-tab'] : ''}
-          onClick={() => setActiveTab("hotel")}
+          onClick={() => handleTabChange("hotel")}
         >
           <p>1 Hotel</p>
         </button>
         <button
           className={activeTab === "meal" ? styles['active-tab'] : ''}
-          onClick={() => setActiveTab("meal")}
+          onClick={() => handleTabChange("meal")}
         >
           <p>Meals</p>
         </button>
@@ -91,12 +94,12 @@ const Itinerary = ({ categoryDetails }) => {
           <div className={styles['day-plan-sidebar-days']}>
             <div className={styles['date-container']}>
               <div className={styles['search-options-destination']}>
-              <DatePicker
-  selected={selectedDate}
-  onChange={handleDateChange}
-  dateFormat="dd/MM/yyyy"
-  customInput={<CustomInput />} // Use custom input
-/>
+                <DatePicker
+                  selected={selectedDate}
+                  onChange={handleDateChange}
+                  dateFormat="dd/MM/yyyy"
+                  customInput={<CustomInput />} // Use custom input
+                />
               </div>
               {categoryDetails.map((_, index) => {
                 const currentDate = new Date(startDate);

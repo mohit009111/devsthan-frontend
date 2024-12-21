@@ -14,7 +14,7 @@ const Itinerary = ({ categoryDetails }) => {
   const dayRefs = useRef([]); // Array of refs for each day
   const [selectedDate, setSelectedDate] = useState(new Date()); // Default to today's date
   const [startDate, setStartDate] = useState(new Date()); // State for start date
-  const CustomInput = forwardRef(({ value, onClick }, ref) => (
+  const CustomInput = React.forwardRef(({ value, onClick }, ref) => (
     <input
       className={styles['datepicker-input']}
       value={value}
@@ -24,6 +24,7 @@ const Itinerary = ({ categoryDetails }) => {
       placeholder="Select Date"
     />
   ));
+  CustomInput.displayName = "CustomInput";
   const formatDate = (date) => {
     const day = String(date.getDate()).padStart(2, '0');
     const month = String(date.getMonth() + 1).padStart(2, '0');

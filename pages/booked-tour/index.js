@@ -4,17 +4,12 @@ import { useRouter } from 'next/router';
 
 const BookedTourDetails = () => {
   const router = useRouter();
-  const { adults, children, tourName, totalPrice } = router.query;
+  const { adults, children, tourName, totalPrice ,date} = router.query;
 
-  const [date, setDate] = useState("");
+
 
   // Safely access localStorage in the browser
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const storedDate = localStorage.getItem("selectedDate");
-      setDate(storedDate);
-    }
-  }, []);
+
 
   return (
     <div className={styles.bookedTourPage}>

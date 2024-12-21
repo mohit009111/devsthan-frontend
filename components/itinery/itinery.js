@@ -5,12 +5,29 @@ import Transfers from '../tourPageComponents/transfers';
 import Hotels from '../tourPageComponents/hotels';
 import DayPlan from '../tourPageComponents/dayPlan';
 import Slider from "react-slick";
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const Itinerary = ({ categoryDetails, date }) => {
   const dayRefs = useRef([]); // Array of refs for each day
-
+ const [selectedDate, setSelectedDate] = useState(null);
+ const formatDate = (date) => {
+ 
+   const day = String(date.getDate()).padStart(2, '0'); // Ensure 2-digit day
+   const month = String(date.getMonth() + 1).padStart(2, '0'); // Ensure 2-digit month
+   const year = date.getFullYear();
+   return `${day}-${month}-${year}`;
+ };
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+    if (date) {
+      // Format the date as dd-MM-yyyy and save it
+      const formattedDate = formatDate(date);
+      localStorage.setItem('departureDate', formattedDate);
+    }
+  };
   const [activeTab, setActiveTab] = useState('day-plan');
   const [selectedDay, setSelectedDay] = useState(0);
 
@@ -75,6 +92,16 @@ const Itinerary = ({ categoryDetails, date }) => {
         <div className={styles['day-plan-sidebar']}>
           <div className={styles['day-plan-sidebar-days']}>
             <div className={styles['date-container']}>
+            <div className={styles['search-options-destination']}>
+         
+            <DatePicker
+              selected={selectedDate}
+              onChange={handleDateChange}
+              placeholderText="Select Date"
+              dateFormat="dd/MM/yyyy"
+              className={styles['datepicker-input']}
+            />
+          </div>
               {categoryDetails.map((_, index) => {
                 const currentDate = new Date(startDate);
                 currentDate.setDate(startDate.getDate() + index); // Increment date by index

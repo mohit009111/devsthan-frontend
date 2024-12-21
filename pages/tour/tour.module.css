@@ -677,7 +677,7 @@ padding: 10px 20px !important;
 .tabs {
   margin-top: 20px;
   display: flex;
-  gap: 20px;
+  gap: 10px;
   border-top: 1px solid #ccc;
   padding-top: 10px;
 }
@@ -840,7 +840,7 @@ margin-bottom: 10px;
 }
 
 .dialog-badge {
-  
+  min-width: 70px;
   color: black;
   background-color: #edf2de;
   border-radius: 15px;

@@ -5,21 +5,15 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toast, ToastContainer } from 'react-toastify';
 import { SiOnstar } from 'react-icons/si';
 import { useRouter } from 'next/router';
-import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css";
+import Loader from '../loader/loader';
 import CustomizedQuery from './customizedQuery';
 import { v4 as uuidv4 } from 'uuid';
-const formatDate = (date) => {
 
-  const day = String(date.getDate()).padStart(2, '0'); // Ensure 2-digit day
-  const month = String(date.getMonth() + 1).padStart(2, '0'); // Ensure 2-digit month
-  const year = date.getFullYear();
-  return `${day}-${month}-${year}`;
-};
 
 const TourBookingPanel = ({ uuid, categoryDetails, name, duration, category, date }) => {
   const [storedUUID, setStoredUUID] = useState()
-
+  const [isLoadingBook, setIsLoadingBook] = useState(false);
+  const [isLoadingCustomize, setIsLoadingCustomize] = useState(false);
   const [showDialouge, setShowDialouge] = useState(false)
   const [formData, setFormData] = useState({
     fullName: '',
@@ -55,14 +49,7 @@ const TourBookingPanel = ({ uuid, categoryDetails, name, duration, category, dat
 
 
   const [selectedDate, setSelectedDate] = useState(null);
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-    if (date) {
-      // Format the date as dd-MM-yyyy and save it
-      const formattedDate = formatDate(date);
-      localStorage.setItem('departureDate', formattedDate);
-    }
-  };
+ 
 
   const close = (() => {
     setShowCustomizeDialog(false)
@@ -83,42 +70,44 @@ const TourBookingPanel = ({ uuid, categoryDetails, name, duration, category, dat
   );
   useEffect(() => {
     if (!categoryDetails || !categoryDetails.pricing) return;
-
-    // Total persons (adults + children)
+  
     const totalPersons = rooms.adults + rooms.children;
-
+  
     // Find the pricing based on total persons
     const pricing = categoryDetails.pricing.find((p) => p.person === totalPersons);
-
+  
     if (pricing) {
       const priceForTotalPersons = pricing.price;
-
+  
       // Safeguard against division by zero
       const perPersonPrice = totalPersons > 0 ? priceForTotalPersons / totalPersons : 0;
-
+  
       // Children are charged half the per-person price
       const childPrice = perPersonPrice / 2;
-
+  
       // Extra bed cost (assuming a fixed cost per bed, e.g., 2000)
       const extraBedCost = rooms.extraBeds * 2000;
-
+  
       // Calculate the total price
       const computedTotalPrice =
         rooms.adults * perPersonPrice +
         rooms.children * childPrice +
         extraBedCost;
-
-      // Update the total price and price per person
+  
+      // Update state
       setTotalPrice(Math.round(computedTotalPrice));
-      setPricePerPerson(Math.round(perPersonPrice)); // Store price per person
+      setPricePerPerson(Math.round(perPersonPrice));
+      setRoomsCount(pricing.rooms); // Update roomsCount based on pricing
     } else {
-      // Reset the total price and price per person if no matching pricing is found
+      // Reset the total price, price per person, and rooms count if no matching pricing is found
       setTotalPrice(0);
       setPricePerPerson(0);
+      setRoomsCount(1); // Default room count
     }
   }, [categoryDetails, rooms]);
 
   const handleBookNow = async () => {
+    setIsLoadingBook(true)
     // Check if departure date is available in localStorage
     const departureDate = localStorage.getItem('departureDate'); // Assuming the key is 'departureDate'
     if (!departureDate) {
@@ -178,6 +167,8 @@ const TourBookingPanel = ({ uuid, categoryDetails, name, duration, category, dat
     } catch (error) {
       console.error('Error adding to cart:', error);
       toast.error('An error occurred. Please try again.');
+    }finally{
+      setIsLoadingBook(false)
     }
   };
 
@@ -321,15 +312,16 @@ const TourBookingPanel = ({ uuid, categoryDetails, name, duration, category, dat
                   </div>
                 </div>
                 <div className={styles["dialog-details"]}>
-                  <span className={styles["dialog-badge"]}>{duration}</span>
+                  <span className={styles["dialog-badge"]}>{`${duration}D / ${duration-1}N`}</span>
                 </div>
-                <button
+                {isLoadingBook ? <Loader/> :   <button
                   className={styles["dialog-button-primary"]}
                   onClick={handleBookNow}
-                  disabled={loading} // Optionally disable the button while loading
+              
                 >
-                  {loading ? 'Adding to Cart...' : 'Book Now'}
-                </button>
+                Book Now
+                </button>}
+              
                 <ToastContainer position="top-right" autoClose={3000} />
               </div>
 
@@ -372,16 +364,7 @@ const TourBookingPanel = ({ uuid, categoryDetails, name, duration, category, dat
           <p className={styles['panel-heading']}>Book Your Tour</p>
           <p className={styles['panel-des']}>Reserve your ideal trip early for a hassle-free trip; secure comfort and convenience!</p>
 
-          <div className={styles['search-options-destination']}>
-            <p>Departure Date</p>
-            <DatePicker
-              selected={selectedDate}
-              onChange={handleDateChange}
-              placeholderText="Select Date"
-              dateFormat="dd/MM/yyyy"
-              className={styles['datepicker-input']}
-            />
-          </div>
+         
           <form className={styles.inquiryForm} onSubmit={handleSubmit}>
             <label>Full Name</label>
             <input

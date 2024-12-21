@@ -116,7 +116,7 @@ const SignupForm = ({  isComponent, toggleToSignup ,toggleToHide }) => {
               toast.success('Otp Verified seccessfully ');
        
   
-              localStorage.clear();
+              
 
               localStorage.setItem("token", response.token);
               localStorage.setItem("username", (response.user.name));

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../pages/login/login.module.css"; // Import your CSS module
 import Loader from "../../components/loader/loader"; // Assuming you have a Loader component
 import { toast } from "react-toastify";
@@ -18,7 +18,7 @@ const LoginForm = ({  isComponent,toggleToLogin,toggleToHide }) => {
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
     const [otpSent, setOtpSent] = useState(false); // Flag for OTP form visibility
-    const [otp, setOtp] = useState("");
+    const [otp, setOtp] = useState(null);
     const [otpError, setOtpError] = useState("");
     // Handle input changes
     const handleChange = (e) => {
@@ -86,7 +86,7 @@ const LoginForm = ({  isComponent,toggleToLogin,toggleToHide }) => {
                 toast.success('Otp Verified seccessfully ');
               
 
-                localStorage.clear();
+              
 
                 localStorage.setItem("token", response.token);
                 localStorage.setItem("username", (response.user.name));
@@ -119,9 +119,9 @@ const LoginForm = ({  isComponent,toggleToLogin,toggleToHide }) => {
         e.preventDefault();
         try {
             setLoading(true);
-
+const userTempId=localStorage.getItem("userTempId")
             // Call the API to verify OTP
-            const response = await verifyOtpdApi({ email: formData.email, otp });
+            const response = await verifyOtpdApi({ email: formData.email, otp ,userTempId});
 
 
         } catch (err) {
@@ -133,6 +133,9 @@ const LoginForm = ({  isComponent,toggleToLogin,toggleToHide }) => {
 
     };
 
+    useEffect(() => {
+        
+    }, []);
     return (
         <>
             <h2 className={styles["card-title"]}>Login</h2>
@@ -150,7 +153,7 @@ const LoginForm = ({  isComponent,toggleToLogin,toggleToHide }) => {
                             OTP<span className={styles["required"]}>*</span>
                         </label>
                         <input
-                            type="text"
+                            type="number"
                             id="otp"
                             name="otp"
                             value={otp}

@@ -5,10 +5,14 @@ import styles from './bookingDetails.module.css';
 import { useRouter } from "next/router";
 import { apiCall } from '../../utils/common.js';
 import Script from 'next/script.js';
-
+import Loader from '../../components/loader/loader.js';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import FullScreenLoader from '../../components/fullScreenLoader/fullScreenLoader.js';
 export default function TravellerDetails() {
   const router = useRouter();
-
+const[isLoading,setIsLoading]=useState(false)
+const[fullLoading,setFullLoading]=useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const [cartData, setCartData] = useState(null);
@@ -67,7 +71,7 @@ if(token && userId){
     fetchCartData();
 
   }, []);
-console.log(date)
+
 
   const distributePersons = (adults, children) => {
     const totalPersons = adults + children;
@@ -108,34 +112,41 @@ console.log(date)
   };
 
   const handleRazorpay = async () => {
+    setIsLoading(true);
+    
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      toast.error("User not logged in!");
+      setIsLoading(false);
+      return;
+    }
+  
     try {
-
-      const userId = localStorage.getItem("userId");
-      const response = await apiCall({
+      // Calculate the payment details
+      const paymentResponse = await apiCall({
         endpoint: `/paymentCalculate`,
         method: 'POST',
-        body: { tourId: tourid, userId: userId, category: cartData.category },
+        body: { tourId: tourid, userId, category: cartData.category },
       });
-
-   
-
-      if (!response.success || !response.order) {
+  
+      if (!paymentResponse.success || !paymentResponse.order) {
         throw new Error("Order creation failed: Invalid response");
       }
-
+  
       const options = {
-        key: "rzp_test_TZIT0OlGcgvEiz",
-        amount: response.order.amount,
-        currency: response.order.currency,
+        key: "rzp_test_TZIT0OlGcgvEiz", // Your Razorpay key
+        amount: paymentResponse.order.amount,
+        currency: paymentResponse.order.currency,
         name: "Acme Corp",
         description: "Test Transaction",
-        image: "https://example.com/your_logo",
-        order_id: response.order.id,
+        image: "https://example.com/your_logo", // Update with actual logo URL
+        order_id: paymentResponse.order.id,
         handler: async (paymentResponse) => {
-
-
-          // Verify the payment
+          // Show success immediately
+          toast.success("Payment successful, processing order...");
+  
           try {
+            // Verify payment success
             const verifyResponse = await apiCall({
               endpoint: `/verify-payment`,
               method: 'POST',
@@ -145,33 +156,51 @@ console.log(date)
                 razorpay_signature: paymentResponse.razorpay_signature,
               },
             });
-            if (verifyResponse.success == true) {
-              const userId = localStorage.getItem("userId");
-              const response = await apiCall({
+  
+            if (verifyResponse.success) {
+              // Create the order
+              setFullLoading(true)
+              const orderResponse = await apiCall({
                 endpoint: `/create-order`,
                 method: 'POST',
-                body: { tourId: tourid, userId: userId, category: cartData.category, address: address, mobile: mobile, email: email, rooms: rooms, username: username ,date:date},
+                body: {
+                  tourId: tourid,
+                  userId,
+                  category: cartData.category,
+                  address,
+                  mobile,
+                  email,
+                  rooms,
+                  username,
+                  date,
+                },
               });
-             
-              if (response.success) {
+  
+              // Redirect immediately to booked-tour page with query params
+              if (orderResponse.success) {
                 const queryParams = {
-
                   tourName: tourInfo.name,
                   totalPrice: cartData.totalPrice,
                   adults: cartData.adults,
-                  children: cartData.children
+                  children: cartData.children,
+                  date,
                 };
-              
+  
                 router.push({
                   pathname: '/booked-tour',
                   query: queryParams,
                 });
               } else {
-                console.error("Order creation failed", response);
+                toast.error("Order creation failed. Please try again.");
+                console.error("Order creation failed:", orderResponse);
               }
+              setFullLoading(false)
+            } else {
+              toast.error("Payment verification failed.");
+              console.error("Payment verification failed:", verifyResponse);
             }
-          
           } catch (verifyError) {
+            toast.error("Error verifying payment.");
             console.error("Error verifying payment:", verifyError.message);
           }
         },
@@ -187,22 +216,23 @@ console.log(date)
           color: "#3399cc",
         },
       };
-
+  
       const rzp1 = new window.Razorpay(options);
-
+  
       rzp1.on("payment.failed", function (response) {
         console.error("Payment failed:", response.error);
-        alert("Payment failed!");
+        toast.error("Payment failed!");
       });
-
+  
       rzp1.open();
     } catch (error) {
       console.error("Error initiating Razorpay:", error.message);
-      alert("Error initiating Razorpay. Check console for details.");
+      toast.error("An error occurred while processing the payment.");
+    } finally {
+      setIsLoading(false);
     }
   };
-
-
+  
   // Button to trigger Razorpay
   <button id="rzp-button1" onClick={handleRazorpay}>Pay Now</button>;
 
@@ -307,7 +337,8 @@ console.log(date)
               />
             </label>
           </div>
-          <button type="submit" className={styles["button"]}>Pay Now</button>
+          {isLoading ? <Loader/> : <button type="submit" className={styles["button"]}>Pay Now</button> }
+         
         </form>
       </div>
       <div className={styles['package-details-box']}>
@@ -360,13 +391,14 @@ console.log(date)
                 personal information is protected and kept private.
               </li>
               <li>
-                Bharatbooking.com guarantees conformity to international credit card
+                Devsthan-Expert.com guarantees conformity to international credit card
                 payment standards.
               </li>
             </ul>
           </div>
         </div>
       </div>
+     {fullLoading ? <FullScreenLoader/> : null}
     </div></>
   );
 }

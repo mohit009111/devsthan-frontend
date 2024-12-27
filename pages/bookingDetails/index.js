@@ -111,22 +111,17 @@ if(token && userId){
     setShowSignup((prev) => !prev); 
   };
   const handleRazorpay = async () => {
-
-  
     setIsLoading(true);
-    
-    const token= localStorage.getItem("token");
-
+    const token = localStorage.getItem("token");
+  
     if (!token) {
-
       toast.error("User not logged in!");
       setIsLoading(false);
       return;
     }
   
     try {
-      // Calculate the payment details
-      const userId= localStorage.getItem("userId");
+      const userId = localStorage.getItem("userId");
       const paymentResponse = await apiCall({
         endpoint: `/paymentCalculate`,
         method: 'POST',
@@ -142,13 +137,11 @@ if(token && userId){
         amount: paymentResponse.order.amount,
         currency: paymentResponse.order.currency,
         name: "Devsthan Expert",
-        description: "Devsthan Expert Pvt. Ltd. is a premier travel company dedicated to crafting unforgettable journeys that celebrate the vibrant culture, heritage, and natural beauty of India. With a team of experienced travel enthusiasts, we specialize in curating personalized itineraries for both domestic and international travelers. From serene landscapes to bustling cities, our mission is to offer seamless travel experiences that inspire and captivate. Trust us to turn your travel dreams into reality with exceptional service and attention to detail.",
+        description: "Devsthan Expert Pvt. Ltd. is a premier travel company...",
         image: "https://res.cloudinary.com/dmyzudtut/image/upload/v1731261401/Untitled_design_11_dlpmou.jpg",
         order_id: paymentResponse.order.id,
         handler: async (paymentResponse) => {
-          // Show success immediately
           toast.success("Payment successful, processing order...");
-  
           try {
             const verifyResponse = await apiCall({
               endpoint: `/verify-payment`,
@@ -161,7 +154,6 @@ if(token && userId){
             });
   
             if (verifyResponse.success) {
-              // Create the order
               setFullLoading(true);
               const orderResponse = await apiCall({
                 endpoint: `/create-order`,
@@ -179,7 +171,6 @@ if(token && userId){
                 },
               });
   
-              // Redirect immediately to booked-tour page with query params
               if (orderResponse.success) {
                 const queryParams = {
                   tourName: tourInfo.name,
@@ -195,36 +186,25 @@ if(token && userId){
                 });
               } else {
                 toast.error("Order creation failed. Please try again.");
-                console.error("Order creation failed:", orderResponse);
               }
               setFullLoading(false);
             } else {
               toast.error("Payment verification failed.");
-              console.error("Payment verification failed:", verifyResponse);
             }
           } catch (verifyError) {
             toast.error("Error verifying payment.");
-            console.error("Error verifying payment:", verifyError.message);
           }
         },
-        prefill: {
-          name: "Gaurav Kumar",
-          email: "gaurav.kumar@example.com",
-          contact: "9000090000",
-        },
-        notes: {
-          address: "Razorpay Corporate Office",
-        },
-        theme: {
-          color: "#3399cc",
-        },
+        prefill: { /* Prefill data */ },
+        notes: { address: "Razorpay Corporate Office" },
+        theme: { color: "#3399cc" },
       };
   
       const rzp1 = new window.Razorpay(options);
   
       rzp1.on("payment.failed", function (response) {
         console.error("Payment failed:", response.error);
-        toast.error("Payment failed!");
+        toast.error(`Payment failed: ${response.error.description}`);
       });
   
       rzp1.open();
@@ -235,6 +215,7 @@ if(token && userId){
       setIsLoading(false);
     }
   };
+  
   
   
   // Button to trigger Razorpay

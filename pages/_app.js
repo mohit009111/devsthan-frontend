@@ -4,7 +4,7 @@ import Footer from "../components/footer/footer";
 import "slick-carousel/slick/slick-theme.css";
 import { Poppins } from 'next/font/google';
 import Header from '../components/header/Header'; 
-import { ToastContainer } from 'react-toastify';
+import { Toaster } from 'react-hot-toast';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaWhatsapp } from 'react-icons/fa'; // Import WhatsApp icon from react-icons
 
@@ -15,12 +15,12 @@ const poppins = Poppins({
 });
 
 function MyApp({ Component, pageProps }) {
-  const whatsappNumber = "+917015317899"; // Replace with your WhatsApp number
+  const whatsappNumber = "+918683818381"; // Replace with your WhatsApp number
   const message = "Hello, I want to book a tour"; // Customize your message
 
   return (
     <>
-      <ToastContainer
+      <Toaster
         position="top-right" // You can change the position
         autoClose={5000} // Time in milliseconds to auto close
         hideProgressBar={false}

@@ -36,8 +36,9 @@ const VacationSpots = ({ destinations }) => {
   return (
     <section className={styles['vacation-spots-section']}>
       <div className={styles['header']}>
-        <p className={styles['subtitle']}>Journey to the</p>
-        <h2 className={styles['title']}>Desired Vacation Spots</h2>
+        <p className={styles['subtitle']}>  Explore the Essence of</p>
+    
+        <h2 className={styles['title']}>Holy Destinations</h2>
       </div>
 
       {isMobile ? (

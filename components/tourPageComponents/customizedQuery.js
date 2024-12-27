@@ -33,7 +33,7 @@ const CustomizedQuery = ({uuid,handleClose}) => {
         
             body: formData,
           });
-      console.log(response)
+     
 
       if (response.success==true) {
         toast.success('Query submitted successfully!');
@@ -128,10 +128,10 @@ const CustomizedQuery = ({uuid,handleClose}) => {
        
         <div className={styles['approval-section']}>
           <p>
-            Call us For Details: +91 9816348636 <br />
-            Whatsapp Number: +91 8826303636 <br />
-            Toll-Free Number: 1800-532-3636 <br />
-            help@bharatbooking.com
+            Call us For Details: 86-83-81-8381 <br />
+            Whatsapp Number: 86-83-81-8381 <br />
+            info@devsthanexpert.com
+           
           </p>
         </div>
       </form>

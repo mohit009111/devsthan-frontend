@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { apiCall } from '../../utils/common.js';
 import Script from 'next/script.js';
 import Loader from '../../components/loader/loader.js';
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 import 'react-toastify/dist/ReactToastify.css';
 import FullScreenLoader from '../../components/fullScreenLoader/fullScreenLoader.js';
 export default function TravellerDetails() {
@@ -110,12 +110,15 @@ if(token && userId){
   const toggleRegisterMode = () => {
     setShowSignup((prev) => !prev); 
   };
-
   const handleRazorpay = async () => {
+
+  
     setIsLoading(true);
     
-    const userId = localStorage.getItem("userId");
-    if (!userId) {
+    const token= localStorage.getItem("token");
+
+    if (!token) {
+
       toast.error("User not logged in!");
       setIsLoading(false);
       return;
@@ -123,6 +126,7 @@ if(token && userId){
   
     try {
       // Calculate the payment details
+      const userId= localStorage.getItem("userId");
       const paymentResponse = await apiCall({
         endpoint: `/paymentCalculate`,
         method: 'POST',
@@ -134,19 +138,18 @@ if(token && userId){
       }
   
       const options = {
-        key: "rzp_test_TZIT0OlGcgvEiz", // Your Razorpay key
+        key: "rzp_test_TZIT0OlGcgvEiz",
         amount: paymentResponse.order.amount,
         currency: paymentResponse.order.currency,
-        name: "Acme Corp",
-        description: "Test Transaction",
-        image: "https://example.com/your_logo", // Update with actual logo URL
+        name: "Devsthan Expert",
+        description: "Devsthan Expert Pvt. Ltd. is a premier travel company dedicated to crafting unforgettable journeys that celebrate the vibrant culture, heritage, and natural beauty of India. With a team of experienced travel enthusiasts, we specialize in curating personalized itineraries for both domestic and international travelers. From serene landscapes to bustling cities, our mission is to offer seamless travel experiences that inspire and captivate. Trust us to turn your travel dreams into reality with exceptional service and attention to detail.",
+        image: "https://res.cloudinary.com/dmyzudtut/image/upload/v1731261401/Untitled_design_11_dlpmou.jpg",
         order_id: paymentResponse.order.id,
         handler: async (paymentResponse) => {
           // Show success immediately
           toast.success("Payment successful, processing order...");
   
           try {
-            // Verify payment success
             const verifyResponse = await apiCall({
               endpoint: `/verify-payment`,
               method: 'POST',
@@ -159,7 +162,7 @@ if(token && userId){
   
             if (verifyResponse.success) {
               // Create the order
-              setFullLoading(true)
+              setFullLoading(true);
               const orderResponse = await apiCall({
                 endpoint: `/create-order`,
                 method: 'POST',
@@ -194,7 +197,7 @@ if(token && userId){
                 toast.error("Order creation failed. Please try again.");
                 console.error("Order creation failed:", orderResponse);
               }
-              setFullLoading(false)
+              setFullLoading(false);
             } else {
               toast.error("Payment verification failed.");
               console.error("Payment verification failed:", verifyResponse);
@@ -232,6 +235,7 @@ if(token && userId){
       setIsLoading(false);
     }
   };
+  
   
   // Button to trigger Razorpay
   <button id="rzp-button1" onClick={handleRazorpay}>Pay Now</button>;

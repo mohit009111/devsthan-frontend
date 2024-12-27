@@ -42,7 +42,10 @@ const Blogs = ({ blogs }) => {
 
   return (
     <>
-      <h1 className={styles.blogsHeading}>Blogs</h1>
+     <div className={styles['header']}>
+  <p className={styles['subtitle']}>Your Trusted Travel Partner</p>
+  <h2 className={styles['title']}>Why Choose Us</h2>
+</div>
       <div className={styles.blogsContainer}>
         {isMobile ? (
           <Slider {...settings}>

@@ -1,5 +1,4 @@
-"use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../homeBanner/homeBanner.module.css';
 import Slider from "react-slick";
 import styled from "styled-components";
@@ -13,32 +12,29 @@ import { MdFlight } from "react-icons/md";
 import { MdOutlineKeyboardArrowDown, MdOutlineArrowForwardIos, MdOutlineArrowBackIos } from "react-icons/md";
 import TourSearch from '../searchbar-components/tour-search';
 import Search from '../search/search'
-import { Autoplay } from 'swiper/modules';
+
 const BannerInner = styled(Slider)`
-height:100% !important;
- border-radius: 30px;
+  height: 100% !important;
+  border-radius: 30px;
 
-.slick-list{
-height:100% !important;
-
-}
-.slick-slide > div{
-height:100% !important;
-}
-.slick-track{
-height:100% !important;
-}
-.slick-slider {
-height:100% !important;
-}
-.slick-next{
-right:25px;
-}
-
+  .slick-list {
+    height: 100% !important;
+  }
+  .slick-slide > div {
+    height: 100% !important;
+  }
+  .slick-track {
+    height: 100% !important;
+  }
+  .slick-slider {
+    height: 100% !important;
+  }
+  .slick-next {
+    right: 25px;
+  }
 `;
 
 const NextArrow = ({ onClick }) => (
-
   <div className={`${styles["custom-arrow"]} ${styles["next-arrow"]}`} onClick={onClick}>
     <MdOutlineArrowForwardIos />
   </div>
@@ -49,10 +45,12 @@ const PrevArrow = ({ onClick }) => (
     <MdOutlineArrowBackIos />
   </div>
 );
+
 const HomeBanner = ({ locations, homebanner }) => {
-  const [selected, setSelected] = useState("Tour")
-  const [showComminSoon, setShowComminSoon] = useState(false)
- 
+  const [viewport, setViewport] = useState("desktop");
+  const [selected, setSelected] = useState("Tour");
+  const [showComminSoon, setShowComminSoon] = useState(false);
+console.log(homebanner)
   const headings = [
     { title: 'Tour', isAvailable: true, icon: FiMapPin },
     { title: 'Hotel', isAvailable: false, icon: FaHotel },
@@ -71,70 +69,95 @@ const HomeBanner = ({ locations, homebanner }) => {
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
   };
+  useEffect(() => {
+    const updateViewport = () => {
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        setViewport("mobile");
+      } else if (window.matchMedia("(max-width: 1024px)").matches) {
+        setViewport("tablet");
+      } else {
+        setViewport("desktop");
+      }
+    };
+
+    // Initial check
+    updateViewport();
+
+    // Listen for changes
+    window.addEventListener("resize", updateViewport);
+    return () => window.removeEventListener("resize", updateViewport);
+  }, []);
+
+
+  const getBannerImages = () => {
+    switch (viewport) {
+      case "mobile":
+        return homebanner?.data?.bannerUrls?.mobile || [];
+      case "tablet":
+        return homebanner?.data?.bannerUrls?.tablet || [];
+      case "desktop":
+      default:
+        return homebanner?.data?.bannerUrls?.desktop || [];
+    }
+  };
+
+  const bannerImages = getBannerImages();
   return (
     <div className={styles['home-banner']}>
+    <div className={styles['banner-outer']}>
+    <div className={styles['home-banner']}>
       <div className={styles['banner-outer']}>
-
         <BannerInner {...settings}>
-          {
-      homebanner?.data?.bannerUrls?.map((image, index) => (
-              <div key={index} className={styles['banner-inner']}>
-                <img className={styles['banner-img']} src={image} alt={`Banner ${index}`} />
-                {/* <div className={styles['banner-overlay']}></div> */}
-                <div className={styles['banner-inner-content']}>
-                  <div className={styles['banner-inner-location']}>
-                    {/* <IoLocationOutline /> */}
-                    {/* <p>France</p> */}
-                  </div>
-                </div>
+          {bannerImages.map((image, index) => (
+            <div key={index} className={styles['banner-inner']}>
+              <img
+                className={styles['banner-img']}
+                src={image}
+                alt={`Banner ${index}`}
+              />
+              <div className={styles['banner-overlay']}></div>
+              <div className={styles['banner-inner-content']}>
+                <div className={styles['banner-inner-location']}></div>
               </div>
-            ))
-          }
-
-
-        </BannerInner>
-
-      </div>
-      <div className={styles['search-bar']}>
-        <div className={styles['search-headings']}>
-          {headings.map((heading, index) => (
-            <div
-              key={index}
-              className={`${styles['search-headings-tour']} 
-        ${selected === heading.title ? styles['search-headings-tour-selected'] : styles['unavailable']}
-      `}
-              onClick={() => {
-                if (!heading.isAvailable) {
-                  setSelected(heading.title);
-                  setShowComminSoon(true);
-                } else {
-                  setShowComminSoon(false);
-                  setSelected(heading.title);
-                }
-              }}
-            >
-              {/* Conditionally display "Coming Soon" or the heading title */}
-              {!heading.isAvailable && selected === heading.title ? (
-                <p className={styles['coming-soon']}>Coming Soon</p>
-              ) : (
-                <>
-                  {React.createElement(heading.icon, { className: styles['icon-class'] })}
-                  <p>{heading.title}</p>
-                </>
-              )}
             </div>
           ))}
-        </div>
-
-
-        <TourSearch locations={locations} />
-
+        </BannerInner>
+      </div>
+    </div>
+    </div>
+    <div className={styles['search-bar']}>
+      <div className={styles['search-headings']}>
+        {headings.map((heading, index) => (
+          <div
+            key={index}
+            className={`${styles['search-headings-tour']} 
+              ${selected === heading.title ? styles['search-headings-tour-selected'] : styles['unavailable']}`}
+            onClick={() => {
+              if (!heading.isAvailable) {
+                setSelected(heading.title);
+                setShowComminSoon(true);
+              } else {
+                setShowComminSoon(false);
+                setSelected(heading.title);
+              }
+            }}
+          >
+            {!heading.isAvailable && selected === heading.title ? (
+              <p className={styles['coming-soon']}>Coming Soon</p>
+            ) : (
+              <>
+                {React.createElement(heading.icon, { className: styles['icon-class'] })}
+                <p>{heading.title}</p>
+              </>
+            )}
+          </div>
+        ))}
       </div>
 
-
-
+      <TourSearch locations={locations} />
     </div>
-  )
-}
+  </div>
+  );
+};
 
-export default HomeBanner
+export default HomeBanner;

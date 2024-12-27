@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from '../whyChoose/whyChoose.module.css';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import styled from 'styled-components';
 
 const WhyChoose = ({ whyChoose }) => {
   const [isMobile, setIsMobile] = useState(false);
@@ -30,14 +31,25 @@ const WhyChoose = ({ whyChoose }) => {
       items: 1,
     },
   };
+const CustomDots = styled(Carousel)`
+.react-multi-carousel-dot-list {
+margin-bottom:-10px;}
+
+`
+
+
 
   return (
     <section className={styles['about-us-section']}>
-      <h2 className={styles['section-title']}>Why Choose Us</h2>
+       <div className={styles['header']}>
+  <p className={styles['subtitle']}>Your Trusted Travel Partner</p>
+  <h2 className={styles['title']}>Why Choose Us</h2>
+</div>
 
+     
       {isMobile ? (
         // Show carousel only on mobile
-        <Carousel
+        <CustomDots
           responsive={responsive}
           infinite={true}
           autoPlay={false}
@@ -67,7 +79,7 @@ const WhyChoose = ({ whyChoose }) => {
               </div>
             </div>
           ))}
-        </Carousel>
+        </CustomDots>
       ) : (
         // Show grid on larger screens
         <div className={styles['cards-container']}>

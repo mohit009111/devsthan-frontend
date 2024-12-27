@@ -19,7 +19,7 @@ const about = () => {
                     </div>
                 </div>
                 <p className={styles['description']}>
-                Welcome to Devsthan Expert Travel Pvt. Ltd., your trusted partner for religious tours, hotel bookings, and cab bookings across Uttarakhand. With our head office located in Khubru, Sonipat, Haryana, and our operational office at Devsthan Expert Gali-7 Gayatri Vihar (opposite Shanti Kunj Ashram Gate-4) Haridwar, Uttarakhand, we are strategically positioned to serve your travel needs with ease and efficiency.
+                Devsthan Expert Pvt. Ltd. is a premier travel company dedicated to crafting unforgettable journeys that celebrate the vibrant culture, heritage, and natural beauty of India. With a team of experienced travel enthusiasts, we specialize in curating personalized itineraries for both domestic and international travelers. From serene landscapes to bustling cities, our mission is to offer seamless travel experiences that inspire and captivate. Trust us to turn your travel dreams into reality with exceptional service and attention to detail.
                 </p>
               <Link href='/about'><button className={styles['button']}>More About</button></Link>  
             </div>

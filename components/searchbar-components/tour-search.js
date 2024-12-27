@@ -63,7 +63,7 @@ const TourSearch = ({ locations }) => {
           <FiMapPin />
           <div className={styles['search-options-destination']}>
             <p>Destination</p>
-            <p>{destination ? destination : 'Select Destination'}</p>
+            <p className={styles['search-button']}>{destination ? destination : 'Select Destination'}</p>
           </div>
           <MdOutlineKeyboardArrowDown className={styles['arrow-down']} />
           {showSelect && (

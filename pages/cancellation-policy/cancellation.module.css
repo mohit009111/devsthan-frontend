@@ -1,0 +1,56 @@
+.container {
+  
+    font-family: Arial, sans-serif;
+    color: #333;
+    /* background-color: #f9f9f9; */
+    line-height: 1.6;
+   
+    max-width: 1350px;
+    margin-inline: auto;
+  }
+  .section-outer{
+    border-inline: 1px solid #adacac;
+    padding-inline: 20px;
+  }
+  .heading {
+    /* font-size: 32px; */
+    margin-bottom: 15px;
+    text-align: center;
+    color: #2a2a2a;
+    margin-top: 20px;
+  }
+  
+  .section {
+    margin-bottom: 20px;
+    
+  }
+  
+  .section-heading {
+    font-size: 20px;
+
+    font-weight: bold;
+    color: #34495e;
+    margin-bottom: 10px;
+  }
+  
+  .list {
+    margin-left: 20px;
+    list-style-type: disc;
+  }
+  
+  .list-item {
+    margin-bottom: 10px;
+  }
+  
+  .contact {
+    font-weight: bold;
+    color: #e74c3c;
+    margin-top: 20px;
+  }
+  
+  .terms {
+    margin-top: 30px;
+    font-size: 14px;
+    color: #7f8c8d;
+  }
+  

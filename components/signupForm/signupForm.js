@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import styles from "../../pages/sign-up/signup.module.css"
 import Loader from "../../components/loader/loader"; // Assuming you have a Loader component
 import { apiCall } from "../../utils/common";
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 import { useRouter } from "next/router";
 import Link from "next/link";
 
@@ -108,11 +108,7 @@ const SignupForm = ({ isComponent, toggleToSignup, toggleToHide }) => {
 
         body: data,
       });
-      if (response.success) {
-        setLoading(false);
-        setOtpSent(true); // Show OTP form after successful signup
-        toast.success('Otp Verified seccessfully ');
-
+     
 
         if (response.success) {
           setLoading(false);
@@ -138,7 +134,7 @@ const SignupForm = ({ isComponent, toggleToSignup, toggleToHide }) => {
         }
 
 
-      } else {
+       else {
         setLoading(false);
         setErrors({ general: "Signup failed. Please try again." });
         toast.error('Invalid Otp');

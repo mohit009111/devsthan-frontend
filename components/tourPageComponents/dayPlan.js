@@ -45,7 +45,7 @@ const DayPlan = ({ itinerary }) => {
                   
                     </div>
                 </div>
-                <div className={styles['day-details']}>
+                {/* <div className={styles['day-details']}>
                 <h2>Site Seens</h2>
                 <div className={styles['content']}>
                 {
@@ -64,7 +64,7 @@ const DayPlan = ({ itinerary }) => {
                 </div>
 
               
-            </div>
+            </div> */}
 
         </div>
     )

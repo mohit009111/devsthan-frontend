@@ -27,8 +27,8 @@ const Destinations = ({ destinations,destinationsBanner }) => {
           <img src={destinationsBanner?.data?.bannerUrls[0]} alt="Destination Banner" className={styles['parallax-image']} />
         </div>
         <div className={styles.header_content}>
-          <h1 className={styles.title}>Destinations</h1>
-          <nav>Home ➔ Destinations</nav>
+          {/* <h1 className={styles.title}>Destinations</h1>
+          <nav>Home ➔ Destinations</nav> */}
         </div>
       </header>
       <div className={styles.grid}>
@@ -69,6 +69,6 @@ export async function getStaticProps() {
       destinations,
       destinationsBanner
     },
-    revalidate: 600, 
+   
   };
 }

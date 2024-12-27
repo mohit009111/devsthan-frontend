@@ -19,7 +19,7 @@ export default function Blog({ blogs, blogBanner }) {
   return (
 
     <>
-      <header className={styles.header}>
+      {/* <header className={styles.header}>
         <div className={styles['parallax-container']}>
           <img src={blogBanner?.data?.bannerUrls[0]} alt="Destination Banner" className={styles['parallax-image']} />
         </div>
@@ -27,7 +27,7 @@ export default function Blog({ blogs, blogBanner }) {
           <h1 className={styles.title}>Blog</h1>
           <nav>Home ➔ Blog</nav>
         </div>
-      </header>
+      </header> */}
       <div className={styles['blog-container']}>
         <div className={styles['blog-image-container']}>
           <img
@@ -67,7 +67,7 @@ export async function getStaticProps({ params }) {
   return {
     props: { blogs, blogBanner },
 
-    revalidate: 1000, // ISR for revalidating every 10 seconds
+   
   };
 }
 

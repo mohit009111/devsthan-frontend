@@ -7,14 +7,15 @@ const Meals = ({ itinerary }) => {
 
     return (
         <div>
-            {(breakfast?.isAvailable || lunch?.isAvailable || dinner?.isAvailable) ? (
-                <>
-                    <div className={styles['day-details-heading']}>
+             <div className={styles['day-details-heading']}>
                         <div className={styles['day-details-inner']}>
                             <p>Day {itinerary.day}</p>
                             <p>{itinerary.title}</p>
                         </div>
                     </div>
+            {(breakfast?.isAvailable || lunch?.isAvailable || dinner?.isAvailable) ? (
+                <>
+                   
 
                     {breakfast?.isAvailable && (
                         <div className={styles['section']}>

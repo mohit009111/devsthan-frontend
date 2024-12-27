@@ -1,5 +1,5 @@
 .about-us-section {
-  background-color: #f9f9f9;
+  /* background-color: #f9f9f9; */
   padding: 4rem 2rem;
   text-align: center;
 }
@@ -9,6 +9,22 @@
   margin-bottom: 2rem;
 }
 
+.header {
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  color: #6da06f;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 24px;
+}
 .cards-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
@@ -22,7 +38,7 @@
 .about-card {
   background: #fff;
   border-radius: 15px;
-  box-shadow: 0 8px 20px #0000001a;
+  /* box-shadow: 0 8px 20px #0000001a; */
   overflow: hidden;
   transition: transform .3s, box-shadow .3s;
   display: flex
@@ -34,7 +50,7 @@
 
 .about-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+  /* box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15); */
 }
 
 .image-wrapper img {

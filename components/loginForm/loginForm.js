@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "../../pages/login/login.module.css"; // Import your CSS module
 import Loader from "../../components/loader/loader"; // Assuming you have a Loader component
-import { toast } from "react-toastify";
+import { toast } from 'react-hot-toast';
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { apiCall } from "../../utils/common";

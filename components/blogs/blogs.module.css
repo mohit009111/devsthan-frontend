@@ -11,6 +11,23 @@
     margin-top: 20px;
   
   }
+  .header {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .subtitle {
+    color: #6da06f;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .title {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 24px;
+  }
   .prevArrow,
 .nextArrow {
   position: absolute;

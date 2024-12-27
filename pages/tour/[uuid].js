@@ -7,7 +7,7 @@ import styles from './tour.module.css';
 import { apiCall } from "../../utils/common";
 import { useRouter } from 'next/router';
 import Itinerary from '../../components/itinery/itinery';
-
+import Loader from '../../components/loader/loader';
 const TourPage = ({ tourAllData }) => {
 
  
@@ -191,6 +191,6 @@ export async function getStaticProps({ params }) {
     props: {
       tourAllData,
     },
-    revalidate: 600,
+   
   };
 }

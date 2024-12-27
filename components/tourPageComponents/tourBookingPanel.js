@@ -8,12 +8,16 @@ import { useRouter } from 'next/router';
 import Loader from '../loader/loader';
 import CustomizedQuery from './customizedQuery';
 import { v4 as uuidv4 } from 'uuid';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
+import styled from 'styled-components';
+
 
 
 const TourBookingPanel = ({ uuid, categoryDetails, name, duration, category, date }) => {
   const [storedUUID, setStoredUUID] = useState()
   const [isLoadingBook, setIsLoadingBook] = useState(false);
- 
+  const [loadingSubmit, setLoadingSubmit] = useState(false)
   const [showDialouge, setShowDialouge] = useState(false)
   const [formData, setFormData] = useState({
     fullName: '',
@@ -22,10 +26,12 @@ const TourBookingPanel = ({ uuid, categoryDetails, name, duration, category, dat
     message: '',
     uuid: ''
   });
- 
+  const CustomInputWrapper = styled(DatePicker)`
+  cursor: pointer;
+`;
   // Set storedUUID when uuid prop changes
   useEffect(() => {
-    console.log("UUID from props:", uuid); // Debugging
+
     if (uuid) {
       setStoredUUID(uuid);
     }
@@ -49,7 +55,7 @@ const TourBookingPanel = ({ uuid, categoryDetails, name, duration, category, dat
 
 
   const [selectedDate, setSelectedDate] = useState(null);
- 
+
 
   const close = (() => {
     setShowCustomizeDialog(false)
@@ -61,31 +67,52 @@ const TourBookingPanel = ({ uuid, categoryDetails, name, duration, category, dat
   const [rooms, setRooms] = useState({
     id: 1,
     extraBeds: 0,
-    adults: 4,
+    adults: categoryDetails.pricing.length,
     children: 0,
   });
   const router = useRouter();
   const [totalPrice, setTotalPrice] = useState(
 
   );
+  const CustomInput = React.forwardRef(({ value, onClick }, ref) => (
+    <input
+      className={styles['datepicker-input']}
+      value={value}
+      onClick={onClick}
+      readOnly // Prevent keyboard from opening
+      ref={ref}
+      placeholder="Select Date"
+    />
+  ));
+  CustomInput.displayName = "CustomInput";
   useEffect(() => {
     if (!categoryDetails || !categoryDetails.pricing) return;
   
     const totalPersons = rooms.adults + rooms.children;
   
-    // Find the pricing based on total persons
-    const pricing = categoryDetails.pricing.find((p) => p.person === totalPersons);
+    // Function to find pricing with fallback logic
+    const findPricingWithFallback = (persons) => {
+      const validPricing = categoryDetails.pricing.find(
+        (p) => p.person === persons && p.price > 0
+      );
+      if (validPricing) return validPricing; // Return valid pricing if found
+  
+      // Fallback to 3 persons, then 1 person if no valid pricing found
+      return (
+        categoryDetails.pricing.find((p) => p.person === 3 && p.price > 0) ||
+        categoryDetails.pricing.find((p) => p.person === 1 && p.price > 0) ||
+        null
+      );
+    };
+  
+    // Find pricing for total persons or fallback
+    const pricing = findPricingWithFallback(totalPersons);
   
     if (pricing) {
+      const fallbackPersonCount = pricing.person; // Use the fallback person count from pricing
       const priceForTotalPersons = pricing.price;
-  
-      // Safeguard against division by zero
-      const perPersonPrice = totalPersons > 0 ? priceForTotalPersons / totalPersons : 0;
-  
-      // Children are charged half the per-person price
+      const perPersonPrice = fallbackPersonCount > 0 ? priceForTotalPersons / fallbackPersonCount : 0;
       const childPrice = perPersonPrice / 2;
-  
-      // Extra bed cost (assuming a fixed cost per bed, e.g., 2000)
       const extraBedCost = rooms.extraBeds * 2000;
   
       // Calculate the total price
@@ -105,7 +132,7 @@ const TourBookingPanel = ({ uuid, categoryDetails, name, duration, category, dat
       setRoomsCount(1); // Default room count
     }
   }, [categoryDetails, rooms]);
-console.log(isLoadingBook)
+
   const handleBookNow = async () => {
     setIsLoadingBook(true)
     const departureDate = localStorage.getItem('departureDate'); // Assuming the key is 'departureDate'
@@ -113,27 +140,19 @@ console.log(isLoadingBook)
       toast.error('Please select a departure date before proceeding.');
       setIsLoadingBook(false)
       return; // Stop execution if departure date is not available
-      
     }
-
-    // Prepare user-selected data
     const userSelected = {
       category: category,
       adults: rooms.adults,
       children: rooms.children,
       tourId: uuid,
-      departureDate, // Include the departure date in the request
+      departureDate,
     };
-
     const token = localStorage.getItem('token');
-
-    // Generate userTempId if token is not available
     const userTempId = token ? null : uuidv4();
-
-    // Add userTempId or token as separate keys in the object
     const requestBody = {
       ...userSelected,
-      ...(token ? { token } : { userTempId }), // Add token or userTempId depending on availability
+      ...(token ? { token } : { userTempId }),
     };
 
     try {
@@ -154,7 +173,7 @@ console.log(isLoadingBook)
 
         const queryParams = {
           date: date,
-        };
+        };  
         router.push({
           pathname: '/bookingDetails',
           query: queryParams,
@@ -174,86 +193,62 @@ console.log(isLoadingBook)
     } catch (error) {
       console.error('Error adding to cart:', error);
       toast.error('An error occurred. Please try again.');
-    }finally{
+    } finally {
       setIsLoadingBook(false)
     }
   };
-
-
   const updateRoom = (type, value) => {
     setRooms((prev) => {
-      // Calculate the new value for the selected type (adults or children)
-      let newValue = prev[type] + value;
-
-      // Total persons before updating
-      const totalPersons = prev.adults + prev.children;
-
-      // Find pricing for the updated total persons
+      const totalPersons = prev.adults + prev.children; // Current total persons
+      const newValue = prev[type] + value; // Proposed new value for the type
+      const totalPersonsUpdated = totalPersons + value; // Updated total persons
+  
+      // Ensure adults count stays at or above 1
+      if (type === "adults" && newValue < 1) return prev;
+  
+      // Ensure children count stays at or above 0
+      if (type === "children" && newValue < 0) return prev;
+  
+      // Find the pricing for the updated total persons
       const pricingForTotalPersons = categoryDetails.pricing.find(
-        (p) => p.person === totalPersons + value
+        (p) => p.person === totalPersonsUpdated
       );
-
-      // Get the maximum allowed persons
+  
+      // Get the maximum allowed people based on the pricing
       const maxAllowedPersons = pricingForTotalPersons ? pricingForTotalPersons.person : 0;
-
-      if (type === "adults") {
-        const maxAllowedAdults = maxAllowedPersons - prev.children;
-        newValue = Math.min(newValue, maxAllowedAdults); // Limit adults to the max allowed
-      } else if (type === "children") {
-        const maxAllowedChildren = maxAllowedPersons - prev.adults;
-        newValue = Math.min(newValue, maxAllowedChildren); // Limit children to the max allowed
-      }
-
-      // Ensure the new value is not negative
-      newValue = Math.max(0, newValue);
-
-      // Update the rooms object with the new value
+  
+      // Prevent exceeding the maximum allowed people
+      if (totalPersonsUpdated > maxAllowedPersons) return prev;
+  
+      // Calculate updated rooms and pricing
       const updatedRooms = {
         ...prev,
         [type]: newValue,
       };
-
-      // Total persons after the update
-      const totalPersonsUpdated = updatedRooms.adults + updatedRooms.children;
-
-      // Find pricing for the updated total persons
-      const pricing = categoryDetails.pricing.find(
-        (p) => p.person === totalPersonsUpdated
-      );
-
-      const priceForTotalPersons = pricing ? pricing.price : 0;
-      const roomsForTotalPersons = pricing ? pricing.rooms : 0;
-
-      // Calculate price per person
+  
+      const priceForTotalPersons = pricingForTotalPersons ? pricingForTotalPersons.price : 0;
       const perPersonPrice =
         totalPersonsUpdated > 0 ? priceForTotalPersons / totalPersonsUpdated : 0;
-
-      // Calculate child price as half of the per-person price
       const childPrice = perPersonPrice / 2;
-
-      // Extra bed cost (assuming fixed cost per bed, e.g., 2000)
       const extraBedCost = updatedRooms.extraBeds * 2000;
-
-      // Total price calculation for all persons
       const computedTotalPrice =
         updatedRooms.adults * perPersonPrice +
         updatedRooms.children * childPrice +
         extraBedCost;
-
-
-
-      // Update state with calculated values
+  
+      // Update state
       setTotalPrice(Math.round(computedTotalPrice)); // Total price for all persons
       setPricePerPerson(Math.round(perPersonPrice)); // Price per individual
-      setRoomsCount(roomsForTotalPersons); // Update room count based on selected total persons
-
+      setRoomsCount(pricingForTotalPersons ? pricingForTotalPersons.rooms : 0); // Update room count
       return updatedRooms;
     });
   };
-
+  
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoadingSubmit(true)
       const createInquiry = await apiCall({
         endpoint: `/api/createInquiry`,
         method: 'POST',
@@ -270,28 +265,22 @@ console.log(isLoadingBook)
       // setFormData({ fullName: '', phone: '', email: '', message: '' });
     } catch (error) {
       console.error('Error submitting inquiry:', error);
+    } finally {
+      setLoadingSubmit(false)
     }
   };
-
-
-
-
-
-
   return (
-
-
     <>
       <div className={styles['tour-booking-panel-outer']}>
 
         <div className={styles['tour-booking-button-pannel']}>
-          <div style={{minWidth:'145px'}}>
+          <div style={{ minWidth: '145px' }}>
 
-           <div className={styles['tour-booking-pricing']}>
+            <div className={styles['tour-booking-pricing']}>
 
 
-            <p className={styles['tour-booking-price']}>₹ {pricePerPerson}</p> <p className={styles['tour-booking-tax']}>/per person</p>
-           </div>
+              <p className={styles['tour-booking-price']}>₹ {pricePerPerson}</p> <p className={styles['tour-booking-tax']}>/per person</p>
+            </div>
             <p className={styles['tour-booking-taxes']}>Excluding applicable taxes</p>
           </div>
           <button onClick={() => setShowDialouge(true)}>Book Now</button>
@@ -319,16 +308,27 @@ console.log(isLoadingBook)
                   </div>
                 </div>
                 <div className={styles["dialog-details"]}>
-                  <span className={styles["dialog-badge"]}>{`${duration}D / ${duration-1}N`}</span>
+                  <span className={styles["dialog-badge"]}>{`${duration}D / ${duration - 1}N`}</span>
                 </div>
-                {isLoadingBook ? <Loader/> :   <button
+                <div>
+
+                {isLoadingBook ? <Loader /> : <button
                   className={styles["dialog-button-primary"]}
                   onClick={handleBookNow}
-              
+
                 >
-                Book Now
+                  Book Now
                 </button>}
-              
+                {/* <div className={styles['search-options-destination']}>
+                <CustomInputWrapper
+                  selected={selectedDate}
+                  // onChange={handleDateChange}
+                  dateFormat="dd/MM/yyyy"
+                  customInput={<CustomInput />} // Use custom input
+                />
+              </div> */}
+                  </div>
+
                 <ToastContainer position="top-right" autoClose={3000} />
               </div>
 
@@ -352,9 +352,6 @@ console.log(isLoadingBook)
                       <button onClick={() => updateRoom("children", 1)}>+</button>
                     </div>
                   </div>
-
-
-
                 </div>
 
               </div>
@@ -363,15 +360,10 @@ console.log(isLoadingBook)
         )}
         {showCustomizeDialog && (
           <CustomizedQuery uuid={uuid} handleClose={close} />
-
         )}
-
-
         <div className={styles['tour-booking-panel']}>
           <p className={styles['panel-heading']}>Book Your Tour</p>
           <p className={styles['panel-des']}>Reserve your ideal trip early for a hassle-free trip; secure comfort and convenience!</p>
-
-         
           <form className={styles.inquiryForm} onSubmit={handleSubmit}>
             <label>Full Name</label>
             <input
@@ -410,17 +402,10 @@ console.log(isLoadingBook)
               onChange={handleChange}
               required
             />
-
-            <button type="submit">Submit</button>
+            {loadingSubmit ? <Loader /> : <button type="submit">Submit</button>}
           </form>
-
-
-
-
         </div>
       </div>
-
-
     </>
 
   );

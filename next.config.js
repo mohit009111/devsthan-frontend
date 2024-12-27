@@ -1,10 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-  images: {
-    domains: ['res.cloudinary.com'], // Add Cloudinary domain or any other external image domain
-  },
-}
+  // output: 'export',
 
-module.exports = nextConfig
+  images: {
+    unoptimized: true,
+    domains: ['res.cloudinary.com'],
+  },
+  trailingSlash: true,
+};
+
+module.exports = nextConfig;

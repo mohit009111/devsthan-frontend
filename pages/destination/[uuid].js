@@ -114,8 +114,8 @@ const Destination = ({ destinationData, destinationBanner }) => {
           <img src={destinationBanner?.data?.bannerUrls[0]} alt="Destination Banner" className={styles['parallax-image']} />
         </div>
         <div className={styles.header_content}>
-          <h1 className={styles.title}>Destination</h1>
-          <nav>Home ➔ Destination</nav>
+          {/* <h1 className={styles.title}>Destination</h1>
+          <nav>Home ➔ Destination</nav> */}
         </div>
       </header>
       <div className={styles.container}>

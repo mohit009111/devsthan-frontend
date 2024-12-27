@@ -1,8 +1,9 @@
-import React, { useState, forwardRef, useRef } from 'react';
+import React, { useState, useEffect, forwardRef, useRef } from 'react';
 import Meals from '../tourPageComponents/meals';
 import styles from './itinery.module.css';
 import Transfers from '../tourPageComponents/transfers';
 import Hotels from '../tourPageComponents/hotels';
+import SiteSeens from '../tourPageComponents/siteSeens';
 import DayPlan from '../tourPageComponents/dayPlan';
 import Slider from "react-slick";
 import DatePicker from 'react-datepicker';
@@ -57,6 +58,20 @@ const Itinerary = ({ categoryDetails }) => {
     parentRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  useEffect(() => {
+    const departureDetails = localStorage.getItem('departureDate');
+    if (departureDetails) {
+      // Parse the custom date format (e.g., "19-12-2024")
+      const [day, month, year] = departureDetails.split('-').map(Number);
+      const parsedDate = new Date(year, month - 1, day); // Month is 0-indexed
+      if (!isNaN(parsedDate)) {
+        setStartDate(parsedDate); // Set it as a Date object
+        setSelectedDate(parsedDate); // Update selected date as well
+      } else {
+        console.error("Invalid date format in localStorage.");
+      }
+    }
+  }, []);
   return (
     <div className={styles['itinerary']} ref={parentRef}>
       {/* Tabs */}
@@ -72,6 +87,12 @@ const Itinerary = ({ categoryDetails }) => {
           onClick={() => handleTabChange("transfer")}
         >
           <p>Transfers</p>
+        </button>
+        <button
+          className={activeTab === "siteSeen" ? styles['active-tab'] : ''}
+          onClick={() => handleTabChange("siteSeen")}
+        >
+          <p>Site Seens</p>
         </button>
         <button
           className={activeTab === "hotel" ? styles['active-tab'] : ''}
@@ -138,6 +159,15 @@ const Itinerary = ({ categoryDetails }) => {
             categoryDetails.map((itinerary, index) => (
               <div key={index} ref={(el) => (dayRefs.current[index] = el)}>
                 <Transfers itinerary={itinerary} />
+              </div>
+            ))
+          )}
+        </div>
+        <div>
+          {activeTab === "siteSeen" && (
+            categoryDetails.map((itinerary, index) => (
+              <div key={index} ref={(el) => (dayRefs.current[index] = el)}>
+                <SiteSeens itinerary={itinerary} />
               </div>
             ))
           )}

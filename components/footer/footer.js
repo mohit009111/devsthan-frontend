@@ -18,7 +18,8 @@ export default function footer() {
              <Link href={'/about'} className={styles['li']}><li >About Us</li></Link> 
              <Link href={'/destinations'} className={styles['li']}><li >Destinations</li></Link> 
              <Link href={'/blogs'} className={styles['li']}><li >Blogs</li></Link> 
-             
+             <Link href={'/cancellation-policy'} className={styles['li']}><li >Cancellation & Refund</li></Link> 
+             <Link href={'/terms-and-conditions'} className={styles['li']}><li >Terms & Conditions</li></Link> 
              <Link href={'/contact'} className={styles['li']}><li >Contact Us</li></Link> 
              
             </ul>

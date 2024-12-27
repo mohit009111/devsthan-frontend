@@ -1,14 +1,24 @@
 .home-banner {
     max-width: 1540px;
     margin-inline: auto;
-    padding-inline: 35px;
+    /* padding-inline: 35px; */
     border-radius: 30px;
     margin-top: 30px;
     position: relative;
     display: flex;
     justify-content: center;
 }
-
+.search-button{
+        border: 1px solid #ddd;
+    padding: 5px;
+    padding-right: 32px;
+    width: 100%;
+    color: rgb(97, 93, 93);
+    border-radius: 4px;
+    text-align: left;
+    background-color: white;
+    font-size: 14px;
+}
 .coming-soon {
     /* position: absolute;
     top: -10px; */
@@ -310,7 +320,7 @@
     }
 
     .home-banner {
-        padding-inline: 15px;
+        /* padding-inline: 15px; */
         height: 620px;
         margin-top: 10px;
     }
@@ -353,7 +363,7 @@
     }
 
     .home-banner {
-        padding-inline: 10px;
+        /* padding-inline: 10px; */
     }
 
     .search-bar {

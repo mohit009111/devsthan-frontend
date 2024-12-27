@@ -5,11 +5,12 @@ import ToursList from '../../components/toursList/toursList';
 import { BASE_URL } from '../../utils/headers';
 import { useRouter } from 'next/router';
 import Slider from "rc-slider";
-import Loader from '../../components/loader/loader'
+
 import "rc-slider/assets/index.css";
 import { RxCross2 } from "react-icons/rx";
 import { IoFilter } from "react-icons/io5";
 import Link from 'next/link';
+import Loader from '../../components/loader/loader';
 // `getStaticPaths` to define the list of dynamic routes to pre-render
 const durationOptions = [
   { label: "2 Days", count: 2 },
@@ -18,8 +19,9 @@ const durationOptions = [
   { label: "15 Days", count: 15 },
 ];
 const TourCategory = ({ tourData, categories, locations, location }) => {
+  console.log(locations)
   const [loading, setLoading] = useState(true);
-  console.log(location)
+
   const [isListVisible, setIsListVisible] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [filteredOptions, setFilteredOptions] = useState(locations.destinations);
@@ -32,8 +34,8 @@ const TourCategory = ({ tourData, categories, locations, location }) => {
     const query = e.target.value;
     setSearchText(query);
 
-    const filtered = locations.filter((location) =>
-      location.toLowerCase().includes(query.toLowerCase())
+    const filtered = locations.destinations.filter((location) =>
+      location.toLowerCase().replace(/-/g, ' ').includes(query.toLowerCase())
     );
     setFilteredOptions(filtered);
   };
@@ -113,7 +115,7 @@ const TourCategory = ({ tourData, categories, locations, location }) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            location: location,
+            location: location.replace(/-/g, ' '),
 
             tourType: checkedCategories,
             minPrice,
@@ -123,7 +125,7 @@ const TourCategory = ({ tourData, categories, locations, location }) => {
         });
         const data = await response.json();
         setTours(data)
-        console.log(data)
+    
         // setTours1(data);
       } catch (error) {
         console.error("Error fetching tours:", error);
@@ -138,8 +140,8 @@ const TourCategory = ({ tourData, categories, locations, location }) => {
   return (
     <>
       <header className={styles.header}>
-        <h1 className={styles.title}>Tours </h1>
-        <nav>Home ➔ </nav>
+        {/* <h1 className={styles.title}>Tours </h1>
+        <nav>Home ➔ </nav> */}
       </header>
 
       <div className={styles['tour-category']}>
@@ -242,7 +244,7 @@ const TourCategory = ({ tourData, categories, locations, location }) => {
 
         <div className={styles['tour-cards']}>
           {loading ? (
-            <div className={styles['loader']}>Loading...</div>
+            <div className={styles['loader']}><Loader/></div>
           ) : tours.length === 0 ? (
             <div className={styles['no-tours']}>No Tour Found</div>
           ) : (
@@ -369,20 +371,21 @@ export async function getStaticPaths() {
   });
 
 
+  const destinations = locations?.destinations
+  ?.map((dest) => dest.trim().toLowerCase()) 
+  .filter((value, index, self) => self.indexOf(value) === index);
 
-  const destinations = locations?.destinations?.map((dest) => dest.trim()) || [];
 
 
 
   const paths = destinations.map((destination) => ({
-    params: { location: destination },
+    params: { location: encodeURIComponent(destination) },
   }));
-
-
-
+  
   return {
     paths,
-    fallback: 'blocking', // or false, depending on your requirement
+    fallback:'blocking'
+
   };
 }
 
@@ -417,6 +420,7 @@ export async function getStaticProps({ params }) {
         tourData: [],
         categories: [],
         location: '',
+        
         locations: []
       },
     };

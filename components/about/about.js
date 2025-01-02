@@ -25,16 +25,16 @@ const about = () => {
             </div>
             <div className={styles['images-container']}>
                 <div className={styles['image-wrapper']}>
-                    <Image src="https://res.cloudinary.com/dmyzudtut/image/upload/v1729833162/images/yhwqnzsjqzfygsycssmi.jpg" alt="Group" width={200} height={200} className={styles['about-images']}/>
+                    <Image src="https://res.cloudinary.com/dmyzudtut/image/upload/v1735376268/images/uxs5pgmanov5vyntgom4.webp" alt="Group" width={200} height={200} className={styles['about-images']}/>
                 </div>
                 <div className={styles['image-wrapper']}>
-                    <Image src="https://res.cloudinary.com/dmyzudtut/image/upload/v1729833162/images/yhwqnzsjqzfygsycssmi.jpg" alt="Resort" width={200} height={200} className={styles['about-images']}/>
+                    <Image src="https://res.cloudinary.com/dmyzudtut/image/upload/v1735376398/about_zlvr4e.jpg" alt="Resort" width={200} height={200} className={styles['about-images']}/>
                 </div>
                 <div className={styles['image-wrapper']}>
-                    <Image src="https://res.cloudinary.com/dmyzudtut/image/upload/v1729833162/images/yhwqnzsjqzfygsycssmi.jpg" alt="Desert" width={200} height={200} className={styles['about-images']}/>
+                    <Image src="https://res.cloudinary.com/dmyzudtut/image/upload/v1735376406/about2_yy6k9x.jpg" alt="Desert" width={200} height={200} className={styles['about-images']}/>
                 </div>
                 <div className={styles['image-wrapper']}>
-                    <Image src="https://res.cloudinary.com/dmyzudtut/image/upload/v1729833162/images/yhwqnzsjqzfygsycssmi.jpg" alt="Couple" width={200} height={200} className={styles['about-images']}/>
+                    <Image src="https://res.cloudinary.com/dmyzudtut/image/upload/v1735377308/about3_qul6sh.jpg" alt="Couple" width={200} height={200} className={styles['about-images']}/>
                 </div>
             </div>
         </section>

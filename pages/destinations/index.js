@@ -69,6 +69,6 @@ export async function getStaticProps() {
       destinations,
       destinationsBanner
     },
-   
+    revalidate: 600,
   };
 }

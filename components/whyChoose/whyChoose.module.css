@@ -38,7 +38,7 @@
 .about-card {
   background: #fff;
   border-radius: 15px;
-  /* box-shadow: 0 8px 20px #0000001a; */
+  box-shadow: 0 8px 20px #0000001a;
   overflow: hidden;
   transition: transform .3s, box-shadow .3s;
   display: flex

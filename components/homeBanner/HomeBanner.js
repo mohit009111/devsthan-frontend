@@ -105,7 +105,7 @@ console.log(homebanner)
   return (
     <div className={styles['home-banner']}>
     <div className={styles['banner-outer']}>
-    <div className={styles['home-banner']}>
+    <div className={styles['home-bannerr']}>
       <div className={styles['banner-outer']}>
         <BannerInner {...settings}>
           {bannerImages.map((image, index) => (

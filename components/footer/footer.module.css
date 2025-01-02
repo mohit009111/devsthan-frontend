@@ -4,7 +4,22 @@
     padding: 40px;
     animation: fadeIn 1s ease-in-out;
   }
-  
+  .social-links {
+  display: flex;
+  gap: 16px;
+}
+
+.social-icon {
+  font-size: 20px;
+color: white;
+  transition: color 0.3s;
+  margin-top: 15px;
+}
+
+.social-icon:hover {
+  color: #0070f3; /* Hover color, adjust as needed */
+}
+
   .footer-content {
     display: flex;
    

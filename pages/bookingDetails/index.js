@@ -9,6 +9,8 @@ import Loader from '../../components/loader/loader.js';
 import { toast } from 'react-hot-toast';
 import 'react-toastify/dist/ReactToastify.css';
 import FullScreenLoader from '../../components/fullScreenLoader/fullScreenLoader.js';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 export default function TravellerDetails() {
   const router = useRouter();
 const[isLoading,setIsLoading]=useState(false)
@@ -26,51 +28,150 @@ const[fullLoading,setFullLoading]=useState(false)
   const [tourid, setTourid] = useState("");
   const [username, setUsername] = useState("");
   const [date, setDate] = useState("");
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const userId = localStorage.getItem("userId");
-    const date = localStorage.getItem("departureDate");
-    const username = localStorage.getItem("username");
-    const userTempId = localStorage.getItem("userTempId")
-    
-    setUsername(username)
-    setDate(date)
-if(token && userId){
+const [selectedDate, setSelectedDate] = useState(new Date()); // Default to today's date
+  const [startDate, setStartDate] = useState(new Date()); // State for start date
+  const formatDate = (date) => {
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
+  const handleDateChange = (date) => {
+    setSelectedDate(date); // Update the selected date state
+    if (date) {
+      setStartDate(date); // Set the start date
+      const formattedDate = formatDate(date); // Format the date
+      setDate(formattedDate)
+      localStorage.setItem('departureDate', formattedDate); // Save formatted date in localStorage
+    }
+  };
   
-  setIsLoggedIn(true);
-}
-    const userData = { token, userId, userTempId };
-
-    const fetchCartData = async () => {
+  // Custom Input Component for Date Picker
+  const CustomInput = React.forwardRef(({ value, onClick }, ref) => (
+    <input
+      className={styles['datepicker-input']}
+      value={value}
+      onClick={onClick}
+      readOnly
+      ref={ref}
+      placeholder="Select Date"
+    />
+  ));
+  CustomInput.displayName = "CustomInput";
+  
+  // useEffect to handle data updates whenever selectedDate changes
+  useEffect(() => {
+    const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+    const userId = localStorage.getItem("userId") || sessionStorage.getItem("userId");
+    const departureDate = localStorage.getItem("departureDate");
+    const username = localStorage.getItem("username");
+    const userTempId = localStorage.getItem("userTempId");
+  
+    setUsername(username);
+  
+    // Process departure date if available
+    if (departureDate) {
       try {
-        setLoading(true);
-        const response = await apiCall({
-          endpoint: `/api/getCart`,
-          method: 'POST',
-          body: userData,
-        });
-
-        setTourInfo(response.tour)
-        distributePersons(response.cart.adults, response.cart.children);
-        setCartData(response.cart);
-        setTourid(response.cart.tourId)
-        if (!response.ok) {
-          throw new Error('Failed to fetch cart data');
+        // Parse the date in "DD-MM-YYYY" format
+        const [day, month, year] = departureDate.split('-').map(Number);
+        const parsedDate = new Date(year, month - 1, day); // Month is 0-indexed
+  
+        if (!isNaN(parsedDate.getTime())) {
+          // Format date to "DD//MM//YY"
+          const formattedDate = `${String(day).padStart(2, '0')}//${String(month).padStart(2, '0')}//${String(year).slice(-2)}`;
+  
+          // Only update states if the date has changed
+          if (selectedDate?.getTime() !== parsedDate.getTime()) {
+            setStartDate(parsedDate);      // Set parsed date object
+            setSelectedDate(parsedDate);   // Update selected date
+            setDate(formattedDate);        // Display formatted date
+          }
+        } else {
+          console.error("Invalid date format in localStorage.");
         }
-
-
-
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+      } catch (error) {
+        console.error("Error parsing date from localStorage:", error);
       }
-    };
+    }
+  
+    if (token && userId) {
+      setIsLoggedIn(true);
+    }
+  }, [selectedDate]); // Runs only when 'selectedDate' changes
+  
 
-    fetchCartData();
+// Fetch Cart Data whenever 'selectedDate' changes
+useEffect(() => {
+  const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+  const userId = localStorage.getItem("userId") || sessionStorage.getItem("userId");
+  const userTempId = localStorage.getItem("userTempId");
+  const userData = { token, userId, userTempId };
 
-  }, []);
+  const fetchCartData = async () => {
+    try {
+      setLoading(true); // Start loading
+      const response = await apiCall({
+        endpoint: `/api/getCart`,
+        method: 'POST',
+        body: userData,
+      });
+
+      // Handle response
+      setTourInfo(response.tour);
+      distributePersons(response.cart.adults, response.cart.children);
+      setCartData(response.cart);
+      setTourid(response.cart.tourId);
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch cart data');
+      }
+    } catch (err) {
+      setError(err.message); // Handle error
+    } finally {
+      setLoading(false); // Stop loading
+    }
+  };
+
+  // Fetch data whenever 'selectedDate' changes
+  fetchCartData();
+}, []); // Dependency added for 'selectedDate'
+
+
+// Fetch Cart Data (runs only once after initial setup)
+useEffect(() => {
+  const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+  const userId = localStorage.getItem("userId") || sessionStorage.getItem("userId");
+  const userTempId = localStorage.getItem("userTempId");
+  const userData = { token, userId, userTempId };
+
+  const fetchCartData = async () => {
+    try {
+      setLoading(true);
+      const response = await apiCall({
+        endpoint: `/api/getCart`,
+        method: 'POST',
+        body: userData,
+      });
+
+      // Handle response
+      setTourInfo(response.tour);
+      distributePersons(response.cart.adults, response.cart.children);
+      setCartData(response.cart);
+      setTourid(response.cart.tourId);
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch cart data');
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchCartData();
+}, []); // Empty dependency array to fetch data only once
+
 
 
   const distributePersons = (adults, children) => {
@@ -112,28 +213,33 @@ if(token && userId){
   };
   const handleRazorpay = async () => {
     setIsLoading(true);
-    const token = localStorage.getItem("token");
   
-    if (!token) {
+    // Retrieve token and user ID
+    const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+    const userId = localStorage.getItem("userId") || sessionStorage.getItem("userId");
+  
+    if (!token || !userId) {
       toast.error("User not logged in!");
       setIsLoading(false);
       return;
     }
   
     try {
-      const userId = localStorage.getItem("userId");
+      // Step 1: Calculate Payment
       const paymentResponse = await apiCall({
         endpoint: `/paymentCalculate`,
         method: 'POST',
         body: { tourId: tourid, userId, category: cartData.category },
       });
   
+      console.log("Payment Response:", paymentResponse);
+  
       if (!paymentResponse.success || !paymentResponse.order) {
         throw new Error("Order creation failed: Invalid response");
       }
   
       const options = {
-        key: "rzp_test_TZIT0OlGcgvEiz",
+        key: "rzp_live_B5xF9jUOmcfT68", // Replace with test key for debugging
         amount: paymentResponse.order.amount,
         currency: paymentResponse.order.currency,
         name: "Devsthan Expert",
@@ -142,8 +248,10 @@ if(token && userId){
         order_id: paymentResponse.order.id,
         handler: async (paymentResponse) => {
           toast.success("Payment successful, processing order...");
+  
           try {
-            const verifyResponse = await apiCall({
+            // Step 2: Verify Payment
+            const verifyResponse = await retryApiCall({
               endpoint: `/verify-payment`,
               method: 'POST',
               body: {
@@ -153,23 +261,29 @@ if(token && userId){
               },
             });
   
+            console.log("Verify Payment Response:", verifyResponse);
+  
             if (verifyResponse.success) {
               setFullLoading(true);
-              const orderResponse = await apiCall({
+  
+              // Step 3: Create Order
+              const orderResponse = await retryApiCall({
                 endpoint: `/create-order`,
                 method: 'POST',
                 body: {
-                  tourId: tourid,
-                  userId,
-                  category: cartData.category,
-                  address,
-                  mobile,
-                  email,
-                  rooms,
-                  username,
-                  date,
+                  tourId: tourid || '',
+                  userId: userId || '',
+                  category: cartData.category || '',
+                  address: address || '',
+                  mobile: mobile || '',
+                  email: email || '',
+                  rooms: rooms || 0,
+                  username: username || '',
+                  date: date || '',
                 },
               });
+  
+              console.log("Order Response:", orderResponse);
   
               if (orderResponse.success) {
                 const queryParams = {
@@ -180,10 +294,12 @@ if(token && userId){
                   date,
                 };
   
-                router.push({
-                  pathname: '/booked-tour',
-                  query: queryParams,
-                });
+                setTimeout(() => {
+                  router.push({
+                    pathname: '/booked-tour',
+                    query: queryParams,
+                  });
+                }, 500);
               } else {
                 toast.error("Order creation failed. Please try again.");
               }
@@ -195,8 +311,12 @@ if(token && userId){
             toast.error("Error verifying payment.");
           }
         },
-        prefill: { /* Prefill data */ },
-        notes: { address: "Razorpay Corporate Office" },
+        prefill: {
+          name: username || "Guest",
+          email: email || "example@email.com",
+          contact: mobile || "9999999999",
+        },
+        notes: { address: address || "Razorpay Corporate Office" },
         theme: { color: "#3399cc" },
       };
   
@@ -213,6 +333,18 @@ if(token && userId){
       toast.error("An error occurred while processing the payment.");
     } finally {
       setIsLoading(false);
+    }
+  };
+  
+  // Retry API Call Function
+  const retryApiCall = async (config, retries = 3) => {
+    for (let i = 0; i < retries; i++) {
+      try {
+        const response = await apiCall(config);
+        if (response.success) return response;
+      } catch (error) {
+        if (i === retries - 1) throw error;
+      }
     }
   };
   
@@ -341,9 +473,23 @@ if(token && userId){
         </div>
 
         <div className={styles['package-summary']}>
-          <p>
-            <span>Travel Date:</span> <strong>{date}</strong>
-          </p>
+          <div>
+         
+            <span>Travel Date:</span> <strong>{date}
+              
+            </strong>
+            <div className={styles['search-options-destination']}>
+            
+            <DatePicker
+              selected={selectedDate}
+              onChange={handleDateChange}
+              dateFormat="dd/MM/yyyy"
+              customInput={<CustomInput />} // Use custom input
+            />
+          </div>
+            
+          </div>
+         
           <p>
             <span>No. of Rooms:</span> <strong>{cartData?.selectedRooms}</strong>
           </p>

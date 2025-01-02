@@ -1,6 +1,7 @@
 // components/Footer.js
 import Link from 'next/link';
 import styles from '../footer/footer.module.css';
+import { FaFacebookF, FaInstagram, FaYoutube } from 'react-icons/fa';
 
 export default function footer() {
   return (
@@ -9,6 +10,17 @@ export default function footer() {
         <div className={styles['promo-section']}>
           <h2 className={styles['promo-title']}>Want To Take Tour Packages?</h2>
         <Link  href="/tours/uttarakhand"> <button className={styles['promo-button']}>Book A Tour</button></Link>
+        <div className={styles['social-links']}>
+      <Link href="https://www.facebook.com/DevsthanExpert/" target="_blank" rel="noopener noreferrer">
+        <FaFacebookF className={styles['social-icon']} />
+      </Link>
+      <Link href="https://www.instagram.com/devsthan_expert/" target="_blank" rel="noopener noreferrer">
+        <FaInstagram className={styles['social-icon']} />
+      </Link>
+      <Link href="https://www.youtube.com/@DevsthanExpert" target="_blank" rel="noopener noreferrer">
+        <FaYoutube className={styles['social-icon']} />
+      </Link>
+    </div>
          
         </div>
         <div className={styles['footer-links']}>

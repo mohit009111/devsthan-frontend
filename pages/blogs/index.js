@@ -54,6 +54,6 @@ export async function getStaticProps() {
             blogs,
             blogsBanner,
         },
-       
+        revalidate: 600,
     };
 }

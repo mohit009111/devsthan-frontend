@@ -412,6 +412,7 @@ export async function getStaticProps({ params }) {
         location,
         locations
       },
+      revalidate: 600,
     };
   } catch (error) {
     console.error('Error fetching tour data:', error);
@@ -423,6 +424,8 @@ export async function getStaticProps({ params }) {
         
         locations: []
       },
+     
     };
+    
   }
 }

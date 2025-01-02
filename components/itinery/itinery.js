@@ -9,7 +9,8 @@ import Slider from "react-slick";
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
-const Itinerary = ({ categoryDetails }) => {
+const Itinerary = ({ categoryDetails, tourAllData }) => {
+  console.log(tourAllData)
   const dayRefs = useRef([]); // Array of refs for each day
   const parentRef = useRef(null); // Ref for the parent container
   const [selectedDate, setSelectedDate] = useState(new Date()); // Default to today's date
@@ -82,30 +83,37 @@ const Itinerary = ({ categoryDetails }) => {
         >
           <p>{`${categoryDetails.length} Day Plan`}</p>
         </button>
-        <button
-          className={activeTab === "transfer" ? styles['active-tab'] : ''}
-          onClick={() => handleTabChange("transfer")}
-        >
-          <p>Transfers</p>
-        </button>
-        <button
-          className={activeTab === "siteSeen" ? styles['active-tab'] : ''}
-          onClick={() => handleTabChange("siteSeen")}
-        >
-          <p>Site Seens</p>
-        </button>
-        <button
+        {tourAllData[0].hotel==true ? <button
           className={activeTab === "hotel" ? styles['active-tab'] : ''}
           onClick={() => handleTabChange("hotel")}
         >
-          <p>1 Hotel</p>
-        </button>
-        <button
-          className={activeTab === "meal" ? styles['active-tab'] : ''}
-          onClick={() => handleTabChange("meal")}
+          <p>Hotel</p>
+        </button> : null}
+        {tourAllData[0].
+transportation
+==true ? <button
+          className={activeTab === "transfer" ? styles['active-tab'] : ''}
+          onClick={() => handleTabChange("transfer")}
         >
-          <p>Meals</p>
-        </button>
+          <p>Transportation</p>
+        </button> : null}
+        {tourAllData[0].siteSeens ?
+          <button
+            className={activeTab === "siteSeen" ? styles['active-tab'] : ''}
+            onClick={() => handleTabChange("siteSeen")}
+          >
+            <p>Site Seens</p>
+          </button>
+
+          : null}
+        {tourAllData[0].meals ?
+          <button
+            className={activeTab === "meal" ? styles['active-tab'] : ''}
+            onClick={() => handleTabChange("meal")}
+          >
+            <p>Meals</p>
+          </button>
+          : null}
       </div>
 
       {/* Content */}

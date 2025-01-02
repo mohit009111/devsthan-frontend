@@ -80,8 +80,8 @@ const TourPage = ({ tourAllData }) => {
       <div className={styles['tab-panel']}>
         <div className={styles['tab-content']}>
           {activeTab === 'Itinerary' && (
-            <Itinerary categoryDetails={categoryDetails.itineraries
-            }  />
+            <Itinerary categoryDetails={categoryDetails.itineraries 
+            }  tourAllData={tourAllData && tourAllData}/>
           )}
 
           {activeTab === 'Policies' && (
@@ -191,6 +191,7 @@ export async function getStaticProps({ params }) {
     props: {
       tourAllData,
     },
+    revalidate: 600,
    
   };
 }

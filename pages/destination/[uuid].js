@@ -239,5 +239,6 @@ export async function getStaticProps({ params }) {
       destinationData,
       destinationBanner
     },
+    revalidate: 600,
   };
 }

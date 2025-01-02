@@ -65,6 +65,7 @@ const homebanner = await apiCall({
       blogs,
       homebanner
     },
- 
+    revalidate: 600,
   };
+
 }

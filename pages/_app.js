@@ -20,9 +20,20 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-3JPZ5FGCXB"></script>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-3JPZ5FGCXB');
+              `,
+            }}
+          ></script>
       <Toaster
-        position="top-right" // You can change the position
-        autoClose={5000} // Time in milliseconds to auto close
+        position="top-right" 
+        autoClose={5000} 
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

@@ -43,8 +43,8 @@ const Blogs = ({ blogs }) => {
   return (
     <>
      <div className={styles['header']}>
-  <p className={styles['subtitle']}>Your Trusted Travel Partner</p>
-  <h2 className={styles['title']}>Why Choose Us</h2>
+  <p className={styles['subtitle']}>Your Travel Inspirationr</p>
+  <h2 className={styles['title']}>Blogs</h2>
 </div>
       <div className={styles.blogsContainer}>
         {isMobile ? (

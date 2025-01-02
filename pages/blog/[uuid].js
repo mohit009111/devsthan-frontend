@@ -67,8 +67,9 @@ export async function getStaticProps({ params }) {
   return {
     props: { blogs, blogBanner },
 
-   
+    revalidate: 600,
   };
+  
 }
 
 export async function getStaticPaths() {

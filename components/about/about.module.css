@@ -78,7 +78,7 @@
   }
   .about-images{
     width: 100% !important;
-    object-fit: cover;
+    object-fit: inherit;
   }
   @media  screen and (max-width:900px)  {
     .about-us-section{
